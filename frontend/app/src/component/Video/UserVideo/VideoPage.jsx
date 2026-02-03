@@ -24,12 +24,13 @@ const VideoPage = () => {
   const handleVideoPage = async (videoId, userId) => {
     navigate(`/video-rec-page/${videoId}/user/${userId}`);
   };
-  if (video.length === 0) {
+  if (video?.length === 0) {
     return <LoadingSpinner label="Fetching Videos" />;
   }
+  console.log("user role", user.role, user);
   return (
     <>
-      {video.videos.length === 0 ? (
+      {video?.videos?.length === 0 ? (
         <EmptyVideoPage userId={userId} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2  lg:gap-5  ">

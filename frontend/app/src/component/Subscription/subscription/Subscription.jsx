@@ -48,18 +48,18 @@ const Subscription = () => {
                   Recent Videos
                 </p>
                 <div className=" flex flex-wrap justify-center ">
-                  {f.video.length !== 0 ? (
+                  {f?.video.length !== 0 ? (
                     <>
                       {/* Small screens → show only first 2 */}
                       <div className="flex flex-wrap  sm:hidden ">
-                        {f.video.slice(0, 2).map((p) => (
-                          <SubscripptionVideo f={f} p={p} />
+                        {f?.video?.slice(0, 2).map((p, index) => (
+                          <SubscripptionVideo f={f} p={p} key={index} />
                         ))}
                       </div>
 
                       {/* Medium and up → show all */}
                       <div className="hidden sm:flex sm:flex-wrap sm:justify-center xl:grid xl:grid-cols-3">
-                        {f.video.map((p) => (
+                        {f?.video?.map((p) => (
                           <SubscripptionVideo f={f} p={p} />
                         ))}
                       </div>

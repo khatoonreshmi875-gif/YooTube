@@ -99,7 +99,9 @@ const UpdateVideo = () => {
           name="thumbnail"
           data={videoData}
           error={errors.thumbnail}
-          rules={{ required: "thumbnail is required" }}
+          rules={{
+            required: !videoData.thumbnail ? "thumbnail is required" : false,
+          }}
           preview={preview}
           onChange={(e) => {
             const file = e.target.files[0];

@@ -5,8 +5,9 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { AppContext } from "../../utils/contextApi";
 import { deleteVideo } from "../../../Api/VideoApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
-const VideoMenu = ({ v, isOpen, index }) => {
-  const { setvideo } = useContext(AppContext);
+
+const VideoMenu = ({ v, isOpen, index, userId }) => {
+  const { setvideo, user } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleDelete = async (v) => {
@@ -48,20 +49,22 @@ const VideoMenu = ({ v, isOpen, index }) => {
       {" "}
       {isOpen === index && (
         <div className="flex flex-col bg-black/70 z-50 text-white absolute  top-9  rounded-md  w-36 shadow-lg right-0">
-          <button
-            onClick={() =>
-              navigate("/edit-video", {
-                state: {
-                  videoId: v._id,
-                  video: v,
-                },
-              })
-            }
-            className="flex items-center hover:bg-gray-700 px-4 py-2 w-full transition"
-          >
-            <MdEdit className="text-lg mr-2" />
-            Edit
-          </button>
+          {user._id === userId && (
+            <button
+              onClick={() =>
+                navigate("/edit-video", {
+                  state: {
+                    videoId: v._id,
+                    video: v,
+                  },
+                })
+              }
+              className="flex items-center hover:bg-gray-700 px-4 py-2 w-full transition"
+            >
+              <MdEdit className="text-lg mr-2" />
+              Edit
+            </button>
+          )}
           <button
             onClick={() => handleDelete(v)}
             className="flex items-center hover:bg-gray-700 px-4  py-1 w-full transition"

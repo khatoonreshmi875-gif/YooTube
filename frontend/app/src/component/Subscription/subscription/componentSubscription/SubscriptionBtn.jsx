@@ -1,19 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { toggleSubcribeWithId } from "../../../../Api/Subscription.js";
 import { AppContext } from "../../../utils/contextApi.js";
 
 const SubscriptionBtn = ({ f, userId }) => {
-  const { setfollow, setSubscribers, setfollowers, subscribers, user } =
-    useContext(AppContext);
+  const { setfollowers, followers, user } = useContext(AppContext);
+  const [follow, setFollow] = useState(false);
+  const [isToggle, setIsToggle] = useState(false);
   const handleSubscribe = async (channelId) => {
+    setFollow((prev) => !prev);
     const res = await toggleSubcribeWithId(channelId);
     console.log("res of sunbscription", res.data);
+    setFollow(res.data.subscriber);
   };
   const handleUnSubscribe = async (channelId) => {
-    setfollowers((prev) => prev.filter((m) => m._id !== channelId));
+    setFollow((prev) => !prev);
     const res = await toggleSubcribeWithId(channelId);
     console.log("res of sunbscription", res.data);
+    setFollow(res.data.subscriber);
   };
+  console.log(
+    "followers",
+    followers,
+    followers?.some((m) => m._id === f._id),
+  );
+  const data = isToggle ? follow : followers?.some((m) => m._id === f._id);
   return (
     <>
       {" "}
@@ -22,22 +32,18 @@ const SubscriptionBtn = ({ f, userId }) => {
           <button
             className="bg-cyan-700 px-3 py-1 rounded-md text-white text-sm lg:text-base font-serif hover:bg-cyan-600 transition"
             onClick={() => {
-              setfollow(f._id);
-
+              setfollowers((prev) => prev.filter((p) => p._id !== f._id));
               handleUnSubscribe(f._id);
             }}
           >
             UnSubscribe
           </button>
-        ) : subscribers.subscriberOfEachChannel?.some(
-            (m) => m._id === f._id,
-          ) ? (
+        ) : data ? (
           <button
             className="bg-red-600 px-3 py-1 rounded-md text-white hover:bg-red-500 transition "
             onClick={() => {
-              setfollow(f._id);
-              setSubscribers((prev) => prev.filter((p) => p._id !== f._id));
               handleSubscribe(f._id);
+              setIsToggle(true);
             }}
           >
             UnSubscribe
@@ -46,9 +52,9 @@ const SubscriptionBtn = ({ f, userId }) => {
           <button
             className="bg-green-600 px-3 text-sm py-1 rounded-md text-white hover:bg-green-500 transition"
             onClick={() => {
-              setfollow(f._id);
-              setSubscribers((prev) => [...prev, f]);
               handleSubscribe(f._id);
+
+              setIsToggle(true);
             }}
           >
             Subscribe
