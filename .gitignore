@@ -1,0 +1,16 @@
+ECHO is on.
+# Ignore all node_modules folders
+node_modules/
+
+# Ignore environment files
+.env
+
+# Ignore build output
+dist/
+
+# Ignore logs
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
