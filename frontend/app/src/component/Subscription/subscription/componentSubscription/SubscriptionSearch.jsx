@@ -2,12 +2,11 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../../../utils/contextApi";
 import { searchChannel } from "../../../../Api/Subscription";
 
-const SubscriptionSearch = ({ setSelectedChannelId, c }) => {
+const SubscriptionSearch = ({ setSelectedChannelId,channel ,handleSearchChannel}) => {
   const [value, setvalue] = useState(false);
   const { followers } = useContext(AppContext);
   const [part, setpart] = useState(null);
 
-  const [channel, setchannel] = useState(followers);
 
   <div className="bg-red-50 text-black">
     {value &&
@@ -23,12 +22,8 @@ const SubscriptionSearch = ({ setSelectedChannelId, c }) => {
         </p>
       ))}
   </div>;
-  const handleSearchChannel = async (userdata) => {
-    console.log("userdata", userdata);
-    const res = await searchChannel(userdata);
-    console.log("channel", res);
-    setchannel(res.data.data.channel);
-  };
+ 
+  
   return (
     <>
       <input

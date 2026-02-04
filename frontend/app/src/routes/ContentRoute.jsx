@@ -5,9 +5,10 @@ import CreateTweet from "../component/Tweet/CreateTweet";
 import UpdateVideo from "../component/Video/EditVideo/UpdateVideo";
 import UploadVideo from "../component/Video/UploadVideo";
 import AddPlaylist from "../component/Playlist/playlistCRUD/AddPlaylist";
-import AssignModerator from "../component/User/userAuth/component/AssignModerator";
+import AssignModerator from "../component/User/userAuth/component/moderator/AssignModerator";
 import ReportPage from "../component/HomePage.jsx/ReportPage";
 import ReportAdminPage from "../component/HomePage.jsx/ReportAdminPage";
+import UserPage from "../component/User/userAuth/component/auth/UserPage";
 
 export const ContentRoute = [
   {
@@ -50,5 +51,9 @@ export const ContentRoute = [
   {
     path: "report-admin",
     element: <ReportAdminPage />,
+  },
+  {
+    path: "all-user",
+    element: <UserPage/>,
   },
 ];

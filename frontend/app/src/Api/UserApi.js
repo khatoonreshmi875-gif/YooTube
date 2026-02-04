@@ -207,3 +207,35 @@ export const Report = async (userdata, userId) => {
     throw err;
   }
 };
+export const AllUser = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${BASE_URL}/all-user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("get all user fetched", response);
+    return response;
+  } catch (err) {
+    console.log(" get all user failed", err);
+    throw err;
+  }
+};
+export const RemoveModerator = async (userdata) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(`${BASE_URL}/remove-moderator`, userdata, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("remove moderator successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" remove modertor failed ", err);
+    throw err;
+  }
+};

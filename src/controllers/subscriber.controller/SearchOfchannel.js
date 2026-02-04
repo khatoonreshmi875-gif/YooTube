@@ -12,7 +12,9 @@ export const SearchOfchannel = asynchandler(async (req, res) => {
     // First try regex search
     channel = await User.find({
       channelName: { $regex: value, $options: "i" },
-    }).select("channelName avatar createdAt _id");
+    }).select(
+      "channelName avatar createdAt _id role email subscriberCount subscribedTo",
+    );
 
     video = await Video.find({
       title: { $regex: value, $options: "i" },

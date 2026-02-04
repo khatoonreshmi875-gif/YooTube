@@ -1,11 +1,11 @@
 // export default EditPlaylist;
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { editPlaylist } from "../../../Api/Playlistapi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
-import FormInput from "../../Video/FormInput";
-import FormButton from "../../Video/UserVideo/FormButton";
+import FormButton from "../../Video/UserVideo/form/FormButton";
+import FormInput from "../../Video/UserVideo/form/FormInput";
 import { handleAxiosError } from "../../utils/erroeHandler";
 
 const EditPlaylist = () => {

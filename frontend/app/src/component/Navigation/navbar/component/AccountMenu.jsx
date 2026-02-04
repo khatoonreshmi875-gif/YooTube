@@ -50,7 +50,11 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
 
           <MenuLink to="/register" label=" Register" />
           {user.role === "admin" && (
-            <MenuLink to="/assign-moderator" label="Assign Moderator" />
+            <>
+              {" "}
+              <MenuLink to="/assign-moderator" label="Assign Moderator" />
+              <MenuLink to="/all-user" label="User List " />
+            </>
           )}
         </div>
       )}

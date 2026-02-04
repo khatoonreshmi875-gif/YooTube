@@ -114,8 +114,9 @@ import commentRouter from "./routes/comment.routes.js";
 import reportRouter from "./routes/report.routes.js";
 import likeRouter from "./routes/like.routes.js";
 import dislikeRouter from "./routes/dislike.routes.js";
-import { refershAccessToken } from "./controllers/user.controller/refreshAccessToken.js";
+
 import { generateRefreshAndAccessToken } from "./utils/generateRefreshAndAccessToken.js";
+import { refershAccessToken } from "./controllers/user.controller/auth/token/refreshAccessToken.js";
 
 // //routes declaraton
 app.use("/api/v1/users", userRouter);

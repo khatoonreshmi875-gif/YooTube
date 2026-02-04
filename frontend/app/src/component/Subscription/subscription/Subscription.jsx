@@ -5,16 +5,16 @@ import { AppContext } from "../../utils/contextApi.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
 import { priotizeSelectChannel } from "./sortFunction.js";
 import SubscriptionBtn from "../subscription/componentSubscription/SubscriptionBtn.jsx";
-import EmptySubscription from "./componentSubscription/EmptySubscription.jsx";
+import EmptySubscription from "./componentSubscription/EmptyCard/EmptySubscription.jsx";
 import SubscriptionSearch from "./componentSubscription/SubscriptionSearch.jsx";
 import SubscripptionVideo from "./componentSubscription/subscripptionvideo.jsx";
 import ChannelCard from "./componentSubscription/ChannelCard.jsx";
-import EmptyvideoCard from "./componentSubscription/EmptyvideoCard.jsx";
+import EmptyvideoCard from "./componentSubscription/EmptyCard/EmptyvideoCard.jsx";
 const Subscription = () => {
   const { followers, user, FormatTime, setfollowers } = useContext(AppContext);
   const { userId } = useParams();
   const [selectedChannelId, setSelectedChannelId] = useState("");
-
+  const [userFolower, setUserFolower] = useState();
   const handleSubscribePage = async (userId) => {
     try {
       const res = await totalSubcribeChannel(userId);
@@ -24,9 +24,19 @@ const Subscription = () => {
       handleAxiosError(err, navigate);
     }
   };
+  const handleSubscribeUserPage = async (userId) => {
+    try {
+      const res = await totalSubcribeChannel(user._id);
+      setUserFolower(res.data.data.subscriberOfEachChannel);
+      console.log("subscription", res.data.data);
+    } catch (err) {
+      handleAxiosError(err, navigate);
+    }
+  };
 
   useEffect(() => {
     handleSubscribePage(userId);
+    handleSubscribeUserPage(user._id);
   }, []);
 
   return (
@@ -70,7 +80,11 @@ const Subscription = () => {
                 </div>
               </div>
               <div className="mt-4 lg:mt-0 flex justify-center lg:justify-end p-4 sm:py-4">
-                <SubscriptionBtn f={f} userId={userId} />
+                <SubscriptionBtn
+                  f={f}
+                  userId={userId}
+                  userFolower={userFolower}
+                />
               </div>
             </div>
           ))}

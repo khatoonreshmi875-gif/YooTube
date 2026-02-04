@@ -1,5 +1,5 @@
 import React from "react";
-import VideoPage from "../Video/UserVideo/VideoPage.jsx";
+import VideoPage from "../Video/UserVideo/page/VideoPage.jsx";
 import TweetPage from "../Tweet/UserTweet/TweetPage.jsx";
 import Playlist from "../Playlist/userPlaylist/page/Playlist.jsx";
 import Subscription from "../Subscription/subscription/Subscription.jsx";

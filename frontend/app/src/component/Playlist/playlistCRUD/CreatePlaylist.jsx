@@ -4,10 +4,11 @@ import { createPlaylists } from "../../../Api/Playlistapi";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../utils/contextApi";
-import FormInput from "../../Video/FormInput";
-import FormField from "../../Video/FormField";
+
 import { handleAxiosError } from "../../utils/erroeHandler";
-import FormButton from "../../Video/UserVideo/FormButton";
+import FormButton from "../../Video/UserVideo/form/FormButton";
+import FormField from "../../Video/UserVideo/form/FormField";
+import FormInput from "../../Video/UserVideo/form/FormInput";
 
 const CreatePlaylist = () => {
   const [dots, setdots] = useState(".");

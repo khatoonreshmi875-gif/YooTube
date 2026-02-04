@@ -24,7 +24,8 @@ const WatchHistory = () => {
     <>
       <div className=" w-full  flex flex-col  min-h-screen">
         {history.length === 0 && <EmptyWatchHistory />}
-        
+
+        {history.length !== 0 && (
           <button
             className=" 
                bg-red-600 text-white  w-full mt-3 p-3 rounded-lg shadow-md shadow-red-200 active:bg-slate-900 pt-24"
@@ -32,7 +33,7 @@ const WatchHistory = () => {
           >
             Delete WatchHistory
           </button>
-        
+        )}
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 sm:space-x-5 space-y-5 pt-3 pb-20 ">
           {loading ? (

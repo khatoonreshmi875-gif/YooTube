@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../utils/contextApi";
 import { handleAxiosError } from "../utils/erroeHandler";
-import FormField from "../Video/FormField";
-import FormInput from "../Video/FormInput";
-import FormButton from "../Video/UserVideo/FormButton";
-import FormSelect from "../Video/FormSelect";
+import FormField from "../Video/UserVideo/form/FormField";
+import FormButton from "../Video/UserVideo/form/FormButton";
+import FormSelect from "../Video/UserVideo/form/FormSelect";
+import FormInput from "../Video/UserVideo/form/FormInput";
 
 const CreateTweet = () => {
   const {

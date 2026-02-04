@@ -3,11 +3,10 @@ import { useForm } from "react-hook-form";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { EditVideo } from "../../../Api/VideoApi";
-import FormButton from "../UserVideo/FormButton";
+import FormButton from "../UserVideo/form/FormButton";
 import { handleAxiosError } from "../../utils/erroeHandler";
-import FormInput from "../FormInput";
-import FormField from "../FormField";
 import UpdateFormThumbnail from "./UpdateFormThumbnail";
+import FormInput from "../UserVideo/form/FormInput";
 const UpdateVideo = () => {
   const { state } = useLocation();
   const videoId = state?.videoId;

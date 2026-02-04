@@ -4,14 +4,12 @@ import { upload_Video } from "../../Api/VideoApi.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { tags } from "./EditVideo/CategoryTag.js";
-import FormField from "./FormField.jsx";
-import FormInput from "./FormInput.jsx";
-import FormSelect from "./FormSelect.jsx";
-import FormButton from "./UserVideo/FormButton.jsx";
+import FormField from "./UserVideo/form/FormField.jsx";
+import FormInput from "./UserVideo/form/FormInput.jsx";
+import FormSelect from "./UserVideo/form/FormSelect.jsx";
+import FormButton from "./UserVideo/form/FormButton.jsx";
 const UploadVideo = () => {
   const [stateValue, setstateValue] = useState("");
-
-  const [dots, setdots] = useState("");
   const categories = [
     "Action",
     "Adventure",
@@ -97,11 +95,7 @@ const UploadVideo = () => {
       navigate("/");
     }
   };
-  useEffect(() => {
-    setInterval(() => {
-      setdots((prev) => (prev.length < 3 ? prev + "." : ""));
-    }, 1000);
-  }, [issubmittingVideo]);
+
   return (
     <>
       <form
@@ -200,11 +194,7 @@ const UploadVideo = () => {
           watch={watch}
         />
         {/* Buttons */}
-        <FormButton
-          navigate={navigate}
-          dots={dots}
-          issubmitting={issubmittingVideo}
-        />
+        <FormButton navigate={navigate} issubmitting={issubmittingVideo} />
       </form>
     </>
   );

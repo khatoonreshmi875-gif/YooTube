@@ -2,28 +2,31 @@ import React, { useContext, useState } from "react";
 import { toggleSubcribeWithId } from "../../../../Api/Subscription.js";
 import { AppContext } from "../../../utils/contextApi.js";
 
-const SubscriptionBtn = ({ f, userId }) => {
+const SubscriptionBtn = ({ f, userId, userFolower }) => {
   const { setfollowers, followers, user } = useContext(AppContext);
   const [follow, setFollow] = useState(false);
   const [isToggle, setIsToggle] = useState(false);
   const handleSubscribe = async (channelId) => {
+    console.log("it run", channelId);
     setFollow((prev) => !prev);
     const res = await toggleSubcribeWithId(channelId);
-    console.log("res of sunbscription", res.data);
-    setFollow(res.data.subscriber);
+    console.log("res of sunbscription", res.data.data.subscriber);
+    setFollow(res.data.data.subscriber);
   };
   const handleUnSubscribe = async (channelId) => {
+    console.log("it run", channelId);
     setFollow((prev) => !prev);
     const res = await toggleSubcribeWithId(channelId);
     console.log("res of sunbscription", res.data);
-    setFollow(res.data.subscriber);
+    setFollow(res.data.data.subscriber);
   };
   console.log(
     "followers",
     followers,
     followers?.some((m) => m._id === f._id),
+    console.log(follow),
   );
-  const data = isToggle ? follow : followers?.some((m) => m._id === f._id);
+  const data = isToggle ? follow : userFolower?.some((m) => m._id === f._id);
   return (
     <>
       {" "}
@@ -53,7 +56,6 @@ const SubscriptionBtn = ({ f, userId }) => {
             className="bg-green-600 px-3 text-sm py-1 rounded-md text-white hover:bg-green-500 transition"
             onClick={() => {
               handleSubscribe(f._id);
-
               setIsToggle(true);
             }}
           >

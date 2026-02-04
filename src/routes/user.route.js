@@ -1,24 +1,29 @@
 import { Router } from "express";
-import { loginUser } from "../controllers/user.controller/loginUser.js";
-import { registerUser } from "../controllers/user.controller/registerUser.js";
-import { logoutUser } from "../controllers/user.controller/logoutUser.js";
-import { getCurrentUser } from "../controllers/user.controller/getCurrentUser.js";
-import { changeCurrentPassword } from "../controllers/user.controller/changeCurrentPassword.js";
+import { loginUser } from "../controllers/user.controller/auth/loginUser.js";
+import { registerUser } from "../controllers/user.controller/auth/registerUser.js";
+import { logoutUser } from "../controllers/user.controller/auth/logoutUser.js";
+import { getCurrentUser } from "../controllers/user.controller/profile/read/getCurrentUser.js";
+import { changeCurrentPassword } from "../controllers/user.controller/auth/password/changeCurrentPassword.js";
 
-import { updateAccountDetails } from "../controllers/user.controller/updateAccountDetails.js";
-import { updatecoverImage } from "../controllers/user.controller/updateCoverImage.js";
-import { updateUserAvatar } from "../controllers/user.controller/updateUserAvatar.js";
-import { getWatchHistory } from "../controllers/user.controller/getWatchHistory.js";
-import { getCurrentUserById } from "../controllers/user.controller/getCurrentUserById.js";
-import { clearAllWatchhistory } from "../controllers/user.controller/clearAllWatchhistory.js";
-import { RemoveVideoWatchHistory } from "../controllers/user.controller/RemoveVideoWatchHistory.js";
-import { forgotPassword } from "../controllers/user.controller/forgetPassword.js";
-import { resetPassword } from "../controllers/user.controller/ResetPassword.js";
+import { updateAccountDetails } from "../controllers/user.controller/profile/update/updateAccountDetails.js";
+import { updatecoverImage } from "../controllers/user.controller/profile/update/updateCoverImage.js";
+import { updateUserAvatar } from "../controllers/user.controller/profile/update/updateUserAvatar.js";
+import { getWatchHistory } from "../controllers/user.controller/watchHistory/getWatchHistory.js";
+import { getCurrentUserById } from "../controllers/user.controller/profile/read/getCurrentUserById.js";
+import { clearAllWatchhistory } from "../controllers/user.controller/watchHistory/clearAllWatchhistory.js";
+import { RemoveVideoWatchHistory } from "../controllers/user.controller/watchHistory/RemoveVideoWatchHistory.js";
+import { resetPassword } from "../controllers/user.controller/auth/password/ResetPassword.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import cacheMiddleware from "../middlewares/cache.middleware.js";
-import { AssignModerator } from "../controllers/user.controller/Assignmoderator.js";
-import { refershAccessToken } from "../controllers/user.controller/refreshAccessToken.js";
+import { AssignModerator } from "../controllers/user.controller/moderation/AssignModerator.js";
+
+import { refershAccessToken } from "../controllers/user.controller/auth/token/refreshAccessToken.js";
+import { getAllUser } from "../controllers/user.controller/allUser.js";
+import { removeModerator } from "../controllers/user.controller/moderation/removeModerator.js";
+import { forgotPassword } from "../controllers/user.controller/auth/password/forgetPassword.js";
+import { getUserByModerator } from "../controllers/user.controller/moderation/getUserByModerator.js";
+import { getUserByUserRole } from "../controllers/user.controller/getUserByUserRole.js";
 
 const userRouter = Router();
 userRouter.route("/curr-user").get(verifyJWT, cacheMiddleware, getCurrentUser);
@@ -46,6 +51,11 @@ userRouter.route("/login").post(loginUser);
 userRouter.route("/logout").post(verifyJWT, logoutUser);
 userRouter.route("/forget-password").post(forgotPassword);
 userRouter.route("/assign-moderator").post(AssignModerator);
+userRouter.route("/remove-moderator").post(removeModerator);
+userRouter.route("/role-moderator").get(getUserByModerator);
+userRouter.route("/role-user").get(getUserByUserRole);
+
+userRouter.route("/all-user").get(getAllUser);
 userRouter.route("/reset-password").post(resetPassword);
 userRouter.route("/refresh-token").post(refershAccessToken);
 userRouter.route("/change-password").post(verifyJWT, changeCurrentPassword);
