@@ -207,6 +207,47 @@ export const Report = async (userdata, userId) => {
     throw err;
   }
 };
+export const getReport = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      `http://localhost:8000/api/v1/reports/report`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    console.log("report fetch successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" report fetch failed", err);
+    throw err;
+  }
+};
+export const getReportByDate = async (userdata) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      `http://localhost:8000/api/v1/reports/report-by-date`,
+      userdata,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    console.log("report fetch by date successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" report fetch by date failed", err);
+    throw err;
+  }
+};
 export const AllUser = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -226,16 +267,140 @@ export const AllUser = async () => {
 export const RemoveModerator = async (userdata) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.post(`${BASE_URL}/remove-moderator`, userdata, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await axios.post(
+      `${BASE_URL}/remove-moderator`,
+      userdata,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     console.log("remove moderator successfully", response);
     return response;
   } catch (err) {
     console.log(" remove modertor failed ", err);
+    throw err;
+  }
+};
+export const getUserByUserRole = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      `${BASE_URL}/role-user`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    console.log("User by user role successfully", response);
+    return response;
+  } catch (err) {
+    console.log("user by user role fetch failed ", err);
+    throw err;
+  }
+};
+export const getUserByModerator = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(`${BASE_URL}/role-moderator`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("user moderator successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" User modertor fetch failed ", err);
+    throw err;
+  }
+};
+export const getUpdateAccountDetails = async (userdata) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.patch(`${BASE_URL}/update-account`, userdata, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("user updated successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" User updated failed ", err);
+    throw err;
+  }
+};
+export const getUpdateCoverImage = async (userdata) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.patch(
+      `${BASE_URL}/update-coverImage`,
+      userdata,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    console.log("user updated cover image successfully ", response);
+    return response;
+  } catch (err) {
+    console.log(" User updated cover image failed ", err);
+    throw err;
+  }
+};
+export const getUpdateAvatar = async (userdata) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.patch(`${BASE_URL}/update-avatar`, userdata, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("user updated avatar successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" User avatarr fetch failed ", err);
+    throw err;
+  }
+};
+export const DeleteAccount = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(`${BASE_URL}/delete-account`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("user delete account successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" User delete failed ", err);
+    throw err;
+  }
+};
+export const DeleteAccountById = async (userId) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(`${BASE_URL}/delete-account/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("user delete account successfully", response);
+    return response;
+  } catch (err) {
+    console.log(" User delete failed ", err);
     throw err;
   }
 };

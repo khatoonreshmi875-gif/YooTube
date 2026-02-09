@@ -5,10 +5,11 @@ import { ApiResponse } from "../../../../utils/ApiResponse.js";
 import asynchandler from "../../../../utils/asynchandler.js";
 import { userInvalidate } from "../../../../utils/userInvalidate.js";
 export const updateAccountDetails = asynchandler(async (req, res) => {
+  console.log("it riunn");
   const { fullName, channelName, email, description } = req.body;
-  if (!(fullName && email)) {
-    throw new ApiError(401, "All fields are required");
-  }
+  // if (!(fullName && email)) {
+  //   throw new ApiError(401, "All fields are required");
+  // }
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {

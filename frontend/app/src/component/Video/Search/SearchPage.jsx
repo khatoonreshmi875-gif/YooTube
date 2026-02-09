@@ -1,20 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { AppContext } from "../../utils/contextApi.js";
+import { searchChannel } from "../../../Api/Subscription.js";
 import {
   getSimilarChannelVideo,
   getSimilarVideo,
   RecommendedVideo,
 } from "../../../Api/VideoApi.js";
+import { AppContext } from "../../utils/contextApi.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
-import SearchSkeleton from "./SearchSkeleton.jsx";
-import TweetSection from "./SearchPageComponent/TweetSection.jsx";
-import useInfiniteScroll from "./SearchPageComponent/useInfiniteScroll.jsx";
-import VideoItem from "./SearchPageComponent/VideoItem.jsx";
 import { sortVideo } from "./SearchPageComponent/SortVideo.jsx";
+import useInfiniteScroll from "./SearchPageComponent/useInfiniteScroll.jsx";
 import { fetchAndUpdateVideos } from "./SearchPageComponent/VideoHelper.js";
-import TweetSkeleton from "../../Tweet/TweetSkeleton.jsx";
-import { searchChannel } from "../../../Api/Subscription.js";
+import VideoItem from "./SearchPageComponent/VideoItem.jsx";
+import SearchSkeleton from "./SearchSkeleton.jsx";
 const SearchPage = () => {
   const location = useLocation();
   const navigate = useNavigate();

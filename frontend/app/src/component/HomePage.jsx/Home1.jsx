@@ -24,28 +24,28 @@ const Home1 = () => {
   return (
     <div>
       {getvideo && getvideo.length > 0 ? (
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 pt-24 pb-16  ">
+        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 p-2 ">
           {getvideo.map((v, index) => (
             <Home2 key={index} v={v} index={index} playlist={allPlaylist} />
           ))}
           {hasNomore && <NoMoreVideoMessage />}
         </div>
       ) : (
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 mt-24 p-2">
+        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3  p-2">
           {Array.from({ length: 9 }).map((_, i) => (
             <Videoskeleton key={i} />
           ))}
         </div>
       )}
       {loading && (
-        <div className="grid  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-x-6 gap-y-8 w-full   mt-24">
+        <div className=" grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3  p-2">
           {Array.from({ length: 9 }).map((_, i) => (
             <Videoskeleton key={i} />
           ))}
         </div>
       )}
       {load && (
-        <div className="grid  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-x-6 gap-y-8 w-full mt-24 ">
+        <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3  p-2  ">
           {Array.from({ length: 9 }).map((_, i) => (
             <Videoskeleton key={i} />
           ))}

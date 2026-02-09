@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import SimilarVideo from "./watchSimilarVideo/SimilarVideo.jsx";
-import Mainvideo from "./watchVideo/Mainvideo.jsx";
+
 import CommentThread from "./watchComment/CommentThread.jsx";
-import PlaylistVideo from "./watchSimilarVideo/PlaylistVideo.jsx";
+
+import { lazy } from "react";
+import { Suspense } from "react";
+import LoadingSpinner from "../utils/LoadingSpinner.jsx";
+import Mainvideo from "./watchVideo/Mainvideo.jsx";
+const PlaylistVideo = lazy(
+  () => import("./watchSimilarVideo/PlaylistVideo.jsx"),
+);
+import SimilarVideo from "./watchSimilarVideo/SimilarVideo.jsx";
 
 const WatchPage = () => {
   const location = useLocation();
@@ -12,14 +19,11 @@ const WatchPage = () => {
   const [showComments, setShowComments] = useState(false); // toggle for mobile
 
   return (
-    <div className="min-w-0 w-full pt-24 pb-24 ">
+    <div className="min-w-0 w-full  pb-24 ">
       <div className="flex flex-col xl:flex-row break-words gap-4 ">
         {/* Left side: video always */}
         <div className="flex flex-col lg:w-full xl:w-2/3 ">
-          <div className="">
-            {" "}
-            <Mainvideo />
-          </div>
+          <Mainvideo />
 
           {/* Desktop: always show comments */}
           <div className="xl:block hidden">
@@ -44,6 +48,7 @@ const WatchPage = () => {
             </div>
 
             {showComments ? (
+              
               <div>
                 <CommentThread />
               </div>
@@ -57,7 +62,15 @@ const WatchPage = () => {
                     ✕ Close Playlist
                   </button>
                 )}
-                {fromPlaylist && <PlaylistVideo similarVideos={playlist} />}
+                {fromPlaylist && (
+                  <Suspense
+                    fallback={
+                      <LoadingSpinner label="playlist video is loading" />
+                    }
+                  >
+                    <PlaylistVideo similarVideos={playlist} />
+                  </Suspense>
+                )}{" "}
                 <SimilarVideo />
               </div>
             )}
@@ -74,7 +87,14 @@ const WatchPage = () => {
               ✕ Close Playlist
             </button>
           )}
-          {fromPlaylist && <PlaylistVideo similarVideos={playlist} />}
+          {fromPlaylist && (
+            <Suspense
+              fallback={<LoadingSpinner label="playlist video is loading" />}
+            >
+              <PlaylistVideo similarVideos={playlist} />
+            </Suspense>
+          )}
+
           <SimilarVideo />
         </div>
       </div>

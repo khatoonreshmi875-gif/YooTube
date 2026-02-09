@@ -1,11 +1,12 @@
-import React from "react";
-import { MdAccountCircle } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
+import {
+  UserCircleIcon
+} from "@heroicons/react/24/solid";
 import { useContext } from "react";
-import { AppContext } from "../../../utils/contextApi";
-import MenuLink from "./MenuLink";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../../Api/UserApi";
+import { AppContext } from "../../../utils/contextApi";
+import { handleAxiosError } from "../../../utils/erroeHandler";
+import MenuLink from "./MenuLink";
 
 const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
   const { setisLoggedin, setgetvideo, user } = useContext(AppContext);
@@ -25,6 +26,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
   }
 
   const token = localStorage.getItem("token");
+  console.log("user role ", user.role, token);
   return (
     <>
       {" "}
@@ -35,7 +37,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
           setContent(false);
         }}
       >
-        <MdAccountCircle />
+        <UserCircleIcon className="w-7 h-7 sm:w-9 sm:h-8"/>
       </button>
       {likeVideos && (
         <div className="right-4 top-20 absolute text-gray-500 bg-white list-none py-4 rounded-xl text-sm px-1 font-serif z-50 ">
@@ -46,14 +48,37 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
               <NavLink to="/login">Log-In</NavLink>
             )}
           </li>
-          <MenuLink to="/change-password" label="Change password" />
+          <MenuLink
+            to="/change-password"
+            label="Change password"
+            onClick={() => setlikeVideos(false)}
+          />
 
-          <MenuLink to="/register" label=" Register" />
+          <MenuLink
+            to="/register"
+            label=" Register"
+            onClick={() => setlikeVideos(false)}
+          />
           {user.role === "admin" && (
+            <MenuLink
+              to="/assign-moderator"
+              label="Assign Moderator"
+              onClick={() => setlikeVideos(false)}
+            />
+          )}
+
+          {(user.role === "admin" || user.role === "moderator") && (
             <>
-              {" "}
-              <MenuLink to="/assign-moderator" label="Assign Moderator" />
-              <MenuLink to="/all-user" label="User List " />
+              <MenuLink
+                to="/all-user"
+                label="User List "
+                onClick={() => setlikeVideos(false)}
+              />
+              <MenuLink
+                to="/report-admin"
+                label="Reports"
+                onClick={() => setlikeVideos(false)}
+              />
             </>
           )}
         </div>

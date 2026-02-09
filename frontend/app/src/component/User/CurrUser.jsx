@@ -2,11 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 import { SubscribeBtn, toggleSubcribeWithId } from "../../Api/Subscription.js";
-import { getCurrentUserById } from "../../Api/UserApi.js";
+import { DeleteAccount, getCurrentUserById } from "../../Api/UserApi.js";
 import Navbar1 from "../Navigation/Navbar1.jsx";
 import { AppContext } from "../utils/contextApi.js";
 import { handleAxiosError } from "../utils/erroeHandler.jsx";
 import LoadingSpinner from "../utils/LoadingSpinner.jsx";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const CurrUser = () => {
   const { userId } = useParams();
@@ -26,7 +27,12 @@ const CurrUser = () => {
     useContext(AppContext);
   const [initial, setInitial] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  const handleDeleteAccount = async () => {
+    const res = await DeleteAccount();
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
     setInitial({});
@@ -38,8 +44,8 @@ const CurrUser = () => {
         setInitial(result.data.data);
 
         setSubscribe(() => ({
-          subscriberCount: result.data.data.subscriberCount,
-          subscribedTo: result.data.data.subscribedToCount,
+          subscriberCount: result?.data?.data?.subscriberCount,
+          subscribedTo: result?.data?.data?.subscribedToCount,
         }));
       } catch (err) {
         handleAxiosError(err, navigate);
@@ -68,7 +74,8 @@ const CurrUser = () => {
         subscriberCount:
           res?.data?.data.subscribers?.subscriberCount ?? prev.subscriberCount,
         subscriber: res?.data?.data.subscribers?.subscriber ?? prev.subscriber,
-      }));P
+      }));
+      P;
     } catch (error) {
       handleAxiosError(error, navigate);
     } finally {
@@ -82,56 +89,100 @@ const CurrUser = () => {
       </div>
     );
   }
+
   return (
     <>
-      <div className="flex flex-col min-h-screen  min-w-0 w-full pt-24     ">
+      <div className="flex flex-col min-h-screen min-w-0 w-full ">
         {/* Cover Image */}
-        <div className="w-full  flex flex-col flex-1 relative">
+        <div className="w-full flex flex-col flex-1 relative p-7">
           <img
-            src={initial?.coverImage}
+            src={`${initial?.coverImage}.jpg`}
             alt="Cover"
-            className="h-[15rem] w-full object-cover rounded-lg"
+            className=" w-full aspect-auto   object-cover rounded-lg "
           />
 
           {/* Avatar + Channel Info */}
-          <div
-            className="flex items-start  space-x-2 bg-gradient-to-br from-slate-800 via-black to-slate-800 xs:m-4 m-1 rounded-lg p-4 hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md hover:scale-95  
-"
-          >
-            <div className="lg:mt-[-1rem]  mb-[-9rem]  py-6 ">
+          <div className="flex items-start space-x-2 bg-gradient-to-br from-slate-800 via-black to-slate-800 xs:m-4 m-1 rounded-lg p-4 hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md hover:scale-95">
+            <div className="lg:mt-[-1rem] mb-[-9rem] py-6">
               <img
-                className=" md:w-[150px] w-24 aspect-square rounded-full  border-2  md:border-4 md:border-white shadow-lg hover:scale-105"
+                className="md:w-[150px] w-24 aspect-square rounded-full border-2 md:border-4 md:border-white shadow-lg hover:scale-105"
                 src={initial?.avatar}
                 alt="Avatar"
               />
             </div>
-            <div className="lg:ml-6 md:ml-2  ml-1 md:space-y-3    space-y-1    px-3 ">
-              <h1 className=" md:font-bold md:text-2xl text-lg sm:text-xl font-normal text-white font-serif ">
-                {initial?.channelName}
-              </h1>
+            <div className="lg:ml-6 md:ml-2 ml-1 md:space-y-3 space-y-1 px-3 w-full">
+              <div className="flex justify-between items-start">
+                <h1 className="md:font-bold md:text-2xl text-lg sm:text-xl font-normal text-white font-serif">
+                  {initial?.channelName}
+                </h1>
 
-              <div className="flex flex-wrap flex-col md:flex-row md:gap-3 sm:text-sm  text-sm text-gray-400 font-serif ">
+                {/* 3-dot menu */}
+                <div className="relative inline-block text-left">
+                  <button
+                    onClick={() => setOpen(!open)}
+                    className="p-2 rounded-full hover:bg-gray-700 transition"
+                  >
+                    <BsThreeDotsVertical className="text-white text-xl" />
+                  </button>
+
+                  {open && (
+                    <div className="absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                      <div className="py-1 flex flex-col text-gray-200">
+                        <button
+                          onClick={() => navigate(`/update-account`)}
+                          className="px-4 py-2 text-sm hover:bg-slate-700 text-left"
+                        >
+                          Update Account
+                        </button>
+                        <button
+                          onClick={() => navigate(`/update-avatar`)}
+                          className="px-4 py-2 text-sm hover:bg-slate-700 text-left"
+                        >
+                          Update Avatar
+                        </button>
+                        <button
+                          onClick={() => navigate(`/update-coverImage`)}
+                          // onClick={handleUpdateCoverImage}
+                          className="px-4 py-2 text-sm hover:bg-slate-700 text-left"
+                        >
+                          Update Cover Image
+                        </button>
+                        <button
+                          onClick={handleDeleteAccount}
+                          className="px-4 py-2 text-sm hover:bg-red-700 text-left"
+                        >
+                          Delete Account
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap flex-col md:flex-row md:gap-3 sm:text-sm text-sm text-gray-400 font-serif">
                 <p className="font-medium text-xs md:text-base sm:text-sm hover:text-white mt-3">
                   {initial?.username}
                 </p>
-                <div className="flex space-x-2 sm:space-x-6 flex-row ">
-                  <div className="font-medium text-xs md:text-sm space-x-2 hover:text-white flex items-center  font-sans">
-                    <span className="text-2xl  mt-[-0.6rem]">.</span>
+                <div className="flex space-x-2 sm:space-x-6 flex-row">
+                  <div className="font-medium text-xs md:text-sm space-x-2 hover:text-white flex items-center font-sans">
+                    <span className="text-2xl mt-[-0.6rem]">.</span>
                     {subscribe?.subscriberCount} Subscribers
                   </div>
-                  <div className="font-medium text-xs md:text-sm  space-x-2 hover:text-white flex items-center  font-sans   ">
-                    <span className="sm:text-2xl text-xl  mb-[1rem]">.</span>{" "}
+                  <div className="font-medium text-xs md:text-sm space-x-2 hover:text-white flex items-center font-sans">
+                    <span className="sm:text-2xl text-xl mb-[1rem]">.</span>{" "}
                     <span>{subscribe?.subscribedTo} Subscribed</span>
                   </div>
                 </div>
               </div>
 
-              <p className="text-gray-400 text-[12px] font-light md:text-base sm:text-sm max-w-xl line-clamp-2 italic ">
+              <p className="text-gray-400 text-[12px] font-light md:text-base sm:text-sm max-w-xl line-clamp-2 italic">
                 {initial?.description}
               </p>
 
               <button
-                className={`${subscribe?.subscriber ? "bg-red-600" : "bg-red-400"} hover:bg-red-600 text-gray-200  text-xs md:text-lg sm:text-sm font-semibold rounded-md md:px-4  px-2  py-1 transition active:scale-95 mt-2`}
+                className={`${
+                  subscribe?.subscriber ? "bg-red-600" : "bg-red-400"
+                } hover:bg-red-600 text-gray-200 text-xs md:text-lg sm:text-sm font-semibold rounded-md md:px-4 px-2 py-1 transition active:scale-95 mt-2`}
                 onClick={() => handleSubscribe(initial?._id)}
               >
                 {subscribe?.subscriber ? "Subscribed" : "Subscribe"}
@@ -140,7 +191,7 @@ const CurrUser = () => {
           </div>
 
           {/* Divider */}
-          <hr className="border-gray-700 " />
+          <hr className="border-gray-700" />
 
           {/* Navbar */}
           <Navbar1 />
@@ -153,8 +204,8 @@ const CurrUser = () => {
           <hr className="border-gray-700 my-6" />
         </div>
       </div>
+      ;
     </>
   );
 };
-
 export default CurrUser;

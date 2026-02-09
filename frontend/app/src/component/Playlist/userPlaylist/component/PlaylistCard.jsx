@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistMenu from "./PlaylistMenu";
-import { FaXmark } from "react-icons/fa6";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/contextApi";
 import { useState } from "react";
@@ -78,9 +78,9 @@ const PlaylistCard = ({ infoPlaylist, userId }) => {
                 }}
               >
                 {isOpen === index ? (
-                  <FaXmark />
+                  <XMarkIcon className="h-6 w-10 text-white" />
                 ) : (
-                  <BiDotsVerticalRounded className="text-white text-xl hover:text-gray-300" />
+                  <EllipsisVerticalIcon className="h-6 w-10 text-white " />
                 )}
                 <PlaylistMenu
                   isOpen={isOpen}

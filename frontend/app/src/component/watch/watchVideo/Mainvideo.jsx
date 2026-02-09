@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { FaXmark } from "react-icons/fa6";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { onlyVideo } from "../../../Api/VideoApi.js";
 import { AppContext } from "../../utils/contextApi.js";

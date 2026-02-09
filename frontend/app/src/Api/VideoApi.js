@@ -37,8 +37,9 @@ export const getVideo = async (page) => {
 };
 
 export const RecommendedVideo = async (page) => {
+  const token = localStorage.getItem("token");
   try {
-    const token = localStorage.getItem("token");
+    console.log("token od  rec video", token);
 
     const response = await axios.get(
       `${BASE_URL}/get-reccomended-video?page=${page}`,
@@ -53,6 +54,7 @@ export const RecommendedVideo = async (page) => {
 
     return response;
   } catch (error) {
+    console.log("token od  rec video", token);
     console.log("error of reccomended video", error);
     throw error;
   }

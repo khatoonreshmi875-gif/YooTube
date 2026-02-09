@@ -1,27 +1,39 @@
-import React, { useRef, useState } from "react";
-import { useContext } from "react";
-import { AppContext } from "../utils/contextApi.js";
+import {
+  Suspense,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+  lazy,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { getRemoveAVideoInWatchhistory } from "../../Api/UserApi.js";
-import TweetSection from "./HomePageComponent/TweetSection.jsx";
-import VideoMenu from "./HomePageComponent/VideoMenu.jsx";
-import VideoInfo from "./HomePageComponent/VideoInfo.jsx";
-import HoverVideo from "./HomePageComponent/HoverVideo.jsx";
+import { AppContext } from "../utils/contextApi.js";
 import { handleAxiosError } from "../utils/erroeHandler.jsx";
+
+import VideoInfo from "./HomePageComponent/VideoInfo.jsx";
+import VideoMenu from "./HomePageComponent/VideoMenu.jsx";
+const TweetSection = lazy(() => import("./HomePageComponent/TweetSection.jsx"));
+import HoverVideo from "./HomePageComponent/HoverVideo.jsx";
+import LoadingSpinner from "../utils/LoadingSpinner.jsx";
+
 const Home2 = ({ index, v, s, playlist }) => {
   const { sethistory } = useContext(AppContext);
   const navigate = useNavigate();
   const videoref = useRef([]);
   const [isImageIndex, setIsImageIndex] = useState(null);
-  const handleDeleteAVideoWatchHistory = async (videoId) => {
-    try {
-      sethistory((prev) => prev.filter((item) => item._id !== videoId));
-      const res = await getRemoveAVideoInWatchhistory(videoId);
-    } catch (err) {
-      console.log("delete a video from watch history failed", err);
-      handleAxiosError(err, navigate);
-    }
-  };
+  const handleDeleteAVideoWatchHistory = useCallback(
+    async (videoId) => {
+      try {
+        sethistory((prev) => prev.filter((item) => item._id !== videoId));
+        const res = await getRemoveAVideoInWatchhistory(videoId);
+      } catch (err) {
+        console.log("delete a video from watch history failed", err);
+        handleAxiosError(err, navigate);
+      }
+    },
+    [sethistory, navigate],
+  );
 
   const goToPlaylist = (id) => navigate(`/playlist/${id}`);
   const goToVideoPage = (id, userId) =>
@@ -36,14 +48,16 @@ const Home2 = ({ index, v, s, playlist }) => {
     <>
       {index === 12 && (
         <div className="col-span-full my-6">
-          <TweetSection />
+          <Suspense fallback={<LoadingSpinner label="loading"/>}>
+            <TweetSection />
+          </Suspense>
         </div>
       )}
 
-      <div className="  h-96 my-6 ">
+      <div className="my-6 ">
         <div className="w-full h-full px-2 ">
           <div className="bg-gradient-to-tl from-slate-800 via-black to-slate-800  rounded-lg  hover:shadow-lg transition-shadow duration-300  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md w-full shadow-md h-full">
-            {/* Video / Thumbnail */}
+            {/* Video / Thumbnail */}{" "}
             {playingSlot ? (
               <HoverVideo
                 video={p}
@@ -63,7 +77,6 @@ const Home2 = ({ index, v, s, playlist }) => {
                 isData={false}
               />
             )}
-
             {/* Video Info for single video */}
             {playingSlot ? (
               <VideoInfo v={p} />
@@ -73,7 +86,6 @@ const Home2 = ({ index, v, s, playlist }) => {
                 <VideoMenu v={v} isNested={true} index={index} />
               </div>
             )}
-
             {s && (
               <div onClick={() => handleDeleteAVideoWatchHistory(s)}>
                 Delete

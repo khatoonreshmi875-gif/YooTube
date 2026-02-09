@@ -31,7 +31,7 @@ const ChangePassword = () => {
   }, [issubmittingPassword]);
   return (
     <>
-      <div className="h-full w-full bg-gradient-to-bl from-slate-950 to-slate-900 pt-28">
+      <div className="h-full w-full bg-gradient-to-bl from-slate-950 to-slate-900 ">
         <form
           onSubmit={handlePasswordSubmit(onPasswordSubmit)}
           className="w-full sx:w-3/5 lg:w-2/5 sx:mx-auto space-y-5 p-5 rounded-xl bg-gradient-to-r from-cyan-950 via-black to-slate-700 mr-2 sx:mt-4  "

@@ -2,9 +2,9 @@ import { Router } from "express";
 import { loginUser } from "../controllers/user.controller/auth/loginUser.js";
 import { registerUser } from "../controllers/user.controller/auth/registerUser.js";
 import { logoutUser } from "../controllers/user.controller/auth/logoutUser.js";
-import { getCurrentUser } from "../controllers/user.controller/profile/read/getCurrentUser.js";
+import { deleteUser } from "../controllers/user.controller/profile/delete/deleteUser.js";
 import { changeCurrentPassword } from "../controllers/user.controller/auth/password/changeCurrentPassword.js";
-
+import { getCurrentUser } from "../controllers/user.controller/profile/getCurrentUser.js";
 import { updateAccountDetails } from "../controllers/user.controller/profile/update/updateAccountDetails.js";
 import { updatecoverImage } from "../controllers/user.controller/profile/update/updateCoverImage.js";
 import { updateUserAvatar } from "../controllers/user.controller/profile/update/updateUserAvatar.js";
@@ -24,6 +24,7 @@ import { removeModerator } from "../controllers/user.controller/moderation/remov
 import { forgotPassword } from "../controllers/user.controller/auth/password/forgetPassword.js";
 import { getUserByModerator } from "../controllers/user.controller/moderation/getUserByModerator.js";
 import { getUserByUserRole } from "../controllers/user.controller/getUserByUserRole.js";
+import { adminAuthorizationMiddleware } from "../middlewares/adminAuth.middleware.js";
 
 const userRouter = Router();
 userRouter.route("/curr-user").get(verifyJWT, cacheMiddleware, getCurrentUser);
@@ -46,14 +47,31 @@ userRouter.route("/register").post(
   registerUser,
 );
 userRouter.route("/login").post(loginUser);
+userRouter.route("/delete-user").delete(deleteUser);
 
 //secured route
 userRouter.route("/logout").post(verifyJWT, logoutUser);
 userRouter.route("/forget-password").post(forgotPassword);
-userRouter.route("/assign-moderator").post(AssignModerator);
-userRouter.route("/remove-moderator").post(removeModerator);
-userRouter.route("/role-moderator").get(getUserByModerator);
-userRouter.route("/role-user").get(getUserByUserRole);
+userRouter
+  .route("/assign-moderator")
+  .post(verifyJWT, adminAuthorizationMiddleware(["admin"]), AssignModerator);
+userRouter
+  .route("/remove-moderator")
+  .post(verifyJWT, adminAuthorizationMiddleware(["admin"]), removeModerator);
+userRouter
+  .route("/role-moderator")
+  .get(
+    verifyJWT,
+    adminAuthorizationMiddleware(["admin", "moderator"]),
+    getUserByModerator,
+  );
+userRouter
+  .route("/role-user")
+  .get(
+    verifyJWT,
+    adminAuthorizationMiddleware(["admin", "moderator"]),
+    getUserByUserRole,
+  );
 
 userRouter.route("/all-user").get(getAllUser);
 userRouter.route("/reset-password").post(resetPassword);
@@ -61,6 +79,8 @@ userRouter.route("/refresh-token").post(refershAccessToken);
 userRouter.route("/change-password").post(verifyJWT, changeCurrentPassword);
 
 userRouter.route("/update-account").patch(verifyJWT, updateAccountDetails);
+userRouter.route("/delete-account").delete(verifyJWT, deleteUser);
+userRouter.route("/delete-account/:userId").delete(verifyJWT, deleteUser);
 userRouter
   .route("/update-avatar")
   .patch(verifyJWT, upload.single("avatar"), updateUserAvatar);

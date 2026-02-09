@@ -16,9 +16,27 @@ const CreateMenu = ({ setContent, setlikeVideos, content }) => {
       </div>
       {content && (
         <div className="right-20 top-20 absolute text-gray-500 bg-white list-none py-4 rounded-xl text-sm px-1 font-serif">
-          <MenuLink to="/upload-video" label="create Video" />
-          <MenuLink to="/create-playlist" label="create Playlist" />
-          <MenuLink to="/create-tweet" label=" create Tweet" />
+          <MenuLink
+            to="/upload-video"
+            label="create Video"
+            onClick={() => {
+              setContent(false);
+            }}
+          />
+          <MenuLink
+            to="/create-playlist"
+            label="create Playlist"
+            onClick={() => {
+              setContent(false);
+            }}
+          />
+          <MenuLink
+            to="/create-tweet"
+            label=" create Tweet"
+            onClick={() => {
+              setContent(false);
+            }}
+          />
         </div>
       )}
     </>

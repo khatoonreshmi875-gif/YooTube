@@ -82,10 +82,10 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
         },
       },
       {
-        $skip: Pages * 15,
+        $skip: Pages * 6,
       },
       {
-        $limit: 15,
+        $limit: 6,
       },
       {
         $unwind: {

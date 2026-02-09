@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { AppContext } from "../../utils/contextApi";
 import { deleteVideo } from "../../../Api/VideoApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
 
-const VideoMenu = ({ v, isOpen, index, userId }) => {
+const VideoMenu = ({ v, isOpen, index }) => {
   const { setvideo, user } = useContext(AppContext);
+  const { userId } = useParams();
   const navigate = useNavigate();
 
   const handleDelete = async (v) => {
@@ -44,6 +45,7 @@ const VideoMenu = ({ v, isOpen, index, userId }) => {
       });
     }
   };
+  console.log(user._id, userId, user._id === userId);
   return (
     <>
       {" "}

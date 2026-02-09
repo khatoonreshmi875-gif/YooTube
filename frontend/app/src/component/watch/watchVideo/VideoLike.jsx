@@ -1,7 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { toggleVideoDislike } from "../../../Api/DislikeApi.js";
 import { toggleLike } from "../../../Api/LikeApi.js";
-import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
+
+import { ThumbsUp,ThumbsDown  } from "lucide-react";
 import { AppContext } from "../../utils/contextApi.js";
 import {
   SubscribeBtn,
@@ -160,10 +161,16 @@ const VideoLike = ({
       >
         {
           <>
-            <div className="flex items-center  text-white space-x-2 text-sm sm:text-lg   ">
-              <p>{reaction.liked ? <BiSolidLike /> : <BiLike />}</p>
+            <div className="flex items-center  text-white space-x-2   ">
+              <p>
+                {reaction.liked ? (
+                  <ThumbsUp fill="white" stroke="white" size={16} />
+                ) : (
+                  <ThumbsUp size={16} />
+                )}
+              </p>
 
-              <p>{reaction.likeCount}</p>
+              <p className="text-sm ">{reaction.likeCount}</p>
             </div>
           </>
         }
@@ -175,10 +182,16 @@ const VideoLike = ({
       >
         {
           <>
-            <div className="flex items-center  text-white space-x-2 text-sm sm:text-lg   ">
-              <p>{reaction.disliked ? <BiSolidDislike /> : <BiDislike />}</p>
+            <div className="flex items-center  text-white space-x-2    ">
+              <p>
+                {reaction.disliked ? (
+                  <ThumbsDown fill="white" stroke="white" size={16} />
+                ) : (
+                  <ThumbsDown size={16} />
+                )}
+              </p>
 
-              <p>{reaction.dislikeCount}</p>
+              <p className="text-sm ">{reaction.dislikeCount}</p>
             </div>
           </>
         }

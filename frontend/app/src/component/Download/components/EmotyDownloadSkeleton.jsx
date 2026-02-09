@@ -1,11 +1,13 @@
-import { MdDownload } from "react-icons/md";
+import {
+  CloudArrowDownIcon
+} from "@heroicons/react/24/solid";
 const EmotyDownloadSkeleton = () => {
   return (
     <div>
       <div className=" flex justify-center sm:items-center space-y-4 h-screen  sm:mt-0">
         <div className="flex justify-center flex-col items-center ">
           <div className="text-5xl text-white ">
-            <MdDownload />
+            <CloudArrowDownIcon />
           </div>
           <p className="text-lg font-semibold text-gray-200 sm:text-xl">
             No videos downloaded yet
@@ -20,6 +22,6 @@ const EmotyDownloadSkeleton = () => {
       </div>{" "}
     </div>
   );
-}
+};
 
-export default EmotyDownloadSkeleton
+export default EmotyDownloadSkeleton;

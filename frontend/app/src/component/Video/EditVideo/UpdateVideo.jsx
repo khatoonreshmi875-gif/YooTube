@@ -52,7 +52,7 @@ const UpdateVideo = () => {
   const [preview, setPreview] = useState(video?.thumbnail || "");
 
   return (
-    <div className="sm:mx-auto sm:bg-slate-300 bg-white min-h-screen sm:flex  justify-center pt-2 ">
+    <div className="sm:mx-auto sm:bg-slate-300 bg-white min-h-screen sm:flex  justify-center pt-2 mt-24 mb-24 sm:mb-0">
       <form
         onSubmit={handleUpdateVideoSubmit(onSubmit)}
         className="bg-white sm:p-8 sm:w-[80%] w-full h-fit p-2 sm:shadow-md rounded-xl space-y-5  "

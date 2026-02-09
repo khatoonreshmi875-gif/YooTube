@@ -1,28 +1,36 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { AppContext } from "../../utils/contextApi.js";
-import TweetLike from "./TweetPageComponent/TweetLike.jsx";
-import { TweetPageApi, TweetByTweetId } from "../../../Api/TweetApi.js";
 import { useNavigate, useParams } from "react-router-dom";
-import TweetPageBtn from "./TweetPageComponent/TweetPageBtn.jsx";
-import EmptytweetPage from "./TweetPageComponent/EmptyTweetPage.jsx";
+import { TweetPageApi } from "../../../Api/TweetApi.js";
+import { AppContext } from "../../utils/contextApi.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
 import LoadingSpinner from "../../utils/LoadingSpinner.jsx";
 import TweetMedia from "../HomeTweet/HomeTweetComponent/mainPage/mainPageComponent/TweetMedia.jsx";
+import EmptytweetPage from "./TweetPageComponent/EmptyTweetPage.jsx";
+import TweetLike from "./TweetPageComponent/TweetLike.jsx";
+import TweetPageBtn from "./TweetPageComponent/TweetPageBtn.jsx";
+
+
 const tweetDataPage = () => {
   const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { userId } = useParams();
+
+  // useState
+  const [loading, setLoading] = useState(false);
   const [showVisibleIndex, setShowVisibleIndex] = useState([]);
   const [tweetData, setTweetData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  //ref
+
   const ref = useRef([]);
 
-  const { userId } = useParams();
+  //effect
+
   useEffect(() => {
     const handletweetDataPage = async () => {
       try {
         setLoading(true);
         const result = await TweetPageApi(user._id);
-        console.log("tweetData page", result.data.data);
         setTweetData(result?.data?.data);
       } catch (err) {
         handleAxiosError(err, navigate);
@@ -32,6 +40,7 @@ const tweetDataPage = () => {
     };
     handletweetDataPage();
   }, [user]);
+
   useEffect(() => {
     const initial = {};
     if (tweetData?.length !== 0) {
@@ -40,6 +49,7 @@ const tweetDataPage = () => {
     setShowVisibleIndex(initial);
   }, [tweetData]);
 
+  //render loading
   if (loading) {
     return <LoadingSpinner label="Fetching Tweet" isData={true} />;
   }
@@ -57,8 +67,9 @@ const tweetDataPage = () => {
               <div key={t._id} className="">
                 <div className=" bg-gradient-to-br from-slate-800 via-black to-slate-800 text-white rounded-xl   transform hover:scale-105 transition-all duration-300  p-5 shadow-md shadow-blue-200  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 hover:shadow-blue-300 hover:shadow-lg">
                   {/* Media */}
-                  <TweetMedia tweet={t} isTweet={true} />
-
+                 
+                    <TweetMedia tweet={t} isTweet={true} />
+                 
                   {/* Content */}
                   <div className="p-4">
                     <p className="text-white font-serif lg:text-lg  text-sm line-clamp-2 mb-2">

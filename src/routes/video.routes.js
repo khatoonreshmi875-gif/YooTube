@@ -34,9 +34,7 @@ videoRouter.route("/upload-video").post(
   publishAVideo,
 );
 
-videoRouter
-  .route("/user-id/:userId")
-  .get(verifyJWT, cacheMiddleware, getSimilarChannel);
+videoRouter.route("/user-id/:userId").get(getSimilarChannel);
 
 videoRouter
   .route("/delete/:videoId")
@@ -65,8 +63,6 @@ videoRouter
   .route("/vid/:videoId")
   .get(verifyJWT, cacheMiddleware, getVideoByVideoId);
 videoRouter.route("/get-reccomended-video").get(verifyJWT, getRecommendedVideo);
-videoRouter
-  .route("/rec-video/:videoId")
-  .get(verifyJWT, cacheMiddleware, getSimilarVideo);
+videoRouter.route("/rec-video/:videoId").get(getSimilarVideo);
 
 export default videoRouter;

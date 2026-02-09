@@ -1,153 +1,151 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
+
 import {
   stateOfTweetDisike,
   toggleTweetDislike,
 } from "../../../../Api/DislikeApi.js";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { stateOfTweetLike, toggleTweetLike } from "../../../../Api/LikeApi.js";
+import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
+import { useNavigate } from "react-router-dom";
 
 const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
-  const [initialLike, setinitialLike] = useState([]);
-  const [initialDislike, setinitialDislike] = useState([]);
-  const [reaction, setreaction] = useState({
+  const navigate = useNavigate();
+  // usestate
+
+  const [reaction, setReaction] = useState({
     likeCount: initialLikeCount,
     dislikeCount: initialDislikeCount,
     liked: false,
     disliked: false,
   });
-  console.log(
-    "reaction",
-    reaction,
-    tweetId,
-    initialLikeCount,
-    initialDislikeCount,
-    reaction.likeCount,
-  );
+
+  // effect
+
   useEffect(() => {
-    setreaction((prev) => ({
+    setReaction((prev) => ({
       ...prev,
       likeCount: initialLikeCount ?? 0,
       dislikeCount: initialDislikeCount ?? 0,
     }));
   }, [initialLikeCount, initialDislikeCount]);
 
-  const stateTweetDislike = useCallback(async (tweetId) => {
-    if (!tweetId) return;
-    const result = await stateOfTweetDisike(tweetId);
-
-    setinitialDislike(result.data.data.isTweetdisLike);
-    console.log("initial dislike", initialDislike);
-  }, []);
-  const stateTweetLike = useCallback(async (tweetId) => {
-    const result = await stateOfTweetLike(tweetId);
-    setinitialLike(result.data.data.isTweetLike);
-    console.log("initial like", initialLike);
-  }, []);
   useEffect(() => {
-    if (tweetId) {
-      console.log("tweetid", tweetId);
-      stateTweetLike(tweetId);
-      stateTweetDislike(tweetId);
-    }
+    const fetchInitialState = async () => {
+      if (!tweetId) return;
+
+      try {
+        const likeRes = await stateOfTweetLike(tweetId);
+        const dislikeRes = await stateOfTweetDisike(tweetId);
+
+        setReaction((prev) => ({
+          ...prev,
+          liked: likeRes.data.data.isTweetLike,
+          disliked: dislikeRes.data.data.isTweetdisLike,
+        }));
+      } catch (err) {
+        console.error("Error fetching initial reaction state:", err);
+      }
+    };
+
+    fetchInitialState();
   }, [tweetId]);
 
-  useEffect(() => {
-    setreaction((prev) => {
-      return {
-        ...prev,
-        liked: initialLike,
-        disliked: initialDislike,
-      };
-    });
-  }, [initialLike, initialDislike]);
+  //handlers
 
   const toggleDislike = useCallback(
     async (tweetId) => {
-      setreaction((prev) => ({
-        dislikeCount: prev.disliked
-          ? Math.max(0, prev.dislikeCount - 1)
-          : prev.dislikeCount + 1,
-        disliked: !prev.disliked,
-        likeCount: prev.liked
-          ? Math.max(0, prev.likeCount - 1)
-          : prev.likeCount,
-        liked: prev.liked ? false : prev.liked,
-      }));
-      const result = await toggleTweetDislike(tweetId);
-      console.log("data are ", result);
+      try {
+        setReaction((prev) => ({
+          dislikeCount: prev.disliked
+            ? Math.max(0, prev.dislikeCount - 1)
+            : prev.dislikeCount + 1,
+          disliked: !prev.disliked,
+          likeCount: prev.liked
+            ? Math.max(0, prev.likeCount - 1)
+            : prev.likeCount,
+          liked: prev.liked ? false : prev.liked,
+        }));
+        const result = await toggleTweetDislike(tweetId);
+        console.log("data are ", result);
 
-      setreaction((prev) => ({
-        ...prev,
-        dislikeCount: result?.data?.data?.updatedTweet?.tweetDislikeCount,
-        likeCount: result?.data?.data?.updatedTweet?.tweetLikeCount,
-        liked: result?.data?.data?.likeRemoved,
-        disliked: result?.data?.data?.dislike,
-      }));
+        setReaction((prev) => ({
+          ...prev,
+          dislikeCount: result?.data?.data?.updatedTweet?.tweetDislikeCount,
+          likeCount: result?.data?.data?.updatedTweet?.tweetLikeCount,
+          liked: result?.data?.data?.likeRemoved,
+          disliked: result?.data?.data?.dislike,
+        }));
+      } catch (err) {
+        handleAxiosError(err, naviagte);
+      }
     },
     [tweetId],
   );
 
   const tweetLike = useCallback(
     async (tweetId) => {
-      setreaction((prev) => {
-        //console.log("liked", prev.liked);
-        return {
-          likeCount: prev.liked
-            ? Math.max(0, prev.likeCount - 1)
-            : prev.likeCount + 1,
-          liked: !prev.liked,
-          dislikeCount: prev.disliked
-            ? Math.max(0, prev.dislikeCount - 1)
-            : prev.dislikeCount,
-          disliked: prev.disliked ? false : prev.disliked,
-        };
-      });
+      try {
+        setReaction((prev) => {
+          return {
+            likeCount: prev.liked
+              ? Math.max(0, prev.likeCount - 1)
+              : prev.likeCount + 1,
+            liked: !prev.liked,
+            dislikeCount: prev.disliked
+              ? Math.max(0, prev.dislikeCount - 1)
+              : prev.dislikeCount,
+            disliked: prev.disliked ? false : prev.disliked,
+          };
+        });
 
-      const result = await toggleTweetLike(tweetId);
-      setreaction((prev) => ({
-        ...prev,
-        dislikeCount: result?.data?.data?.updatedTweet.tweetDislikeCount,
-        likeCount: result.data?.data?.updatedTweet?.tweetLikeCount,
-        liked: result.data.data.Liked,
-        disliked: result.data.data.RemoveDislike,
-      }));
-      console.log("liked", result.data.data.updatedTweet.tweetDislikeCount);
+        const result = await toggleTweetLike(tweetId);
+        setReaction((prev) => ({
+          ...prev,
+          dislikeCount: result?.data?.data?.updatedTweet.tweetDislikeCount,
+          likeCount: result.data?.data?.updatedTweet?.tweetLikeCount,
+          liked: result.data.data.Liked,
+          disliked: result.data.data.RemoveDislike,
+        }));
+      } catch (err) {
+        handleAxiosError(err, navigate);
+      }
     },
     [tweetId],
   );
 
   return (
-    <div className="flex justify-between sm:justify-between">
+    <div className="flex flex-row items-center ">
       <button
         onClick={() => {
           tweetLike(tweetId);
         }}
-        className="md:m-5 text-sm  "
+        className="md:m-5 text-sm  text-white  flex space-x-2 "
       >
         {reaction.liked ? (
-          <BiSolidLike className="text-gray-200" />
+          <ThumbsUp fill="white" stroke="white" size={16} />
         ) : (
-          <BiLike className="text-gray-200" />
+          <ThumbsUp size={16} />
         )}
 
         <span className="text-gray-200 text-xs md:text-sm">
-          {reaction.likeCount} like
+          {reaction.likeCount}
         </span>
       </button>
       <button
-        className="text-sm"
+        className="text-sm text-white flex  space-x-2 "
         onClick={() => {
           toggleDislike(tweetId);
         }}
       >
         {reaction.disliked ? (
-          <BiSolidDislike className="text-gray-200" />
+          <ThumbsDown fill="white" stroke="white" size={16} />
         ) : (
-          <BiDislike className="text-gray-200" />
+          <ThumbsDown size={16} />
         )}
 
         <span className="text-gray-200 text-xs md:text-sm">
-          {reaction.dislikeCount} like
+          {reaction.dislikeCount}
         </span>
       </button>
     </div>

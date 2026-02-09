@@ -1,7 +1,8 @@
 import React from "react";
+import { Suspense } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../../utils/LoadingSpinner";
 import Layout from "../../../Layout";
-
 const VideoItem = ({ s, index, isDownload }) => {
   const navigate = useNavigate();
   if (s === null) {
@@ -30,8 +31,9 @@ const VideoItem = ({ s, index, isDownload }) => {
       ) : (
         <div>
           <div className="w-full">
-            {" "}
-            <Layout s={s} key={s._id} isDownload={true} />
+            
+              <Layout s={s} key={s._id} isDownload={true} />
+           
           </div>
         </div>
       )}

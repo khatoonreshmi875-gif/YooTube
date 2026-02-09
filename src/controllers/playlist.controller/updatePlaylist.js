@@ -16,7 +16,7 @@ export const updatePlaylist = asynchandler(async (req, res) => {
   let thumbnailUrl;
   if (req.file) {
     const thumbnailFilePath = req.file?.path;
-    console.log("thumbnail", thumbnailFilePath);
+    console.log("thumbnail", thumbnailFilePath);  
     // check video path and thumbnail path
     if (!req.file) {
       console.log("No thumbnail uploaded");

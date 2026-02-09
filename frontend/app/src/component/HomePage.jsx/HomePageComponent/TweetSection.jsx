@@ -85,13 +85,13 @@ const TweetSection = () => {
   return (
     <div className="w-full ">
       <div
-        className="flex flex-row overflow-x-auto w-full space-x-4"
+        className="flex flex-row overflow-x-auto  space-x-4"
         ref={containerRef}
       >
         {allTweet.map((tweet, index) => (
           <div
             key={`${index}+${tweet._id}`}
-            className="min-w-[400px]  h-auto  scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100  rounded-lg shadow-md "
+            className="lg:w-[350px] sm:w-[300px] w-[250px] flex-shrink-0  scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100  rounded-lg shadow-md "
           >
             <MainPage
               tweet={tweet}
@@ -113,4 +113,4 @@ const TweetSection = () => {
   );
 };
 
-export default TweetSection;
+export default React.memo(TweetSection);

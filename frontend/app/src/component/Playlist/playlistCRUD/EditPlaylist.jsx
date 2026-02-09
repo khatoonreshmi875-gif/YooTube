@@ -24,7 +24,7 @@ const EditPlaylist = () => {
       category: playlist?.category || "",
     },
   });
-
+  console.log("playlist", playlist.thumbnail);
   const [preview, setPreview] = useState(playlist?.thumbnail || "");
   const onSubmit = async (form) => {
     const formData = new FormData();
@@ -111,7 +111,7 @@ const EditPlaylist = () => {
             required: playlist.thumbnail ? false : "thumbnail is required",
           }}
           preview={preview}
-          data={playlist}
+          data={playlist.thumbnail}
           onChange={(e) => {
             const file = e.target.files[0];
             if (file) {

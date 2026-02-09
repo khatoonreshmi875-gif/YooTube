@@ -7,7 +7,7 @@ import { priotizeSelectChannel } from "./sortFunction.js";
 import SubscriptionBtn from "../subscription/componentSubscription/SubscriptionBtn.jsx";
 import EmptySubscription from "./componentSubscription/EmptyCard/EmptySubscription.jsx";
 import SubscriptionSearch from "./componentSubscription/SubscriptionSearch.jsx";
-import SubscripptionVideo from "./componentSubscription/subscripptionvideo.jsx";
+import SubscripptionVideo from "./componentSubscription/SubscripptionVideo.jsx";
 import ChannelCard from "./componentSubscription/ChannelCard.jsx";
 import EmptyvideoCard from "./componentSubscription/EmptyCard/EmptyvideoCard.jsx";
 const Subscription = () => {

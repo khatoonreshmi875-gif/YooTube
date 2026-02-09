@@ -6,9 +6,12 @@ import EditDeleteComment from "./Comment/EditDeleteComment.jsx";
 import CommentHeader from "./Comment/CommentHeader.jsx";
 import Replycomment from "./Comment/Replycomment.jsx";
 import { AppContext } from "../../utils/contextApi.js";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
+
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
+
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
 import { useNavigate } from "react-router-dom";
+
 const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
   const { user } = useContext(AppContext);
   const [count, setcount] = useState(0);
@@ -102,7 +105,7 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
                 {c.ReplyCount > 1
                   ? `${c.ReplyCount} replies`
                   : `${c.ReplyCount} reply`}
-                <MdOutlineArrowForwardIos className="text-sm mt-1 " />
+                <ChevronRightIcon className="h-5 w-5 mt-1" />
               </div>
             </button>
           </div>

@@ -136,17 +136,18 @@ const CommentThread = () => {
       />
       {/* Input */}
       <div className="w-full">
-        {commentsWithLikes?.map((c, index) => (
-          <Comment
-            key={index}
-            index={index}
-            c={c}
-            isNested={false}
-            replyApi={getReplycomment}
-            commentsWithLikes={commentsWithLikes}
-            setCommentsWithLikes={setCommentsWithLikes}
-          />
-        ))}
+        
+          {commentsWithLikes?.map((c, index) => (
+            <Comment
+              key={index}
+              index={index}
+              c={c}
+              isNested={false}
+              replyApi={getReplycomment}
+              commentsWithLikes={commentsWithLikes}
+              setCommentsWithLikes={setCommentsWithLikes}
+            />
+          ))}
       </div>
       {hasNomore.current && (
         <p className="text-2xl text-center  font-serif w-full bg-slate-700">

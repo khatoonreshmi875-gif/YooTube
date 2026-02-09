@@ -15,7 +15,7 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
   const navigate = useNavigate();
   return (
     <div
-      className={` ${isTweet ? "relative h-72 w-full" : "relative w-full h-[60%] bg-gray-100"}`}
+      className={` ${isTweet ? "relative w-full aspect-square" : "relative w-full aspect-square bg-gray-100"}`}
     >
       {merge(tweet).map((p, Imageindex) => (
         <div key={Imageindex} ref={(el) => (ref.current[Imageindex] = el)}>
@@ -33,10 +33,11 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
             {}
             {getFileType(p) === "mp4" ? (
               <video
-                className="w-full h-full object-cover "
+                className="w-full aspect-square object-cover "
                 autoPlay
                 playsInline
                 ref={videoRef}
+               
                 onMouseLeave={() => {
                   videoRef.current.pause();
                   let initial = {};
@@ -56,8 +57,9 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
             ) : (
               <img
                 src={p}
-                className="w-full h-full   object-fit "
+                className="w-full aspect-square   object-fit "
                 alt="tweet media"
+              
                 onClick={() => {
                   TweetByTweetId(tweet._id);
                   navigate(`/main-tweet/${tweet._id}`);
@@ -91,4 +93,4 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
   );
 };
 
-export default TweetMedia;
+export default React.memo(TweetMedia);

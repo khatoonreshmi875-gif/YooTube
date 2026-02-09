@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { useContext, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaXmark } from "react-icons/fa6";
+
+import { XMarkIcon } from "@heroicons/react/24/outline";
+
 import { AppContext } from "../../../utils/contextApi.js";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import EmptyVideoPage from "./EmptyVideoPage.jsx";
-import VideoMenu from "../VideoMenu.jsx";
+
 import LoadingSpinner from "../../../utils/LoadingSpinner.jsx";
+import VideoMenu from "../VideoMenu.jsx";
+import EmptyVideoPage from "./EmptyVideoPage.jsx";
 
 const VideoPage = () => {
   const { userId } = useParams();
@@ -45,10 +48,10 @@ const VideoPage = () => {
                 onMouseLeave={() => setIsPlayingIndex(null)}
                 className="relative w-full cursor-pointer p-1"
               >
-                <div className="lg:h-72 h-48 sm:h-56 ">
+                <div className=" ">
                   {IsPlayingIndex === index ? (
                     <video
-                      className="w-full h-full px-1 lg:px-4 pt-2 object-cover rounded-3xl  "
+                      className="w-full aspect-video px-1 lg:px-4 pt-2 object-cover rounded-3xl  "
                       ref={(el) => (videoRef.current[index] = el)}
                       onMouseLeave={() => setIsPlayingIndex(null)}
                       controls
@@ -63,7 +66,7 @@ const VideoPage = () => {
                       <img
                         src={v.thumbnail}
                         alt={v.title}
-                        className="w-full h-full px-1 pt-2 object-cover  lg:px-4 rounded-xl lg:rounded-3xl hover:opacity-90 transition shadow-blue-50 "
+                        className="w-full aspect-video px-1 pt-2 object-cover  lg:px-4 rounded-xl lg:rounded-3xl hover:opacity-90 transition shadow-blue-50 "
                         onClick={() => setIsPlayingIndex(index)}
                         onMouseEnter={() => setIsPlayingIndex(index)}
                       />
@@ -99,9 +102,9 @@ const VideoPage = () => {
                       className="text-2xl ml-auto text-white hover:text-gray-300 transition "
                     >
                       {IsOpen === index ? (
-                        <FaXmark />
+                        <XMarkIcon className="h-6 w-10 text-white" />
                       ) : (
-                        <BiDotsVerticalRounded />
+                        <EllipsisVerticalIcon className="h-6 w-10 text-white " />
                       )}
                     </button>
                     <VideoMenu v={v} isOpen={IsOpen} index={index} />

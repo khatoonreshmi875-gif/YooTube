@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Maincomment from "./HomeTweetComponent/MainComment";
-import MainPage from "./HomeTweetComponent/mainPage/MainPage";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getTweetCommentById } from "../../../Api/CommentApi";
 import { TweetByTweetId } from "../../../Api/TweetApi";
-import TweetSkeleton from "./HomeTweetComponent/TweetSkeleton";
 import { handleAxiosError } from "../../utils/erroeHandler";
+import Maincomment from "./HomeTweetComponent/MainComment";
+import MainPage from "./HomeTweetComponent/mainPage/MainPage";
 
 const MainTweetPage = () => {
   const [tweetData, setTweetData] = useState();
@@ -33,10 +32,6 @@ const MainTweetPage = () => {
 
   return (
     <div>
-      {/* {!tweetData ? (
-        // Skeleton Loader
-        <TweetSkeleton />
-      ) : ( */}
       <>
         <div className="lg:w-1/2 md:w-2/3 sm:w-3/4 w-full mx-auto sm:mb-0 mb-24 ">
           {" "}

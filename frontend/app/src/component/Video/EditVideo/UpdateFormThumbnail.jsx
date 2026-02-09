@@ -9,13 +9,14 @@ const UpdateFormThumbnail = ({
   name,
   rules,
   error,
+  message=""
 }) => {
   return (
     <>
       {" "}
       <div className="mb-6 border-2 border-gray-300 rounded-lg p-4 mt-3">
         <div className="sm:text-lg font-medium  text-gray-700 mb-4 font-serif text-sm ">{label}</div>
-        {data.thumbnail && (
+        {data && (
           <img
             src={preview}
             alt="Current thumbnail"
@@ -37,6 +38,7 @@ const UpdateFormThumbnail = ({
             Browse
           </button>
         </div>
+        {message}
         {error && (
           <p role="alert" className="text-red-500 font-serif text-sm ">
             {error.message}

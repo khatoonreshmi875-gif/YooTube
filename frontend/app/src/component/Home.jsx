@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "./utils/contextApi.js";
 import { getRemoveAVideoInWatchhistory } from "../Api/UserApi.js";
 import HoverVideo from "./HomePage.jsx/HomePageComponent/HoverVideo.jsx";
 import VideoInfo from "./HomePage.jsx/HomePageComponent/VideoInfo.jsx";
 import VideoMenu from "./HomePage.jsx/HomePageComponent/VideoMenu.jsx";
+import { AppContext } from "./utils/contextApi.js";
 
 const Home = ({ v, index, watchedAt }) => {
   const { setChannelOwnerId, sethistory } = useContext(AppContext);
@@ -37,6 +37,7 @@ const Home = ({ v, index, watchedAt }) => {
         setisImageIndex={setisImageIndex}
         isData={false}
       />
+
       <div className="flex relative">
         <VideoInfo v={v} index={index} watchedAt={watchedAt} />
         <VideoMenu
@@ -51,3 +52,4 @@ const Home = ({ v, index, watchedAt }) => {
 };
 
 export { Home };
+

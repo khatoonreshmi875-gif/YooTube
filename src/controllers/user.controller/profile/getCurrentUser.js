@@ -1,6 +1,6 @@
-import { User } from "../../../../models/user.model.js";
-import { ApiResponse } from "../../../../utils/ApiResponse.js";
-import asynchandler from "../../../../utils/asynchandler.js";
+import { User } from "../../../models/user.model.js";
+import { ApiResponse } from "../../../utils/ApiResponse.js";
+import asynchandler from "../../../utils/asynchandler.js";
 export const getCurrentUser = asynchandler(async (req, res) => {
   const userId = req.user._id;
 
@@ -8,7 +8,7 @@ export const getCurrentUser = asynchandler(async (req, res) => {
   // client.del(`/api/v1/users/curr-user`);
   const user = await User.findById(userId)
     .select(
-      "coverImage channelName avatar username description subscriberCount subscribedToCount role",
+      "coverImage channelName avatar username email fullName description subscriberCount subscribedToCount role",
     )
     .lean();
 

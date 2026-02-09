@@ -1,4 +1,3 @@
-import { Tweet } from "../../../../models/tweet.model.js";
 import { User } from "../../../../models/user.model.js";
 import ApiError from "../../../../utils/ApiError.js";
 import asynchandler from "../../../../utils/asynchandler.js";
@@ -6,23 +5,33 @@ import { uploadOnCloudinary } from "../../../../utils/cloudinary.js";
 import { deleteFile } from "../../../../utils/deleteOldFile.js";
 import { userInvalidate } from "../../../../utils/userInvalidate.js";
 export const updateUserAvatar = asynchandler(async (req, res) => {
-  const avatarLocalPath = req.file?.path;
-  if (!avatarLocalPath) {
-    throw new ApiError(400, "Avatar file is required");
+  let avatar;
+  let avatarLocalPath;
+
+  console.log("req file ", req.file);
+  if (req.file) {
+    avatarLocalPath = req.file?.path;
+    if (!avatarLocalPath) {
+      throw new ApiError(400, "Avatar file is required");
+    }
+    avatar = await uploadOnCloudinary(avatarLocalPath, "avatar");
+    if (!avatar.url) {
+      throw new ApiError(400, "Error while uploading on avatar");
+    }
   }
-  const avatar = await uploadOnCloudinary(avatarLocalPath);
-  if (!avatar.url) {
-    throw new ApiError(400, "Error while uploading on avatar");
-  }
+
   const existedUser = await User.findById(req.user?._id);
-  if (existedUser?.avatarPublicId) {
-    await cloudinary.uploader.destroy(existedUser.avatarPublicId);
+  if (req.file) {
+    if (existedUser?.avatarPublicId) {
+      await cloudinary.uploader.destroy(existedUser.avatarPublicId);
+    }
   }
+  console.log(existedUser.avatar);
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
       $set: {
-        avatar: avatar.url,
+        avatar: avatar ? avatar.url : existedUser.avatar,
       },
     },
     { new: true },

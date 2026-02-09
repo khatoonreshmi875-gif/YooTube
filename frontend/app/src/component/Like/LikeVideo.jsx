@@ -8,7 +8,8 @@ import { sortVideo } from "../Video/Search/SearchPageComponent/SortVideo";
 import EmptyLIkeVideo from "./EmptyLIkeVideo";
 import SortMenu from "./SortMenu";
 import LoadingSpinner from "../utils/LoadingSpinner";
-import { FaBars } from "react-icons/fa6";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+
 const LikeVideo = () => {
   const [Sort, setSort] = useState("");
   const navigate = useNavigate();
@@ -53,14 +54,14 @@ const LikeVideo = () => {
       {likeVideos?.[0]?.videos?.length === 0 ? (
         <EmptyLIkeVideo />
       ) : (
-        <div className="min-h-screen   text-gray-900 pt-24">
+        <div className="min-h-screen   text-gray-900 ">
           {/* Header */}
           <div className="flex justify-between items-center p-5  shadow-md cursor-pointer">
             <span
               className="sm:text-lg text-sm font-semibold text-white"
               onClick={() => setIsopen(!Isopen)}
             >
-              <FaBars className="mx-2"/>
+              <Bars3Icon className="mx-h-6 w-6 text-white mx-2" />
             </span>
 
             <p className="bg-gradient-to-tr from-cyan-700 to-slate-800 px-4 py-2 rounded-lg font-poppins sm:text-xl text-sm font-medium text-white font-serif">

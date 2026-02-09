@@ -28,7 +28,7 @@ const WatchHistory = () => {
         {history.length !== 0 && (
           <button
             className=" 
-               bg-red-600 text-white  w-full mt-3 p-3 rounded-lg shadow-md shadow-red-200 active:bg-slate-900 pt-24"
+               bg-red-600 text-white  w-full mt-3 p-3 rounded-lg shadow-md shadow-red-200 active:bg-slate-900"
             onClick={handleDeleteWatchhistory}
           >
             Delete WatchHistory

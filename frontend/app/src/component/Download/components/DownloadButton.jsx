@@ -1,5 +1,4 @@
-import React from "react";
- import { getDB } from "../../../../../../src/utils/indexdb";
+import { getDB } from "../../../../../../src/utils/indexdb";
 const DownloadButton = ({ video }) => {
   const handleDownload = async () => {
     // Fetch video file from server

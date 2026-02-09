@@ -4,7 +4,7 @@ import asynchandler from "../../utils/asynchandler.js";
 export const getUserByUserRole = asynchandler(async (req, res) => {
   const user = await User.find({ role: "user" })
     .select(
-      "coverImage channelName avatar username description subscriberCount subscribedToCount role",
+      " channelName avatar  subscriberCount subscribedToCount role email _id",
     )
     .lean();
 

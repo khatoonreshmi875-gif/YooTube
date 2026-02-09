@@ -3,7 +3,7 @@ import asynchandler from "../../utils/asynchandler.js";
 import { Report } from "../../models/report.model.js";
 export const postReport = asynchandler(async (req, res) => {
   const { content } = req.body;
-  const { userId } = req.params;
+  const { videoId } = req.params;
   if (!content) {
     return res
       .status(400)
@@ -12,7 +12,8 @@ export const postReport = asynchandler(async (req, res) => {
 
   const report = await Report.create({
     content,
-    reportedBy: userId,
+    reportedBy: req.user._id,
+    video: videoId,
   });
   return res
     .status(201)

@@ -29,7 +29,7 @@ export const videoInvalidate = async (videoId, userId, id) => {
     client.del(`/api/v1/videos/id/${videoId}/user/${userId}`),
     client.del(`/api/v1/subscriptions/search-channel:${id}`),
     client.del(`/api/v1/videos/get-reccomended-video?*`),
-    client.del(`/api/v1/videos/user/get-all-videos?page=*:${id}`),
+    invalidateVideoComments(`/api/v1/videos/user/get-all-videos?page=*:${id}`),
     client.del(`/api/v1/likes/liked-videos:${id}`),
 
     client.del(`/api/v1/playlists/user-playlist:${id}`),

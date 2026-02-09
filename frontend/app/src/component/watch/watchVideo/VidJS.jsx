@@ -1,9 +1,7 @@
-import React, { useContext, useRef } from "react";
-import Videojs from "./Videojs";
-import { useCallback, useState, useEffect } from "react";
-import { AppContext } from "../../utils/contextApi";
+import { Suspense, useState, lazy } from "react";
 import { useVideoPlayer } from "./VideoPlayer";
 import useView from "./useView";
+const Videojs = lazy(() => import("./Videojs"));
 
 const VidJS = ({ cloudName, videourl, videoFile, userId }) => {
   console.log("page rerender");
@@ -17,17 +15,26 @@ const VidJS = ({ cloudName, videourl, videoFile, userId }) => {
 
   return (
     <div>
-      <Videojs
-        options={videoJsOptions}
-        onReady={(player) => {
-          handlePlayerReady(player);
-          //playerInstance.current = player;
-          setplayerInstance((prev) => prev || player);
+      <Suspense
+        fallback={
+          <div className="flex flex-col">
+            {" "}
+            <div className="w-full md:h-[30rem] h-48 bg-gray-300 animate-pulse rounded-3xl shadow-lg" />
+          </div>
+        }
+      >
+        <Videojs
+          options={videoJsOptions}
+          onReady={(player) => {
+            handlePlayerReady(player);
+            //playerInstance.current = player;
+            setplayerInstance((prev) => prev || player);
 
-          console.log("on player 🌼", player);
-        }}
-        videourl={videourl}
-      />
+            console.log("on player 🌼", player);
+          }}
+          videourl={videourl}
+        />
+      </Suspense>
     </div>
   );
 };

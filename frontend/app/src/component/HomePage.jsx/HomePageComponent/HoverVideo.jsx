@@ -9,19 +9,18 @@ const HoverVideo = ({
   videoref,
   isData,
 }) => {
- 
-
   return isImageIndex === video?._id ? (
-    <div className="px-4 py-4 h-[70%]">
+    <div className="px-4 py-4 w-full aspect-video ">
       <video
         controls
         autoPlay
         muted
         playsInline
         onClick={onClick}
-        className="w-full h-full rounded-lg object-cover"
+        className="w-full aspect-video rounded-lg object-cover"
         onMouseLeave={() => setisImageIndex(null)}
         ref={(el) => (videoref.current[video?._id] = el)}
+        preload="none"
       >
         <source
           src={
@@ -34,11 +33,11 @@ const HoverVideo = ({
       </video>
     </div>
   ) : (
-    <div className="px-4 py-4 h-[70%] relative  ">
+    <div className="px-4 py-4 relative w-full aspect-video  ">
       <img
         src={video?.thumbnail}
         alt={video?.title}
-        className="w-full h-full rounded-lg object-cover cursor-pointer  shadow-[4px_4px_6px_black,-4px_-4px_6px_black,0_0_8px_blue] "
+        className="w-full aspect-video rounded-lg object-cover cursor-pointer  shadow-[4px_4px_6px_black,-4px_-4px_6px_black,0_0_8px_blue] "
         onMouseEnter={() => setisImageIndex(video?._id)}
         onClick={onClick}
       />
@@ -53,4 +52,4 @@ const HoverVideo = ({
   );
 };
 
-export default HoverVideo;
+export default React.memo(HoverVideo);

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Report } from "../../Api/UserApi";
 
 export const ReportPage = () => {
-  const { userId } = useParams();
+  const { userId} = useParams();
 
   // initialize useForm
   const {
@@ -61,6 +61,3 @@ export const ReportPage = () => {
 };
 
 export default ReportPage;
-
-
-

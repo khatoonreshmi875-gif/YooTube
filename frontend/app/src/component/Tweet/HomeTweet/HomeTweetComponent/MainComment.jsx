@@ -1,28 +1,36 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import {
   AddTweetComment,
   getTweetCommentById,
   ReplyTweetComment,
 } from "../../../../Api/CommentApi";
 import { AppContext } from "../../../utils/contextApi";
-import Comment from "../../../watch/watchComment/Comment";
+
+import { Suspense } from "react";
+import { useNavigate } from "react-router-dom";
+import { handleAxiosError } from "../../../utils/erroeHandler";
 import AddComments from "../../../watch/watchComment/Comment/AddComment";
 import CommentSkeleton from "../../../watch/watchComment/CommentSkeleton";
-import { handleAxiosError } from "../../../utils/erroeHandler";
-import { useNavigate } from "react-router-dom";
+import Comment from "../../../watch/watchComment/Comment";
+
 const Maincomment = ({ tweetId }) => {
-  const [count, setCount] = useState(0);
-  const [loading, setloading] = useState(false);
-  const hasNomore = useRef(false);
   const navigate = useNavigate();
-  //views increasing
-  const hasFetchedFirst = useRef(false);
-  const { user, FormatTime } = useContext(AppContext);
-  const [commentsWithLikes, setCommentsWithLikes] = useState([]);
+  const { user } = useContext(AppContext);
+
+  // useState
 
   const [contentData, setcontentData] = useState("");
   const [contents, setcontents] = useState("");
+  const [commentsWithLikes, setCommentsWithLikes] = useState([]);
+  const [count, setCount] = useState(0);
+  const [loading, setloading] = useState(false);
+
+  // useRef
+  const hasFetchedFirst = useRef(false);
+  const hasNomore = useRef(false);
+
+  // helpers
+
   const allData = (data, id) => {
     return {
       owner: { channelName: user?.channelName, avatar: user?.avatar },
@@ -36,6 +44,8 @@ const Maincomment = ({ tweetId }) => {
     };
   };
 
+  // effects
+
   useEffect(() => {
     if (tweetId) {
       hasNomore.current = false;
@@ -44,8 +54,10 @@ const Maincomment = ({ tweetId }) => {
       hasFetchedFirst.current = false;
     }
   }, []);
+
+  // handlers
   const addcomment = useCallback(
-    async (videoId, userdata) => {
+    async (userdata) => {
       try {
         const res = await AddTweetComment(tweetId, userdata);
 
@@ -59,6 +71,8 @@ const Maincomment = ({ tweetId }) => {
     },
     [contentData],
   );
+
+  // handlers
 
   //call api when it hit the bottom of similar video
 
@@ -120,6 +134,7 @@ const Maincomment = ({ tweetId }) => {
         setcontents={setcontents}
         contents={contents}
       />
+
       {commentsWithLikes?.map((c, index) => (
         <Comment
           key={index}
@@ -131,6 +146,7 @@ const Maincomment = ({ tweetId }) => {
           setCommentsWithLikes={setCommentsWithLikes}
         />
       ))}
+
       {hasNomore.current && (
         <p className="text-2xl text-center  font-serif w-full bg-slate-700">
           No more are available

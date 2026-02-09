@@ -14,7 +14,7 @@ const Layout = ({
   dislikedVideo,
   setDownloads
 }) => {
-  const { FormatTime, onHandleVideoByUserId, onHandleVideoUserId } =
+  const { FormatTime, } =
     useContext(AppContext);
   const formatdate = (date) => {
     const dateobj = new Date(date);

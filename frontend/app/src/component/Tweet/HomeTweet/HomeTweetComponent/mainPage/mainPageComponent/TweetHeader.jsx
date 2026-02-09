@@ -9,6 +9,7 @@ const TweetHeader = ({ tweet }) => {
       <div className="flex items-center p-4 border-b border-gray-200  h-[13%] ">
         <img
           src={tweet?.owner?.avatar}
+          
           onClick={() => {
             handleAvatar(tweet?.owner?._id);
           }}
@@ -28,4 +29,4 @@ const TweetHeader = ({ tweet }) => {
   );
 };
 
-export default TweetHeader;
+export default React.memo(TweetHeader);

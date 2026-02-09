@@ -1,16 +1,16 @@
-import React, { useCallback, useContext, useState } from "react";
-import ShareButon from "../../ShareButon";
-import DownloadButton from "../../Download/components/DownloadButton";
-import { FaXmark } from "react-icons/fa6";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import React, { useContext, useState } from "react";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
+import DownloadButton from "../../Download/components/DownloadButton";
+import ShareButon from "../../ShareButon";
+import { handleAxiosError } from "../../utils/erroeHandler";
 
 import { useNavigate } from "react-router-dom";
-import ReportPage from "../ReportPage";
 import { AppContext } from "../../utils/contextApi";
-const VideoMenu = ({ index, v, isNested, handleDeleteAVideoWatchHistory }) => {
-  const {user}=useContext(AppContext)
+const VideoMenu = ({ index, v, handleDeleteAVideoWatchHistory }) => {
+  const { user } = useContext(AppContext);
   const [IsOpen, setIsOpen] = useState(null);
   const navigate = useNavigate();
   return (
@@ -20,7 +20,11 @@ const VideoMenu = ({ index, v, isNested, handleDeleteAVideoWatchHistory }) => {
           onClick={() => setIsOpen(IsOpen === index ? null : index)}
           className="text-2xl ml-auto text-white hover:text-gray-300 transition "
         >
-          {IsOpen === index ? <FaXmark /> : <BiDotsVerticalRounded />}
+          {IsOpen === index ? (
+            <XMarkIcon className="h-6 w-10 text-white" />
+          ) : (
+            <EllipsisVerticalIcon className="h-6 w-10 text-white " />
+          )}
         </button>
       </div>
       {IsOpen === index && (
@@ -64,7 +68,7 @@ const VideoMenu = ({ index, v, isNested, handleDeleteAVideoWatchHistory }) => {
           )}
           <div
             className=" flex items-center hover:bg-gray-700 px-4 py-2 w-full transition rounded-lg font-serif"
-            onClick={() => navigate(`/report-page/${user._id}`)}
+            onClick={() => navigate(`/report-page/${v._id}`)}
           >
             Report
           </div>
@@ -74,4 +78,4 @@ const VideoMenu = ({ index, v, isNested, handleDeleteAVideoWatchHistory }) => {
   );
 };
 
-export default VideoMenu;
+export default React.memo(VideoMenu);

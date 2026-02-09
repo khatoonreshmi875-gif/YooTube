@@ -44,4 +44,4 @@ const VideoInfo = ({ v, isData = false, watchedAt }) => {
   );
 };
 
-export default VideoInfo;
+export default React.memo(VideoInfo);

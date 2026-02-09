@@ -3,6 +3,7 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import asynchandler from "../../utils/asynchandler.js";
 import { videoInvalidate } from "../../utils/videoInvalidate.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
+import ApiError from "../../utils/ApiError.js";
 export const updateVideo = asynchandler(async (req, res) => {
   const { videoId } = req.params; //// get video ID from URL
 
@@ -33,7 +34,7 @@ export const updateVideo = asynchandler(async (req, res) => {
     }
 
     //upload on cloudinary
-    const thumbnail = await uploadOnCloudinary(thumbnailFilePath);
+    const thumbnail = await uploadOnCloudinary(thumbnailFilePath, "video");
 
     //check video upload and thumbnail upload
     if (!thumbnail.url) {

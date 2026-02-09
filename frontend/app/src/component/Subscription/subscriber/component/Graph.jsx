@@ -25,16 +25,8 @@ const Graph = () => {
     fetchstats();
   }, []);
   const pagesize = 7;
-  const manualData = [
-    { x: new Date("11/22/2025"), y: 3 },
-    { x: new Date("11/23/2025"), y: 5 },
-    { x: new Date("11/24/2025"), y: 7 },
-    { x: new Date("11/25/2025"), y: 2 },
-    { x: new Date("11/26/2025"), y: 9 },
-    { x: new Date("11/27/2025"), y: 9 },
-  ];
 
-  const mergedData = [...manualData, ...dataPreStats, [dataCurrStats]];
+  const mergedData = [...dataPreStats, [dataCurrStats]];
 
   const groupedData = Array.from(
     new Map(

@@ -35,7 +35,7 @@ const publishAVideo = asynchandler(async (req, res) => {
   //video and thumbnail upload on cloudinary
   const [video, thumbnail] = await Promise.all([
     uploadOnCloudinary(videofilePath),
-    uploadOnCloudinary(thumbnailFilePath),
+    uploadOnCloudinary(thumbnailFilePath, "video"),
   ]);
 
   //check check video and thumbnail upload result

@@ -11,6 +11,7 @@ const CommentHeader = ({ setIsOpen, IsOpen, c }) => {
         <div className="sm:w-16 sm:h-16 w-9 aspect-square rounded-full overflow-hidden ring-2 ring-blue-500">
           <img
             src={c.owner.avatar}
+           
             alt="avatar"
             className="sm:w-16  xs:w-12 w-9 aspect-square rounded-full object-cover  "
           />

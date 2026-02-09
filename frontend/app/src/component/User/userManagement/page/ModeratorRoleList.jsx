@@ -1,0 +1,62 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { searchChannel } from "../../../../Api/Subscription";
+import { getUserByModerator } from "../../../../Api/UserApi";
+import UserListNavbar from "../../../Navigation/userListNavbar";
+import SubscriptionSearch from "../../../Subscription/subscription/componentSubscription/SubscriptionSearch";
+import { handleAxiosError } from "../../../utils/erroeHandler";
+import UserComponent from "../component/UserComponent";
+
+const ModeratorRoleList = () => {
+  const [userData, setUserData] = useState([]);
+  const [selectedChannelId, setSelectedChannelId] = useState("");
+  const [channel, setchannel] = useState([]);
+  const navigate = useNavigate();
+  const handleSearchChannel = async (userdata) => {
+    const res = await searchChannel(userdata);
+
+    setchannel(res.data.data.channel);
+
+    setUserData((p) => {
+      const merged = [...channel, ...userData];
+      const uniqueMap = new Map(merged.map((p) => [p._id, p]));
+      return [...uniqueMap.values()];
+    });
+  };
+
+  const FetchAllUser = async () => {
+    try {
+      const res = await getUserByModerator();
+      console.log("data of all user", res);
+      setUserData(res.data.data);
+    } catch (err) {
+      handleAxiosError(err, navigate);
+    }
+  };
+
+  useEffect(() => {
+    FetchAllUser();
+    console.log("data", userData);
+  }, []);
+  return (
+    <div>
+      {" "}
+      <div className="w-full ">
+        <UserListNavbar />{" "}
+        <SubscriptionSearch
+          setSelectedChannelId={setSelectedChannelId}
+          userData={userData}
+          handleSearchChannel={handleSearchChannel}
+          channel={channel}
+        />
+        <UserComponent
+          selectedChannelId={selectedChannelId}
+          setUserData={setUserData}
+          userData={userData}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ModeratorRoleList;

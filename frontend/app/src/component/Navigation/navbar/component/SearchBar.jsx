@@ -1,9 +1,10 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { searchChannel } from "../../../../Api/Subscription";
 import { useState } from "react";
 import { useEffect } from "react";
 import debounce from "lodash/debounce";
+import { useReducer } from "react";
 const SearchBar = () => {
   const navigate = useNavigate();
   const [value, setvalue] = useState(false);
@@ -15,6 +16,18 @@ const SearchBar = () => {
     setpart("");
     setvalue(false);
   }, []);
+  const location = useLocation();
+
+  useEffect(() => {
+    // runs whenever the route changes
+    console.log("Navigated to:", location.pathname);
+
+    // if leaving search page, clear input
+    if (!location.pathname.startsWith("/search-page")) {
+      setpart("");
+    }
+  }, [location]);
+
   const handleSearchChannel = async (userdata) => {
     const res = await searchChannel(userdata);
     setchanel(res.data.data);
@@ -24,6 +37,7 @@ const SearchBar = () => {
       setviideo(res.data.data.video);
     }
   };
+  const hasMounted = useRef(false);
   const debouncedSearchChannel = debounce(handleSearchChannel, 100);
   const channels = Array.isArray(chanel?.channel)
     ? chanel?.channel

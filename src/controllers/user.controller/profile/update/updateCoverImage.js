@@ -1,33 +1,34 @@
 import { User } from "../../../../models/user.model.js";
-import { ApiResponse } from "../../../../utils/ApiResponse.js";
+import ApiError from "../../../../utils/ApiError.js";
 import asynchandler from "../../../../utils/asynchandler.js";
 import { uploadOnCloudinary } from "../../../../utils/cloudinary.js";
-import client from "../../../../utils/redis.js";
+import { userInvalidate } from "../../../../utils/userInvalidate.js";
 
 export const updatecoverImage = asynchandler(async (req, res) => {
-  const coverImageLocalPath = req.file?.path;
+  let coverImage;
+  if (req.file) {
+    const coverImageLocalPath = req.file?.path;
 
-  if (!coverImageLocalPath) {
-    throw new ApiError(400, "coverImage file is required");
-  }
+    if (!coverImageLocalPath) {
+      throw new ApiError(400, "coverImage file is required");
+    }
 
-  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    coverImage = await uploadOnCloudinary(coverImageLocalPath, "cover");
 
   if (!coverImage.url) {
-    throw new ApiError(400, "Error while uploading on coverImage");
+      throw new ApiError(400, "Error while uploading on coverImage");
+    }
   }
+  const existedUser = await User.findById(req.user?._id);
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
       $set: {
-        coverImage: coverImage.url,
+        coverImage: coverImage ? coverImage.url : existedUser.coverImage,
       },
     },
     { new: true },
-  ).select("-password");
-  await Promise.allSettled([
-    client.del(`/api/v1/users/curr-user-by-id/${req.user._id}`),
-    client.del(`/api/v1/users/curr-user`),
-  ]);
+  ).select("coverImage");
+  await userInvalidate(req.user._id);
   return res.status(200).json(200, user, "coverImage updated successfully");
 });

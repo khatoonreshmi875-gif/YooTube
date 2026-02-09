@@ -21,7 +21,10 @@ const TweetContent = ({ tweet }) => {
           {tweet?.content}
         </p>
         {isClamped && (
-          <button onClick={() => setReadMore(!readMore)} className="text-blue-200 text-xs">
+          <button
+            onClick={() => setReadMore(!readMore)}
+            className="text-blue-200 text-xs"
+          >
             {readMore ? "read less" : "read more"}
           </button>
         )}
@@ -30,4 +33,4 @@ const TweetContent = ({ tweet }) => {
   );
 };
 
-export default TweetContent;
+export default React.memo(TweetContent);
