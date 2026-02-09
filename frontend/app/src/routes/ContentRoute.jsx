@@ -36,7 +36,7 @@ const ModeratorRoleList = lazy(
   () => import("../component/User/userManagement/page/ModeratorRoleList.jsx"),
 );
 const UpdateAvatar = lazy(
-  () => import("../component/User/update/updateAvatar.jsx"),
+  () => import("../component/User/update/UpdateAvatar.jsx"),
 );
 const UpdateCoverImage = lazy(
   () => import("../component/User/update/UpdateCoverImage.jsx"),
