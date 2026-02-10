@@ -30,75 +30,75 @@ app.use(
 
 app.use(cookieParser());
 
-app.use(
-  session({
-    secret: "your-session-secret", // use a strong secret in production
-    resave: false,
+// app.use(
+//   session({
+//     secret: "your-session-secret", // use a strong secret in production
+//     resave: false,
 
-    saveUninitialized: true,
-  }),
-);
-app.use(passport.initialize());
-app.use(passport.session());
+//     saveUninitialized: true,
+//   }),
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Configure Passport with Google OAuth strategy
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
-    },
-    (accessToken, refreshToken, profile, done) => {
-      // Here you can save user info to DB
-      const userData = {
-        googleId: profile.id,
-        name: profile.displayName,
-        email: profile.emails[0].value,
-        accessToken,
-        refreshToken,
-      };
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
+//     },
+//     (accessToken, refreshToken, profile, done) => {
+//       // Here you can save user info to DB
+//       const userData = {
+//         googleId: profile.id,
+//         name: profile.displayName,
+//         email: profile.emails[0].value,
+//         accessToken,
+//         refreshToken,
+//       };
 
-      return done(null, profile);
-    },
-  ),
-);
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((obj, done) => done(null, obj));
+//       return done(null, profile);
+//     },
+//   ),
+// );
+// passport.serializeUser((user, done) => done(null, user));
+// passport.deserializeUser((obj, done) => done(null, obj));
 // Initialize Passport
 
 // Routes
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    prompt: "consent",
-  }),
-);
+// app.get(
+//   "/auth/google",
+//   passport.authenticate("google", {
+//     scope: ["profile", "email"],
+//     prompt: "consent",
+//   }),
+// );
 
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
-  async (req, res) => {
-    try {
-      let user = await User.findOne({ email: req.user.emails[0].value });
-      if (user) {
-        console.log("userId/.//././././/./././//.///", user);
-        const { AccessToken, RefreshToken } =
-          await generateRefreshAndAccessToken(user._id);
-        console.log(AccessToken, RefreshToken);
-        res.redirect(
-          `${process.env.CORS_ORIGIN}/google-success?token=${AccessToken}`,
-        );
-      }
-      if (!user) {
-        res.redirect(`${process.env.CORS_ORIGIN}/verify`);
-      }
-    } catch (err) {
-      res.redirect(`${process.env.CORS_ORIGIN}/verify`);
-    } // later replace with real JWT
-  },
-);
+// app.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", { failureRedirect: "/" }),
+//   async (req, res) => {
+//     try {
+//       let user = await User.findOne({ email: req.user.emails[0].value });
+//       if (user) {
+//         console.log("userId/.//././././/./././//.///", user);
+//         const { AccessToken, RefreshToken } =
+//           await generateRefreshAndAccessToken(user._id);
+//         console.log(AccessToken, RefreshToken);
+//         res.redirect(
+//           `${process.env.CORS_ORIGIN}/google-success?token=${AccessToken}`,
+//         );
+//       }
+//       if (!user) {
+//         res.redirect(`${process.env.CORS_ORIGIN}/verify`);
+//       }
+//     } catch (err) {
+//       res.redirect(`${process.env.CORS_ORIGIN}/verify`);
+//     } // later replace with real JWT
+//   },
+// );
 // app.listen(8000, () => {
 //   console.log("Server running on http://localhost:8000");
 // });
