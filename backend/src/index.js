@@ -6,17 +6,17 @@ import app from "./app.js";
 
 dotenv.config({
   path: "./.env",
-  quiet: true,
 });
 
-// Connect DB before exporting
 connectDB()
   .then(() => {
-    console.log("MongoDB connected successfully");
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server is  running at port ${process.env.PORT}`);
+    });
+    app.on("error", (error) => {
+      console.error("Something is  wrong ", error);
+    });
   })
   .catch((err) => {
-    console.error("MongoDB connection failed!!", err);
+    console.log("MongoDB connection failed!!", err);
   });
-
-// ✅ Export app for Vercel (no app.listen here)
-export default app;
