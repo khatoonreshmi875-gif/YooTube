@@ -10,7 +10,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 const app = express();
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: ["https://yoo-tube-xss5-3e5w4sbsk-reshmi.vercel.app"],
     credentials: true,
   }),
 );
