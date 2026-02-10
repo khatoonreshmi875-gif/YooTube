@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getDB } from "../../../../../../src/utils/indexdb";
+import { getDB } from "../../indexdb";
 import Layout from "../../Layout";
 import EmotyDownloadSkeleton from "../components/EmotyDownloadSkeleton";
 const DownloadPage = () => {

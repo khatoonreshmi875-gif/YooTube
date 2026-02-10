@@ -1,4 +1,4 @@
-import { getDB } from "../../../../../../src/utils/indexdb";
+import { getDB } from "../../indexdb";
 const DownloadButton = ({ video }) => {
   const handleDownload = async () => {
     // Fetch video file from server

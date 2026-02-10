@@ -1,10 +1,9 @@
 import { useContext } from "react";
-import { getDB } from "../../../../../src/utils/indexdb";
 import { AppContext } from "./contextApi";
+import { getDB } from "../indexdb";
 
 useContext;
-const Delete = ({ videoId,setDownloads }) => {
-
+const Delete = ({ videoId, setDownloads }) => {
   const handleDelete = async () => {
     const db = await getDB();
 
