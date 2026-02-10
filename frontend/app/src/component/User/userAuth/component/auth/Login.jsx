@@ -128,7 +128,7 @@ const Login = () => {
           </form>
           <p className="text-center text-white text-lg font-serif mt-3">Or</p>
           <div className=" text-center mt-3  ">
-            <a
+            {/* <a
               href="http://localhost:8000/auth/google"
               className="text-black bg-gradient-to-tr from-violet-300 via-blue-200 to-violet-300 sm:px-24 px-8 py-2 rounded-lg shadow-slate-500  active:shadow-transparent shadow-md font-serif sm:font-bold  sm:text-base text-sm font-semibold flex justify-center 
                 "
@@ -157,7 +157,7 @@ const Login = () => {
                 />
               </svg>
               Login with Google
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
