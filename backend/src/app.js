@@ -47,7 +47,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8000/auth/google/callback",
+      callbackURL: `${process.env.PORT}/auth/google/callback`,
     },
     (accessToken, refreshToken, profile, done) => {
       // Here you can save user info to DB
@@ -83,19 +83,18 @@ app.get(
     try {
       let user = await User.findOne({ email: req.user.emails[0].value });
       if (user) {
-        console.log("userId/.//././././/./././//.///", user);
         const { AccessToken, RefreshToken } =
           await generateRefreshAndAccessToken(user._id);
         console.log(AccessToken, RefreshToken);
         res.redirect(
-          `http://localhost:5173/google-success?token=${AccessToken}`,
+          `${process.env.CORS_ORIGIN}/google-success?token=${AccessToken}`,
         );
       }
       if (!user) {
-        res.redirect("http://localhost:5173/verify");
+        res.redirect(`${process.env.CORS_ORIGIN}/verify`);
       }
     } catch (err) {
-      res.redirect("http://localhost:5173/verify");
+      res.redirect(`${process.env.CORS_ORIGIN}/verify`);
     } // later replace with real JWT
   },
 );
