@@ -102,7 +102,9 @@ app.get(
 app.listen(8000, () => {
   console.log("Server running on http://localhost:8000");
 });
-
+app.get("/api/hello", (req, res) => {
+  res.json({ message: "Hello from backend!" });
+});
 //routes
 
 import userRouter from "./routes/user.route.js";
