@@ -10,11 +10,11 @@ import { upload } from "../middlewares/multer.middleware.js";
 import cacheMiddleware from "../middlewares/cache.middleware.js";
 import { Playlist } from "../models/playlists.model.js";
 import { authorizationMiddleware } from "../middlewares/authorization.middleware.js";
-import { createPlayList } from "../controllers/playlist.controller/createPlaylist.js";
-import { getUserPlayListByID } from "../controllers/playlist.controller/getUserPlaylistById.js";
-import { getUserPlayList } from "../controllers/playlist.controller/getUserPlaylist.js";
-import { addVideoToPlayList } from "../controllers/playlist.controller/addVideoToPlaylist.js";
-import { getPlayListById } from "../controllers/playlist.controller/getPlaylistById.js";
+import { createPlayList } from "../controllers/playlist.controller/createPlayList.js";
+import { getUserPlayListByID } from "../controllers/playlist.controller/getUserPlayListById.js";
+import { getUserPlayList } from "../controllers/playlist.controller/getUserPlayList.js";
+import { addVideoToPlayList } from "../controllers/playlist.controller/addVideoToPlayList.js";
+import { getPlayListById } from "../controllers/playlist.controller/getPlayListById.js";
 const playlistRouter = Router();
 playlistRouter.use(verifyJWT);
 
