@@ -33,7 +33,7 @@ async function cacheMiddleware(req, res, next) {
     const originalJson = res.json.bind(res);
     res.json = async (body) => {
       try {
-        await client.setEx(key, 3600, JSON.stringify(body)); // cache for 1h
+        await client.set(key, JSON.stringify(body), "Ex", 3600); // cache for 1h
       } catch (err) {
         console.error("Redis set error:", err);
       }
