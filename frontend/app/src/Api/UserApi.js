@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/v1/users";
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/users`;
 
 export const registerUser = async (userdata) => {
   try {
@@ -191,7 +191,7 @@ export const Report = async (userdata, userId) => {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      `http://localhost:8000/api/v1/reports/report/${userId}`,
+      `${process.env.BACKEND_URL}/api/v1/reports/report/${userId}`,
       userdata,
       {
         headers: {
@@ -211,7 +211,7 @@ export const getReport = async () => {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.get(
-      `http://localhost:8000/api/v1/reports/report`,
+      `${process.env.BACKEND_URL}/api/v1/reports/report`,
 
       {
         headers: {
@@ -231,7 +231,7 @@ export const getReportByDate = async (userdata) => {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      `http://localhost:8000/api/v1/reports/report-by-date`,
+      `${process.env.BACKEND_URL}/api/v1/reports/report-by-date`,
       userdata,
 
       {

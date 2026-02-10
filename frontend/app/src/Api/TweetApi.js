@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/v1/tweets";
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/tweets`;
 export const uploadTweet = async (userdata) => {
   try {
     const token = localStorage.getItem("token");

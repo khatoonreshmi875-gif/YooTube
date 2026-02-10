@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/v1/videos";
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/videos`;
 export const upload_Video = async (userdata) => {
   try {
     const token = localStorage.getItem("token");

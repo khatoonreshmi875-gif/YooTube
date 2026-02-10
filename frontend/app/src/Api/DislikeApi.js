@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "http://localhost:8000/api/v1/dislikes";
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/dislikes`;
 export const toggleVideoDislike = async (videoId) => {
   try {
     const token = localStorage.getItem("token");

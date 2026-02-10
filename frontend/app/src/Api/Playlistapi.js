@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "http://localhost:8000/api/v1/playlists";
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/playlists`;
 
 export const createPlaylists = async (userdata) => {
   try {

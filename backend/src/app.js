@@ -83,6 +83,7 @@ app.get(
     try {
       let user = await User.findOne({ email: req.user.emails[0].value });
       if (user) {
+        console.log("userId/.//././././/./././//.///", user);
         const { AccessToken, RefreshToken } =
           await generateRefreshAndAccessToken(user._id);
         console.log(AccessToken, RefreshToken);
@@ -98,25 +99,25 @@ app.get(
     } // later replace with real JWT
   },
 );
+// app.listen(8000, () => {
+//   console.log("Server running on http://localhost:8000");
+// });
 
-app.get("/api/hello", (req, res) => {
-  res.json({ message: "Hello from backend!" });
-});
 //routes
 
 import userRouter from "./routes/user.route.js";
 import videoRouter from "./routes/video.routes.js";
-import playlistRouter from "./routes/playlist.routes.js";
-import tweetRouter from "./routes/tweet.routes.js";
-import subscriptionRouter from "./routes/subscription.routes.js";
-import commentRouter from "./routes/comment.routes.js";
-import reportRouter from "./routes/report.routes.js";
-import likeRouter from "./routes/like.routes.js";
 import dislikeRouter from "./routes/dislike.routes.js";
-
+import commentRouter from "./routes/comment.routes.js";
+import tweetRouter from "./routes/tweet.routes.js";
+import playlistRouter from "./routes/playlist.routes.js";
+import likeRouter from "./routes/like.routes.js";
+import subscriptionRouter from "./routes/subscription.routes.js";
+import reportRouter from "./routes/report.routes.js";
 import { generateRefreshAndAccessToken } from "./utils/generateRefreshAndAccessToken.js";
 import { refershAccessToken } from "./controllers/user.controller/auth/token/refreshAccessToken.js";
 
+// import { syncViewsToMongo } from "./controllers/video.controller.js";
 // //routes declaraton
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/dislikes", dislikeRouter);

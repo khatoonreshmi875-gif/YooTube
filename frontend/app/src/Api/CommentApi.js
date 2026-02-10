@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/v1/comments";
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/comments`;
 export const getAllCommentOfSpecificVideo = async (videoId, page) => {
   try {
     const token = localStorage.getItem("token");
@@ -11,14 +11,14 @@ export const getAllCommentOfSpecificVideo = async (videoId, page) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("response of fetched video comment by it id: ", response.data);
     return response;
   } catch (err) {
     console.log("Comment fetched bu videoid failed", err);
-     throw err;
+    throw err;
   }
 };
 export const getEditcomment = async (commentId, userdata) => {
@@ -32,14 +32,14 @@ export const getEditcomment = async (commentId, userdata) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     //console.log("updated comment: ", response.data);
     return response;
   } catch (err) {
     console.log("Comment updated failed", err);
-     throw err;
+    throw err;
   }
 };
 export const getCommentById = async (commentId) => {
@@ -53,14 +53,14 @@ export const getCommentById = async (commentId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("Comment by id fetched successfully: ", response.data);
     return response;
   } catch (err) {
     console.log("Comment fetched failed", err);
-     throw err;
+    throw err;
   }
 };
 export const getReplycomment = async (commentId, userdata) => {
@@ -74,14 +74,14 @@ export const getReplycomment = async (commentId, userdata) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("Reply comment: ", response.data);
     return response;
   } catch (err) {
     console.log("Comment Replied failed", err);
-     throw err;
+    throw err;
   }
 };
 export const deleteComment = async (commentId) => {
@@ -98,7 +98,7 @@ export const deleteComment = async (commentId) => {
     return response;
   } catch (err) {
     console.log("Comment delete failed", err);
-     throw err;
+    throw err;
   }
 };
 export const GetAllRepliedComment = async (commentId, page) => {
@@ -111,14 +111,14 @@ export const GetAllRepliedComment = async (commentId, page) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("response of fetch all replied comment: ", response.data);
     return response;
   } catch (err) {
     console.log(" fetch all replied failed", err);
-     throw err;
+    throw err;
   }
 };
 export const getTweetCommentById = async (tweetId, page) => {
@@ -131,14 +131,14 @@ export const getTweetCommentById = async (tweetId, page) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("response of fetch all replied comment: ", response.data);
     return response;
   } catch (err) {
     console.log(" fetch all replied failed", err);
-     throw err;
+    throw err;
   }
 };
 export const AddComment = async (videoId, userdata) => {
@@ -155,7 +155,7 @@ export const AddComment = async (videoId, userdata) => {
     return response;
   } catch (err) {
     console.log("Comment add failed", err);
-     throw err;
+    throw err;
   }
 };
 export const AddTweetComment = async (tweetId, userdata) => {
@@ -169,14 +169,14 @@ export const AddTweetComment = async (tweetId, userdata) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("response of add comment: ", response.data);
     return response;
   } catch (err) {
     console.log("Comment add failed", err);
-     throw err;
+    throw err;
   }
 };
 export const ReplyTweetComment = async (tweetId, userdata) => {
@@ -190,13 +190,13 @@ export const ReplyTweetComment = async (tweetId, userdata) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     console.log("response of add comment: ", response.data);
     return response;
   } catch (err) {
     console.log("Comment add failed", err);
-     throw err;
+    throw err;
   }
 };
