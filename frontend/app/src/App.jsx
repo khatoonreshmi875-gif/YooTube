@@ -48,10 +48,9 @@ function App() {
   }, []);
 
   useEffect(() => {
+    auth.onHandle();
     videos.getallvideo(0);
     playlist.getAllPlaylist();
-
-    auth.onHandle();
   }, []);
 
   const FormatTime = (date) => {

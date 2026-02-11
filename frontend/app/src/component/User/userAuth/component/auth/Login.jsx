@@ -11,7 +11,7 @@ import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setisLoggedin, isLoggedin, getallvideo } = useContext(AppContext);
+  const { setisLoggedin, isLoggedin } = useContext(AppContext);
   const [dots, setDots] = useState("");
 
   const {
@@ -26,6 +26,7 @@ const Login = () => {
       const result = await loginUser(userdata);
       setisLoggedin(result?.data?.success);
       console.log(result?.data?.success);
+
       if (result?.data?.data?.AccessToken) {
         localStorage.setItem("token", result.data.data.AccessToken);
       }

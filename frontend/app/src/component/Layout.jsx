@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { AppContext } from "./utils/contextApi.js";
 
 import { useNavigate } from "react-router-dom";
-import Delete from "./utils/Delete.jsx";
+import DownloadButton from "../component/Download/components/DownloadButton.jsx";
+import VideoMenu from "./HomePage.jsx/HomePageComponent/VideoMenu.jsx";
 
 const Layout = ({
   s,
@@ -12,10 +13,9 @@ const Layout = ({
   key,
   isDownload,
   dislikedVideo,
-  setDownloads
+  setDownloads,
 }) => {
-  const { FormatTime, } =
-    useContext(AppContext);
+  const { FormatTime } = useContext(AppContext);
   const formatdate = (date) => {
     const dateobj = new Date(date);
     const day = dateobj.toLocaleString();
@@ -30,16 +30,19 @@ const Layout = ({
   return (
     <div>
       <div
-        className={` ${isDownload ? "flex sm:flex-row flex-col h-auto  p-4 " : "flex flex-col h-[27rem]  sm:h-[32rem] mb-6 p-4 "}  bg-gradient-to-tl from-slate-800 via-black to-slate-800 rounded-xl shadow-md  hover:shadow-lg transition  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md space-x-4 sm:pb-0   `}
+        className={` ${isDownload ? "flex sm:flex-row flex-col   p-4 " : "flex flex-col h-[27rem]  sm:h-[32rem] mb-6 p-4 "}  bg-gradient-to-tl from-slate-800 via-black to-slate-800 rounded-xl shadow-md  hover:shadow-lg transition  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md space-x-4 sm:pb-0  relative `}
       >
-        <video
-          controls
-          poster={s?.thumbnail}
-          className={`  ${isDownload ? " md:h-56 md:w-96 sm:w-52 sm:h-36 w-full h-72 flex-shrink-0" : "w-full h-1/2 "}   rounded-xl  object-cover cursor-pointer hover:brightness-90 transition duration-200 `}
-          onClick={() => handleVideoPage(s._id, s?.owner?._id)}
-        >
-          <source src={s?.videoFile} type="video/mp4" />
-        </video>
+        <div onClick={() => handleVideoPage(s._id, s?.owner?._id)}>
+          {" "}
+          <video
+            muted
+            poster={s?.thumbnail}
+            className={`  ${isDownload ? "  md:w-96 sm:w-52 sm:h-36 w-full aspect-video flex-shrink-0" : "w-full  "}   rounded-xl  object-cover cursor-pointer hover:brightness-90 transition duration-200 `}
+            onClick={() => handleVideoPage(s._id, s?.owner?._id)}
+          >
+            <source src={s?.videoFile} type="video/mp4" />
+          </video>
+        </div>
 
         <div
           className={`flex flex-col sm:mx-4  justify-center  w-full ${isDownload ? "space-y-3" : "sm:space-y-6 space-y-2"}`}
@@ -87,11 +90,7 @@ const Layout = ({
               ""
             )}
             {isDownload ? (
-              <div className="flex ">
-                <button className="bg-red-900/60 text-sm text-white w-fit rounded-lg p-1 hover:opacity-100   ">
-                  <Delete videoId={s._id} setDownloads={setDownloads}/>
-                </button>
-              </div>
+              <div></div>
             ) : (
               <button
                 className="bg-cyan-800 sm:text-lg text-xs text-white  block  rounded-lg p-1 hover:opacity-80 w-fit px-3 mx-4 font-serif shadow-md shadow-blue-100 active:shadow-slate-900 "
@@ -104,6 +103,7 @@ const Layout = ({
             )}
           </div>
         </div>
+        <VideoMenu index={index} v={s} />
       </div>
     </div>
   );

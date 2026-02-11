@@ -6,6 +6,7 @@ import { useCallback } from "react";
 import { getSimilarVideo } from "../../../Api/VideoApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
 import SimilarVideoSkeleton from "./SimilarVideoSkeleton";
+import VideoMenu from "../../HomePage.jsx/HomePageComponent/VideoMenu";
 
 const SimilarVideo = () => {
   const { FormatTime } = useContext(AppContext);
@@ -92,13 +93,12 @@ const SimilarVideo = () => {
       {similarVideos?.map((s, index) => (
         <div
           key={index}
-          className="flex sm:flex-row flex-col lg:flex-row items-start space-x-3 p-2 rounded-lg bg-gradient-to-tl from-slate-800 via-black to-slate-800 shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md  my-4  hover:cursor-pointer mx-8  sm:mx-0"
+          className="flex sm:flex-row flex-col lg:flex-row items-start space-x-3 p-2 rounded-lg bg-gradient-to-tl from-slate-800 via-black to-slate-800 shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md  my-4  hover:cursor-pointer mx-8  sm:mx-0 relative"
         >
           {/* Video Thumbnail */}
           <video
-            controls
             poster={s.thumbnail}
-            className="sm:w-48 sm:h-32 w-full h-48   rounded-xl shadow-md object-cover cursor-pointer"
+            className="sm:w-56 sm:h-32 w-full h-48   rounded-xl shadow-md object-cover cursor-pointer"
             ref={(el) => (videoref.current[index] = el)}
             onMouseOver={() => {
               setisPlaying(index);
@@ -126,6 +126,7 @@ const SimilarVideo = () => {
               <p>{FormatTime(s.createdAt)}</p>
             </div>
           </div>
+          <VideoMenu index={index} v={s} />
         </div>
       ))}
       {hasNomore.current && (

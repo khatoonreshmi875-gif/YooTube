@@ -6,13 +6,21 @@ import Videoskeleton from "../Video/Videoskeleton.jsx";
 import { Home2 } from "./Home2.jsx";
 import NoMoreVideoMessage from "./HomePageComponent/NoMoreVideoMessage.jsx";
 const Home1 = () => {
-  const { getvideo, hasNomore, allPlaylist, load, loading, getallvideo } =
-    useContext(AppContext);
+  const {
+    getvideo,
+    hasNomore,
+    allPlaylist,
+    load,
+    loading,
+    getallvideo,
+    onHandle,
+  } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
+        await onHandle();
         await getallvideo(0);
       } catch (error) {
         handleAxiosError(error, navigate);

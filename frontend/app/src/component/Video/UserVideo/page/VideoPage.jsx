@@ -46,6 +46,9 @@ const VideoPage = () => {
               <div
                 onMouseEnter={() => setIsPlayingIndex(index)}
                 onMouseLeave={() => setIsPlayingIndex(null)}
+                onClick={() =>
+                  navigate(`/video-rec-page/${v?._id}/user/${v?.owner?._id}`)
+                }
                 className="relative w-full cursor-pointer p-1"
               >
                 <div className=" ">
@@ -54,9 +57,7 @@ const VideoPage = () => {
                       className="w-full aspect-video px-1 lg:px-4 pt-2 object-cover rounded-3xl  "
                       ref={(el) => (videoRef.current[index] = el)}
                       onMouseLeave={() => setIsPlayingIndex(null)}
-                      controls
                       muted
-                      autoPlay
                       onClick={() => handleVideoPage(v?._id, v?.owner?._id)}
                     >
                       <source src={v.videoFile} type="video/mp4" />

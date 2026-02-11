@@ -31,7 +31,7 @@ const DownloadPage = () => {
   };
   console.log(downloads);
   return (
-    <div className="min-h-screen w-full mt-24 mb-24 sm:mb-0">
+    <div className="min-h-screen w-full  mb-24 sm:mb-0">
       <div className=" h-full  ">
         {downloads?.length === 0 ? (
           <EmotyDownloadSkeleton className="h-full w-full " />

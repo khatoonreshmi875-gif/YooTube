@@ -132,7 +132,7 @@ const SearchPage = () => {
     type,
   });
   return (
-    <div className="w-[100%]  pt-24 pb-24">
+    <div className="w-[100%]  pb-24">
       <div className="flex flex-col space-y-6 bg-gradient-to-bl from-slate-950 to-slate-900 sm:p-4 p-1 ">
         {sortVideo(allvideo, selectedItem?.label)?.map((s, index) => {
           const tweetPost = index === 4;

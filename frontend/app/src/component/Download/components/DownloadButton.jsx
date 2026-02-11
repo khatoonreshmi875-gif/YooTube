@@ -30,7 +30,7 @@ const DownloadButton = ({ video }) => {
 
   return (
     <div>
-      <button onClick={handleDownload}>Download</button>;
+      <button onClick={handleDownload}>Download</button>
     </div>
   );
 };

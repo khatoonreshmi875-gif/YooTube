@@ -33,14 +33,15 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
   useEffect(() => {
     const fetchInitialState = async () => {
       if (!tweetId) return;
-
+      console.log(tweetId);
       try {
         const likeRes = await stateOfTweetLike(tweetId);
+        console.log("like res of tweet", likeRes);
         const dislikeRes = await stateOfTweetDisike(tweetId);
 
         setReaction((prev) => ({
           ...prev,
-          liked: likeRes.data.data.isTweetLike,
+          liked: likeRes.data?.data?.isTweetLike,
           disliked: dislikeRes.data.data.isTweetdisLike,
         }));
       } catch (err) {
