@@ -28,7 +28,7 @@ export const forgotPassword = asynchandler(async (req, res) => {
     },
   });
 
-  const resetLink = `http:localhost:5173/reset/${token}`;
+  const resetLink = `${process.env.CORS_ORIGIN}/reset/${token}`;
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: user.email,
