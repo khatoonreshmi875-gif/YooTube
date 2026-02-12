@@ -20,12 +20,9 @@ export const toggleCommentLike = asynchandler(async (req, res) => {
     likeField: "CommentlikeCount",
     dislikeField: "CommentDislikeCount",
   });
-  console.log("updatedVar", updatedVariable);
   if (updatedVariable.video) {
-    console.log("it eun data");
 
     let videoId = updatedVariable.video.toString();
-    console.log("it run", updatedVariable.video.toString(), videoId);
     const result = await Promise.allSettled([
       await invalidateVideoComments(
         `/api/v1/comments/com/${videoId}?page=*:${req.user._id}`,
@@ -42,16 +39,9 @@ export const toggleCommentLike = asynchandler(async (req, res) => {
     }
   }
   if (updatedVariable.tweet) {
-    console.log("it eun data t");
+   
     let tweetId = updatedVariable.tweet.toString();
-    console.log(
-      "tweetId.....................................",
-      // tweetId,
-      // updatedVariable.parent.toString(),
-      // updatedVariable.owner.toString()
-      updatedVariable,
-      updatedVariable.owner.toString(),
-    );
+   
     if (updatedVariable.parent === null) {
       const result = await invalidateVideoComments(
         `/api/v1/comments/comm/${commentId}?page=*:${updatedVariable.owner.toString()}`,

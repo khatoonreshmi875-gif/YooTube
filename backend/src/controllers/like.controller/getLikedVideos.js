@@ -7,8 +7,7 @@ import mongoose from "mongoose";
 export const getLikedVideos = asynchandler(async (req, res) => {
   const { sort = "recent" } = req.query;
   const likes = await Like.find({ video: { $exists: true, $ne: null } });
-  console.log(likes.map((l) => l.video));
-  console.log("userId ⚡", req.user._id);
+ 
   const result = [
     {
       $match: {

@@ -83,10 +83,10 @@ app.get(
     try {
       let user = await User.findOne({ email: req.user.emails[0].value });
       if (user) {
-        console.log("userId/.//././././/./././//.///", user);
+        ("userId/.//././././/./././//.///", user);
         const { AccessToken, RefreshToken } =
           await generateRefreshAndAccessToken(user._id);
-        console.log(AccessToken, RefreshToken);
+       
         res.redirect(
           `${process.env.CORS_ORIGIN}/google-success?token=${AccessToken}`,
         );
@@ -100,7 +100,7 @@ app.get(
   },
 );
 app.listen(8000, () => {
-  console.log("Server running on http://localhost:8000");
+ 
 });
 
 //routes

@@ -8,10 +8,8 @@ export const createPlayList = asynchandler(async (req, res) => {
   if ([name, description, category].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "all fields are required");
   }
-  //console.log(req.body);
   const thumbnailFilePath = req.file?.path;
-  //console.log("thumbnail", thumbnailFilePath);
-  // check video path and thumbnail path
+ 
   if (!req.file) {
     console.log("No thumbnail uploaded");
   } else {
@@ -40,8 +38,7 @@ export const createPlayList = asynchandler(async (req, res) => {
     owner: req.user?._id,
     thumbnail: thumbnail.url || null,
   });
-  // invalidateCache(`/user-playlist/${updatePlaylist.owner}`);
-  // invalidateCache(`/user-playlist`);
+  
   return res
     .status(200)
     .json(new ApiResponse(201, newPlaylist, "Playlist created successfully"));

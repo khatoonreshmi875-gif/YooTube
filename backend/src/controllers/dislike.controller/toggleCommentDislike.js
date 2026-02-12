@@ -21,10 +21,8 @@ export const toggleCommentDisLike = asynchandler(async (req, res) => {
     dislikeField: "CommentDislikeCount",
   });
 
-  console.log(updatedVariable);
   if (updatedVariable.video) {
     let videoId = updatedVariable.video.toString();
-    console.log("it run", updatedVariable.video.toString(), videoId);
     const result = await Promise.allSettled([
       await invalidateVideoComments(
         `/api/v1/comments/com/${videoId}?page=*:${req.user._id}`,
@@ -40,7 +38,6 @@ export const toggleCommentDisLike = asynchandler(async (req, res) => {
       );
     }
   } else {
-    console.log("run");
     let tweetId = updatedVariable.tweet.toString();
     if (updatedVariable.parent === null) {
       const result = await invalidateVideoComments(
@@ -56,7 +53,6 @@ export const toggleCommentDisLike = asynchandler(async (req, res) => {
       updatedVariable.owner.toString(),
       req.user._id,
     );
-    console.log("result comment ", commentId, updatedVariable);
   }
 
   return res.status(200).json(

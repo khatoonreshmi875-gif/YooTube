@@ -23,7 +23,6 @@ export const toggletweetLike = asynchandler(async (req, res) => {
     throw new ApiError(404, "Tweet not found");
   }
 
-  console.log("updated tweet ", updatedVariable);
   await tweetInvalidateLike(
     tweetId,
     updatedVariable.owner.toString(),

@@ -4,13 +4,11 @@ import asynchandler from "../../../../utils/asynchandler.js";
 import { invalidateVideoComments } from "../../../../utils/invalidateAll.js";
 export const replyCommentForTweet = asynchandler(async (req, res) => {
   const { commentId } = req.params;
-  console.log("commentId", commentId);
   const { content } = req.body;
   const comments = await Comment.findById(commentId)
 
     .lean();
 
-  console.log("comment", comments);
   if (!comments) {
     return res
       .status(404)

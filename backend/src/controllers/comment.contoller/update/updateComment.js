@@ -43,14 +43,7 @@ export const updateComment = asynchandler(async (req, res) => {
   if (!updateComment) {
     throw new ApiError(404, "Comment not found");
   }
-  console.log(
-    "res of update comment",
-    result,
-    req.user._id,
-    videoId,
-    updateComment.video.toString(),
-    updateComment.tweet,
-  );
+ 
   return res
     .status(200)
     .json(new ApiResponse(200, updateComment, "Comment updated successfully"));

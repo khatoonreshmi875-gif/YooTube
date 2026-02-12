@@ -11,7 +11,7 @@ export const createAdmin = async () => {
   });
 
   if (existingAdmin) {
-    console.log("Admin already exists:", existingAdmin.username);
+   
     process.exit(0);
   }
   const adminUser = await User.create({
@@ -26,7 +26,7 @@ export const createAdmin = async () => {
     description: "System administrator account", //
   });
   await adminUser.save();
-  console.log("✅ Admin created successfully:", adminUser.username);
+
   process.exit(0);
 };
 createAdmin();

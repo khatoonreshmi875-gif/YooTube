@@ -27,16 +27,8 @@ export const replyComment = asynchandler(async (req, res) => {
   const value = await client.exists(
     `/api/v1/comments/comm/${commentId}?page=0:69221a6f1d952de980dc5f53`,
   );
-  console.log("value", value);
   const videoId = updateComment.video.toString();
-  console.log(
-    "videoid",
-    videoId,
-    updateComment,
-    commentId,
-    reply,
-    req.user._id,
-  );
+ 
   const tweetId =
     updateComment.tweet !== null
       ? updateComment.tweet.toString()
@@ -52,7 +44,6 @@ export const replyComment = asynchandler(async (req, res) => {
       `/api/v1/comments/tweet-comment/${tweetId}?page=*:${req.user._id}`,
     ),
   ]);
-  console.log("res", result);
   return res
     .status(200)
     .json(new ApiResponse(201, comment, "Comment reply created successfully"));
