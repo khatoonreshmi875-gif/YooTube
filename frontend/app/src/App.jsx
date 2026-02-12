@@ -3,12 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AppContext } from "./component/utils/contextApi.js";
 
-const ToastContainer = React.lazy(() =>
-  import("react-toastify").then((module) => ({
-    default: module.ToastContainer,
-  })),
-);
 
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useHistory from "./Hooks/useHistory.jsx";
 import { usePlaylist } from "./Hooks/usePlaylist.jsx";
