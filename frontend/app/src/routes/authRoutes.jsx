@@ -1,21 +1,8 @@
-import { Suspense } from "react";
-import { lazy } from "react";
-
-const Register = lazy(
-  () => import("../component/User/userAuth/component/auth/Register"),
-);
-const Login = lazy(
-  () => import("../component/User/userAuth/component/auth/Login"),
-);
-const ChangePassword = lazy(
-  () => import("../component/User/userAuth/component/password/ChangePassword"),
-);
-const ResetPassword = lazy(
-  () => import("../component/User/userAuth/component/password/ResetPassword"),
-);
-const ForgetPassword = lazy(
-  () => import("../component/User/userAuth/component/password/ForgetPassword"),
-);
+import Register from "../component/User/userAuth/component/auth/Register";
+import Login from "../component/User/userAuth/component/auth/Login";
+import ChangePassword from "../component/User/userAuth/component/password/ChangePassword";
+import ResetPassword from "../component/User/userAuth/component/password/ResetPassword";
+import ForgetPassword from "../component/User/userAuth/component/password/ForgetPassword";
 
 export const authRoutes = [
   {

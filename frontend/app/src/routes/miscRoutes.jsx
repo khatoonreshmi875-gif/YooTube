@@ -3,9 +3,8 @@ import { lazy } from "react";
 const SearchPage = lazy(() => import("../component/Video/Search/SearchPage"));
 const VidJS = lazy(() => import("../component/watch/watchVideo/VidJS"));
 const WatchPage = lazy(() => import("../component/watch/WatchPage"));
-const DownloadPage = lazy(
-  () => import("../component/Download/page/DownloadPage"),
-);
+
+import DownloadPage from "../component/Download/page/DownloadPage";
 
 export const miscroutes = [
   {

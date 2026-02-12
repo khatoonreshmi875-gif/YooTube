@@ -7,9 +7,8 @@ import { lazy } from "react";
 import { Suspense } from "react";
 import LoadingSpinner from "../utils/LoadingSpinner.jsx";
 import Mainvideo from "./watchVideo/Mainvideo.jsx";
-const PlaylistVideo = lazy(
-  () => import("./watchSimilarVideo/PlaylistVideo.jsx"),
-);
+import PlaylistVideo from "./watchSimilarVideo/PlaylistVideo.jsx";
+
 import SimilarVideo from "./watchSimilarVideo/SimilarVideo.jsx";
 
 const WatchPage = () => {
@@ -48,7 +47,6 @@ const WatchPage = () => {
             </div>
 
             {showComments ? (
-              
               <div>
                 <CommentThread />
               </div>
@@ -62,15 +60,7 @@ const WatchPage = () => {
                     ✕ Close Playlist
                   </button>
                 )}
-                {fromPlaylist && (
-                  <Suspense
-                    fallback={
-                      <LoadingSpinner label="playlist video is loading" />
-                    }
-                  >
-                    <PlaylistVideo similarVideos={playlist} />
-                  </Suspense>
-                )}{" "}
+                {fromPlaylist && <PlaylistVideo similarVideos={playlist} />}{" "}
                 <SimilarVideo />
               </div>
             )}
@@ -87,13 +77,7 @@ const WatchPage = () => {
               ✕ Close Playlist
             </button>
           )}
-          {fromPlaylist && (
-            <Suspense
-              fallback={<LoadingSpinner label="playlist video is loading" />}
-            >
-              <PlaylistVideo similarVideos={playlist} />
-            </Suspense>
-          )}
+          {fromPlaylist && <PlaylistVideo similarVideos={playlist} />}
 
           <SimilarVideo />
         </div>

@@ -23,17 +23,25 @@ import { useSubscribe } from "./Hooks/useSubscribe.jsx";
 import { Suspense } from "react";
 import { lazy } from "react";
 import LoadingSpinner from "./component/utils/LoadingSpinner.jsx";
-const Home1 = lazy(() => import("./component/HomePage.jsx/Home1.jsx"));
 
-const NavbarLayout = lazy(() => import("./component/Layout/NavbarLayout.jsx"));
+import Home1 from "./component/HomePage.jsx/Home1.jsx";
+import NavbarLayout from "./component/Layout/NavbarLayout.jsx";
+
 const AuthPage = lazy(
-  () => import("./component/User/userAuth/component/auth/AuthPage.jsx"),
+  () =>
+    import(
+      /* webpackPrefetch: true */ "./component/User/userAuth/component/auth/AuthPage.jsx"
+    ),
 );
 const Googlesuccess = lazy(
-  () => import("./component/User/userAuth/component/auth/Googlesuccess.jsx"),
+  () =>
+    import(
+      /* webpackPrefetch: true */ "./component/User/userAuth/component/auth/Googlesuccess.jsx"
+    ),
 );
 const ProtectedRoute = lazy(
-  () => import("./component/utils/ProtectedRoute.jsx"),
+  () =>
+    import(/* webpackPrefetch: true */ "./component/utils/ProtectedRoute.jsx"),
 );
 function App() {
   const auth = useAuth();

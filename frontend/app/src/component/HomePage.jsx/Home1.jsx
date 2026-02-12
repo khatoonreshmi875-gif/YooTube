@@ -16,6 +16,11 @@ const Home1 = () => {
     onHandle,
   } = useContext(AppContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    // Prefetch likely next routes
+    import("../watch/WatchPage.jsx");
+    import("../Video/Search/SearchPage.jsx");
+  }, []);
 
   useEffect(() => {
     const fetchVideos = async () => {
