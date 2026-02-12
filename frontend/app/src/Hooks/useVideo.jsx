@@ -61,14 +61,14 @@ export const useVideo = () => {
   const onHandleVideo = async () => {
     const result3 = await getVideoByUserId();
     console.log("video by user id", result3.data.data.videos);
-    setvideo(result3.data.data);
+    setvideo(result3.data.data.videos);
   };
 
   //get video by userId
   const onHandleVideoUserId = async (userId) => {
     const result3 = await getVideoUserId(userId);
     console.log("video by user id", result3.data.data.videos);
-    setvideo(result3.data.data);
+    setvideo(result3.data.data.videos);
   };
   return {
     getvideo,

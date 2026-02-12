@@ -11,7 +11,6 @@ const AddPlaylist = () => {
   const { video, onHandleVideo, user } = useContext(AppContext);
   const location = useLocation();
   const { playlist } = location.state || {};
-
   const {
     register: registerPlaylistVideo,
     handleSubmit: handlePlaylistVideoSubmit,

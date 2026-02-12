@@ -33,11 +33,11 @@ const VideoPage = () => {
   console.log("user role", user.role, user);
   return (
     <>
-      {video?.videos?.length === 0 ? (
+      {video?.length === 0 ? (
         <EmptyVideoPage userId={userId} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2  lg:gap-5  ">
-          {video.videos.map((v, index) => (
+          {video.map((v, index) => (
             <div
               key={index}
               className="bg-gradient-to-tl from-slate-800 via-black to-slate-800 rounded-xl shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md "
