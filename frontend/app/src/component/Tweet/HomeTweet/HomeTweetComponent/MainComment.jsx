@@ -6,12 +6,11 @@ import {
 } from "../../../../Api/CommentApi";
 import { AppContext } from "../../../utils/contextApi";
 
-import { Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleAxiosError } from "../../../utils/erroeHandler";
+import Comment from "../../../watch/watchComment/Comment";
 import AddComments from "../../../watch/watchComment/Comment/AddComment";
 import CommentSkeleton from "../../../watch/watchComment/CommentSkeleton";
-import Comment from "../../../watch/watchComment/Comment";
 
 const Maincomment = ({ tweetId }) => {
   const navigate = useNavigate();

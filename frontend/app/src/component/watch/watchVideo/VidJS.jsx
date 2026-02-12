@@ -1,7 +1,7 @@
-import { Suspense, useState, lazy } from "react";
-import { useVideoPlayer } from "./VideoPlayer";
+import { useState } from "react";
 import useView from "./useView";
-const Videojs = lazy(() => import("./Videojs"));
+import Videojs from "./Videojs";
+import { useVideoPlayer } from "./VideoPlayer";
 
 const VidJS = ({ cloudName, videourl, videoFile, userId }) => {
   console.log("page rerender");
@@ -15,26 +15,17 @@ const VidJS = ({ cloudName, videourl, videoFile, userId }) => {
 
   return (
     <div>
-      <Suspense
-        fallback={
-          <div className="flex flex-col">
-            {" "}
-            <div className="w-full md:h-[30rem] h-48 bg-gray-300 animate-pulse rounded-3xl shadow-lg" />
-          </div>
-        }
-      >
-        <Videojs
-          options={videoJsOptions}
-          onReady={(player) => {
-            handlePlayerReady(player);
-            //playerInstance.current = player;
-            setplayerInstance((prev) => prev || player);
+      <Videojs
+        options={videoJsOptions}
+        onReady={(player) => {
+          handlePlayerReady(player);
+          //playerInstance.current = player;
+          setplayerInstance((prev) => prev || player);
 
-            console.log("on player 🌼", player);
-          }}
-          videourl={videourl}
-        />
-      </Suspense>
+          console.log("on player 🌼", player);
+        }}
+        videourl={videourl}
+      />
     </div>
   );
 };

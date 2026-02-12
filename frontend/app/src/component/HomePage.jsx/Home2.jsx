@@ -1,10 +1,10 @@
-import { lazy, useCallback, useContext, useRef, useState } from "react";
+import { useCallback, useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRemoveAVideoInWatchhistory } from "../../Api/UserApi.js";
 import { AppContext } from "../utils/contextApi.js";
 import { handleAxiosError } from "../utils/erroeHandler.jsx";
-import TweetSection from "./HomePageComponent/TweetSection.jsx";
 import HoverVideo from "./HomePageComponent/HoverVideo.jsx";
+import TweetSection from "./HomePageComponent/TweetSection.jsx";
 import VideoInfo from "./HomePageComponent/VideoInfo.jsx";
 import VideoMenu from "./HomePageComponent/VideoMenu.jsx";
 
@@ -87,3 +87,4 @@ const Home2 = ({ index, v, s, playlist }) => {
   );
 };
 export { Home2 };
+

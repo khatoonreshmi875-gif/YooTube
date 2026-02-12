@@ -1,7 +1,6 @@
-import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../Navigation/sidebar/Sidebar";
 import Navbar from "../Navigation/navbar/page/Navbar";
+import Sidebar from "../Navigation/sidebar/Sidebar";
 
 const NavbarLayout = () => {
   const token = localStorage.getItem("token");

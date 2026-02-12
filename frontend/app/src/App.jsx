@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AppContext } from "./component/utils/contextApi.js";
 
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useHistory from "./Hooks/useHistory.jsx";
@@ -126,33 +125,21 @@ function App() {
             }
           >
             <RouterProvider router={router} />
-          </Suspense>
-          <Suspense
-            fallback={
-              <div>
-                {" "}
-                <div className="mt-96">
-                  <LoadingSpinner label="Loading" />
-                </div>
-              </div>
-            }
-          >
-            {" "}
-            <ToastContainer
-              position="top-center"
-              style={{
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-            />
-          </Suspense>
+          </Suspense>{" "}
+          <ToastContainer
+            position="top-center"
+            style={{
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </AppContext.Provider>
       </div>
     </>

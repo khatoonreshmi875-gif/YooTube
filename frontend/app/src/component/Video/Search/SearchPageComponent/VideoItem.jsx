@@ -1,7 +1,4 @@
-import React from "react";
-import { Suspense } from "react";
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../../../utils/LoadingSpinner";
 import Layout from "../../../Layout";
 const VideoItem = ({ s, index, isDownload }) => {
   const navigate = useNavigate();

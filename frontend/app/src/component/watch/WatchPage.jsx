@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import CommentThread from "./watchComment/CommentThread.jsx";
 
-import { lazy } from "react";
-import { Suspense } from "react";
-import LoadingSpinner from "../utils/LoadingSpinner.jsx";
-import Mainvideo from "./watchVideo/Mainvideo.jsx";
 import PlaylistVideo from "./watchSimilarVideo/PlaylistVideo.jsx";
+import Mainvideo from "./watchVideo/Mainvideo.jsx";
 
 import SimilarVideo from "./watchSimilarVideo/SimilarVideo.jsx";
 
