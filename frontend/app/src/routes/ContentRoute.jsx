@@ -14,7 +14,7 @@ import AssignModerator from "../component/User/userAuth/component/moderator/Assi
 import UserPage from "../component/User/userManagement/page/UserPage.jsx";
 import UserRoleList from "../component/User/userManagement/page/UserRoleList.jsx";
 import ModeratorRoleList from "../component/User/userManagement/page/ModeratorRoleList.jsx";
-import UpdateAvatar from "../component/User/update/updateAvatar.jsx";
+import UpdateAvatar from "../component/User/update/UpdateAvatar.jsx";
 import UpdateCoverImage from "../component/User/update/UpdateCoverImage.jsx";
 import UpdateAccountDetails from "../component/User/update/UpdateAccountDetails.jsx";
 import ReportPage from "../component/Report/ReportPage.jsx";
