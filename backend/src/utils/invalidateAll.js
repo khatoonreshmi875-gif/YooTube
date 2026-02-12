@@ -1,10 +1,10 @@
 import Redis from "ioredis";
-const redis = new Redis();
+import client from "./redis.js";
 
 export async function invalidateVideoComments(pattern) {
   // Match both normal and paginated keys
 
-  const stream = redis.scanStream({
+  const stream = client.scanStream({
     match: pattern,
     count: 100, // batch size
   });
@@ -12,7 +12,7 @@ export async function invalidateVideoComments(pattern) {
   stream.on("data", async (keys) => {
     if (keys.length) {
       console.log("Deleting keys:", keys);
-      await redis.del(...keys);
+      await client.del(...keys);
     }
   });
 
