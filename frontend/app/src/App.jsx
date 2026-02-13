@@ -21,23 +21,10 @@ import LoadingSpinner from "./component/utils/LoadingSpinner.jsx";
 
 import Home1 from "./component/HomePage.jsx/Home1.jsx";
 import NavbarLayout from "./component/Layout/NavbarLayout.jsx";
+import AuthPage from "./component/User/userAuth/component/auth/AuthPage.jsx";
+import Googlesuccess from "./component/User/userAuth/component/auth/Googlesuccess.jsx";
+import ProtectedRoute from "./component/utils/ProtectedRoute.jsx";
 
-const AuthPage = lazy(
-  () =>
-    import(
-      /* webpackPrefetch: true */ "./component/User/userAuth/component/auth/AuthPage.jsx"
-    ),
-);
-const Googlesuccess = lazy(
-  () =>
-    import(
-      /* webpackPrefetch: true */ "./component/User/userAuth/component/auth/Googlesuccess.jsx"
-    ),
-);
-const ProtectedRoute = lazy(
-  () =>
-    import(/* webpackPrefetch: true */ "./component/utils/ProtectedRoute.jsx"),
-);
 function App() {
   const auth = useAuth();
   const videos = useVideo();

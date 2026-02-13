@@ -8,6 +8,7 @@ import { AppContext } from "../utils/contextApi.js";
 import { handleAxiosError } from "../utils/erroeHandler.jsx";
 import LoadingSpinner from "../utils/LoadingSpinner.jsx";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import ChannelMenu from "./ChannelMenu.jsx";
 
 const CurrUser = () => {
   const { userId } = useParams();
@@ -28,11 +29,7 @@ const CurrUser = () => {
   const [initial, setInitial] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const handleDeleteAccount = async () => {
-    const res = await DeleteAccount();
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setInitial({});
@@ -103,14 +100,14 @@ const CurrUser = () => {
 
           {/* Avatar + Channel Info */}
           <div className="flex items-start space-x-2 bg-gradient-to-br from-slate-800 via-black to-slate-800 xs:m-4 m-1 rounded-lg p-4 hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md hover:scale-95">
-            <div className="lg:mt-[-1rem] mb-[-9rem] py-6">
+            <div className="lg:mt-[-1rem] mt-[-2rem] py-6">
               <img
                 className="md:w-[150px] w-24 aspect-square rounded-full border-2 md:border-4 md:border-white shadow-lg hover:scale-105"
                 src={initial?.avatar}
                 alt="Avatar"
               />
             </div>
-            <div className="lg:ml-6 md:ml-2 ml-1 md:space-y-3 space-y-1 px-3 w-full">
+            <div className="lg:ml-6 md:ml-2 ml-1 md:space-y-3  sm:px-3 w-full">
               <div className="flex justify-between items-start">
                 <h1 className="md:font-bold md:text-2xl text-lg sm:text-xl font-normal text-white font-serif">
                   {initial?.channelName}
@@ -124,38 +121,7 @@ const CurrUser = () => {
                   >
                     <BsThreeDotsVertical className="text-white text-xl" />
                   </button>
-
-                  {open && (
-                    <div className="absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                      <div className="py-1 flex flex-col text-gray-200">
-                        <button
-                          onClick={() => navigate(`/update-account`)}
-                          className="px-4 py-2 text-sm hover:bg-slate-700 text-left"
-                        >
-                          Update Account
-                        </button>
-                        <button
-                          onClick={() => navigate(`/update-avatar`)}
-                          className="px-4 py-2 text-sm hover:bg-slate-700 text-left"
-                        >
-                          Update Avatar
-                        </button>
-                        <button
-                          onClick={() => navigate(`/update-coverImage`)}
-                          // onClick={handleUpdateCoverImage}
-                          className="px-4 py-2 text-sm hover:bg-slate-700 text-left"
-                        >
-                          Update Cover Image
-                        </button>
-                        <button
-                          onClick={handleDeleteAccount}
-                          className="px-4 py-2 text-sm hover:bg-red-700 text-left"
-                        >
-                          Delete Account
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                  <ChannelMenu open={open} />
                 </div>
               </div>
 

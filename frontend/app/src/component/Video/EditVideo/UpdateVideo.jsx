@@ -117,7 +117,7 @@ const UpdateVideo = () => {
 
         <FormButton
           navigate={navigate}
-          isSubmitting={issubmittingVideoUpdate}
+          issubmitting={issubmittingVideoUpdate}
         />
       </form>
     </div>

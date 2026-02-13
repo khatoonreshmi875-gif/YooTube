@@ -10,6 +10,7 @@ const FormField = ({
   accept,
   watch,
   isVideo = false,
+  message = "",
 }) => {
   return (
     <>
@@ -56,6 +57,7 @@ const FormField = ({
             Browse
           </button>
         </div>
+        {message}
         {error && (
           <p role="alert" className="text-red-500 font-serif text-sm">
             {error.message}

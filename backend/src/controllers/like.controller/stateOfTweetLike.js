@@ -4,7 +4,9 @@ import { ApiResponse } from "../../utils/ApiResponse.js";
 import { Like } from "../../models/likes.model.js";
 export const stateOfTweetLike = asynchandler(async (req, res) => {
   const { tweetId } = req.params;
-  const like = await Like.findOne({ tweet: tweetId });
+  const userId = req.user._id;
+  const like = await Like.findOne({ tweet: tweetId, likedBy: userId });
+
   if (!like) {
     return res
       .status(200)

@@ -28,10 +28,10 @@ const MainPage = ({ tweet, isNested, tweetByTweetId }) => {
           <TweetContent tweet={tweet} />
 
           {/* Media */}
-        
-            <TweetMedia tweet={tweet} />
-       
 
+          <TweetMedia tweet={tweet} />
+
+         
           <div className="flex items-center justify-between xl:w-full pr-6  my-2 h-[15%] ">
             <div className="sm:p-4  w-24 ">
               <TweetLike

@@ -8,7 +8,7 @@ export const updateTweet = asynchandler(async (req, res) => {
   const { content } = req.body;
   if (!content) {
     throw new ApiError(400, "content is required");
-  }
+}
   const updatedTweet = await Tweet.findByIdAndUpdate(tweetId, {
     $set: {
       content,

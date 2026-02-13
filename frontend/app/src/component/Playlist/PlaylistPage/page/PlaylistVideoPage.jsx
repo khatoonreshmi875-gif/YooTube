@@ -44,12 +44,12 @@ const PlaylistVideoPage = () => {
     );
   }
   return (
-    <div className=" min-h-screen  bg-gradient-to-br from-slate-800 via-black to-slate-800 m-4 rounded-lg p-4 hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pt-28 pb-24  ">
+    <div className=" min-h-screen  bg-gradient-to-br from-slate-800 via-black to-slate-800 sm:m-4 rounded-lg  hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pb-24  ">
       {/* Playlist Header */}
       <PlaylistHeader allPlaylist={allPlaylist} />
 
       {/* Playlist Videos */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
         {allPlaylist?.playlist?.videos?.map((p, index) => (
           <VideoCard
             allPlaylist={allPlaylist}

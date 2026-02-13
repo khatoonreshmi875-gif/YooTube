@@ -9,7 +9,7 @@ export const createPlayList = asynchandler(async (req, res) => {
     throw new ApiError(400, "all fields are required");
   }
   const thumbnailFilePath = req.file?.path;
- 
+
   if (!req.file) {
     console.log("No thumbnail uploaded");
   } else {
@@ -22,7 +22,7 @@ export const createPlayList = asynchandler(async (req, res) => {
 
   //upload on cloudinary
 
-  const thumbnail = await uploadOnCloudinary(thumbnailFilePath);
+  const thumbnail = await uploadOnCloudinary(thumbnailFilePath, "video");
 
   //check video upload and thumbnail upload
 
@@ -36,9 +36,12 @@ export const createPlayList = asynchandler(async (req, res) => {
     category,
     createdAt: new Date(),
     owner: req.user?._id,
-    thumbnail: thumbnail.url || null,
+    thumbnail: {
+      cover: thumbnail.url.cover,
+      video: thumbnail.url.video,
+    },
   });
-  
+
   return res
     .status(200)
     .json(new ApiResponse(201, newPlaylist, "Playlist created successfully"));

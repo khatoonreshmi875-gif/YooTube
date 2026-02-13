@@ -110,7 +110,10 @@ const CreatePlaylist = () => {
           className="w-full"
           name="thumbnail"
           error={errors.thumbnail}
-          rules={{ required: "thumbnail is required" }}
+          message={
+            "Recommended size:600× 338.  If not, the image may appear cropped or distorted."
+          }
+         
           watch={watch}
         />
 

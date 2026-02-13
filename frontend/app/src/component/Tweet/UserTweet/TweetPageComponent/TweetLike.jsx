@@ -23,26 +23,18 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
   // effect
 
   useEffect(() => {
-    setReaction((prev) => ({
-      ...prev,
-      likeCount: initialLikeCount ?? 0,
-      dislikeCount: initialDislikeCount ?? 0,
-    }));
-  }, [initialLikeCount, initialDislikeCount]);
-
-  useEffect(() => {
     const fetchInitialState = async () => {
       if (!tweetId) return;
       console.log(tweetId);
       try {
         const likeRes = await stateOfTweetLike(tweetId);
-        console.log("like res of tweet", likeRes);
+        console.log(`like res of tweet of ${tweetId}`, likeRes);
         const dislikeRes = await stateOfTweetDisike(tweetId);
-
+  console.log(`like res of tweet of ${tweetId}`, dislikeRes);
         setReaction((prev) => ({
           ...prev,
-          liked: likeRes.data?.data?.isTweetLike,
-          disliked: dislikeRes.data.data.isTweetdisLike,
+          liked: likeRes.data?.data?.isTweetLike ?? false,
+          disliked: dislikeRes.data.data.isTweetdisLike ?? false,
         }));
       } catch (err) {
         console.error("Error fetching initial reaction state:", err);

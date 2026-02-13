@@ -37,7 +37,6 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
         });
       } else if (tag === "cover") {
         url = cloudinary.url(uploadResult.public_id, {
-          
           transformation: [
             {
               width: 1280,
@@ -46,6 +45,21 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
               quality: "auto",
               fetch_format: "auto",
               // gravity: "auto",
+              dpr: "auto",
+            },
+            { effect: "improve" }, // auto enhancement
+            { effect: "sharpen" },
+          ],
+        });
+      } else if (tag === "tweet") {
+        url = cloudinary.url(uploadResult.public_id, {
+          transformation: [
+            {
+              width: 580, // target width
+              aspect_ratio: "9:16",
+              crop: "limit",
+              quality: "auto",
+              fetch_format: "auto",
               dpr: "auto",
             },
             { effect: "improve" }, // auto enhancement
@@ -78,6 +92,8 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
               {
                 // upscale low-res images
                 // target width
+                width: 600,
+                height: 338,
                 crop: "fit", // keep aspect ratio, don’t distort
                 // sharpen edges
                 quality: "auto:best", // best visual quality

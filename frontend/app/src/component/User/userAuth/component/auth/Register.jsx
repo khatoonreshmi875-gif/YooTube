@@ -148,15 +148,42 @@ const Register = () => {
               name="avatar"
               alt="Avatar Preview"
               watch={watch}
+              message={
+                "Recommended size:240 × 240.  If not, the image may appear cropped or distorted."
+              }
             />
             <FormImageField
               label="  Upload Cover Image"
               register={registerLogin}
               error={errors.coverImage}
-              rules={{ required: "coverImage is required" }}
               name="coverImage"
               alt="coverImage Preview"
               watch={watch}
+              message={
+                "Recommended size:2560 × 480.  If not, the image may appear cropped or distorted."
+              }
+              rules={{
+                validate: (fileList) => {
+                  // Case 1: no image provided
+                  if (!fileList || fileList.length === 0) {
+                    return "coverImage is required";
+                  }
+
+                  // Case 2: check dimensions
+                  const file = fileList[0];
+                  return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                      if (img.width !== 2560 || img.height !== 480) {
+                        resolve("Image must be exactly 2560 × 480 pixels");
+                      } else {
+                        resolve(true);
+                      }
+                    };
+                    img.src = URL.createObjectURL(file);
+                  });
+                },
+              }}
             />
           </div>
         </div>

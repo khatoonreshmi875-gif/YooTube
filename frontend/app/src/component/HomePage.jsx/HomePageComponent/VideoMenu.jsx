@@ -6,13 +6,20 @@ import { toast } from "react-toastify";
 import DownloadButton from "../../Download/components/DownloadButton";
 import ShareButon from "../../ShareButon";
 import { handleAxiosError } from "../../utils/erroeHandler";
-
+import Delete from "../../utils/Delete.jsx";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../utils/contextApi";
-const VideoMenu = ({ index, v, handleDeleteAVideoWatchHistory }) => {
+const VideoMenu = ({
+  index,
+  v,
+  handleDeleteAVideoWatchHistory,
+  isDownload,
+  setDownloads
+}) => {
   const { user } = useContext(AppContext);
   const [IsOpen, setIsOpen] = useState(null);
   const navigate = useNavigate();
+
   return (
     <>
       <div>
@@ -57,6 +64,10 @@ const VideoMenu = ({ index, v, handleDeleteAVideoWatchHistory }) => {
               }}
             >
               Delete
+            </button>
+          ) : isDownload ? (
+            <button className="flex items-center hover:bg-gray-700 px-4 py-2 w-full transition rounded-lg font-serif">
+              <Delete setDownloads={setDownloads} videoId={v} />
             </button>
           ) : (
             <span

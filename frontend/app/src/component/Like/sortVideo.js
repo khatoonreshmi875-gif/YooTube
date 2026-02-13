@@ -1,5 +1,5 @@
-const sortVideos = (videos) => {
-  return videos.sort((a, b) => {
+export const sortVideos = (videos, sortOption) => {
+  return [...videos].sort((a, b) => {
     switch (sortOption) {
       case "titleAsc":
         return a?.video?.title.localeCompare(b?.video?.title);

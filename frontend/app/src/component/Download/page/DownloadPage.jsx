@@ -38,7 +38,7 @@ const DownloadPage = () => {
         ) : (
           <ul>
             {downloads?.map((v, index) => (
-              <div className=" sm:p-7 py-5">
+              <div className=" sm:p-3 py-3">
                 {" "}
                 <li key={v._id}>
                   <div>

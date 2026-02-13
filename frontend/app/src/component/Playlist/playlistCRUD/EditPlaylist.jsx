@@ -38,8 +38,8 @@ const EditPlaylist = () => {
     }
 
     try {
-      await editPlaylist(formData, playlistId);
-
+      const res=await editPlaylist(formData, playlistId);
+      
       navigate(`/curr-user/${playlist.owner}/playlist-home`); // redirect after success
     } catch (err) {
       handleAxiosError(err, navigate);
@@ -110,6 +110,8 @@ const EditPlaylist = () => {
           rules={{
             required: playlist.thumbnail ? false : "thumbnail is required",
           }}
+          message="Recommended size:600 × 480.  
+        If not, the image may appear cropped or distorted."
           preview={preview}
           data={playlist.thumbnail}
           onChange={(e) => {
@@ -126,7 +128,7 @@ const EditPlaylist = () => {
         {/* Submit Button */}
         <FormButton
           navigate={navigate}
-          isSubmitting={issubmittingUpdatePlaylist}
+          issubmitting={issubmittingUpdatePlaylist}
         />
       </form>
     </div>

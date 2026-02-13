@@ -16,7 +16,7 @@ export const updatePlaylist = asynchandler(async (req, res) => {
   let thumbnailUrl;
   if (req.file) {
     const thumbnailFilePath = req.file?.path;
-    console.log("thumbnail", thumbnailFilePath);  
+    console.log("thumbnail", thumbnailFilePath);
     // check video path and thumbnail path
     if (!req.file) {
       console.log("No thumbnail uploaded");
@@ -30,8 +30,8 @@ export const updatePlaylist = asynchandler(async (req, res) => {
 
     //upload on cloudinary
 
-    const thumbnail = await uploadOnCloudinary(thumbnailFilePath);
-
+    const thumbnail = await uploadOnCloudinary(thumbnailFilePath, "video");
+    console.log("thumbnail", thumbnail);
     //check video upload and thumbnail upload
     thumbnailUrl = thumbnail.url;
     if (!thumbnail.url) {

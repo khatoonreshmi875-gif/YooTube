@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../utils/contextApi";
-
 import { useCallback } from "react";
 import { getSimilarVideo } from "../../../Api/VideoApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
@@ -19,7 +18,6 @@ const SimilarVideo = () => {
   const [count, setcount] = useState(0);
   const [loading, setloading] = useState(false);
   const hasFetchedFirst = useRef(false);
-
   const { videoId } = useParams();
 
   const [similarVideos, setSimilarVideos] = useState([]); // r
@@ -93,40 +91,49 @@ const SimilarVideo = () => {
       {similarVideos?.map((s, index) => (
         <div
           key={index}
-          className="flex sm:flex-row flex-col lg:flex-row items-start space-x-3 p-2 rounded-lg bg-gradient-to-tl from-slate-800 via-black to-slate-800 shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md  my-4  hover:cursor-pointer mx-8  sm:mx-0 relative"
+          className="flex sm:flex-row flex-col lg:flex-row justify-between space-x-3 p-2 rounded-lg bg-gradient-to-tl from-slate-800 via-black to-slate-800 shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md  my-4  hover:cursor-pointer mx-8  sm:mx-0 relative"
         >
-          {/* Video Thumbnail */}
-          <video
-            poster={s.thumbnail}
-            className="sm:w-56 sm:h-32 w-full h-48   rounded-xl shadow-md object-cover cursor-pointer"
-            ref={(el) => (videoref.current[index] = el)}
-            onMouseOver={() => {
-              setisPlaying(index);
-              videoref.current[index]?.play();
-            }}
-            onMouseLeave={() => {
-              setisPlaying(null);
-              videoref.current[index]?.pause();
-            }}
-            onClick={() =>
-              navigate(`/video-rec-page/${s?._id}/user/${s?.owner?._id}`)
-            }
-          >
-            <source src={s.videoFile} type="video/mp4" />
-          </video>
-
-          {/* Video Info */}
-          <div className="flex flex-col justify-between space-y-1 w-full my-2">
-            <p className="md:font-semibold text-md sm:text-sm  line-clamp-2  font-serif text-white hover:text-black">
-              {s.title}
-            </p>
-            <p className="text-xs text-gray-200">{s.owner.channelName}</p>
-            <div className="flex text-xs text-gray-200 space-x-2">
-              <p>{s.views} views</p>
-              <p>{FormatTime(s.createdAt)}</p>
+          <div className="flex sm:flex-row flex-col space-x-6">
+            <video
+              poster={s.thumbnail}
+              className="sm:w-56 sm:h-32 w-full h-48   rounded-xl shadow-md object-cover cursor-pointer"
+              ref={(el) => (videoref.current[index] = el)}
+              onMouseOver={() => {
+                setisPlaying(index);
+                videoref.current[index]?.play();
+              }}
+              onMouseLeave={() => {
+                setisPlaying(null);
+                videoref.current[index]?.pause();
+              }}
+              onClick={() =>
+                navigate(`/video-rec-page/${s?._id}/user/${s?.owner?._id}`)
+              }
+            >
+              <source src={s.videoFile} type="video/mp4" />
+            </video>
+            {/* Video Info */}
+            <div className="flex sm:static relative">
+              <div className="flex flex-col justify-between space-y-1 w-full my-2">
+                <p className="md:font-semibold text-md sm:text-sm  line-clamp-2  font-serif text-white hover:text-black">
+                  {s.title}
+                </p>
+                <p className="text-xs text-gray-200">{s.owner.channelName}</p>
+                <div className="flex text-xs text-gray-200 space-x-2">
+                  <p>{s.views} views</p>
+                  <p>{FormatTime(s.createdAt)}</p>
+                </div>
+              </div>
+              <div className="sm:hidden block">
+                <VideoMenu index={index} v={s} />
+              </div>
             </div>
           </div>
-          <VideoMenu index={index} v={s} />
+          {/* Video Thumbnail */}
+
+          <div className="hidden sm:block">
+            <VideoMenu index={index} v={s} />
+          </div>
         </div>
       ))}
       {hasNomore.current && (

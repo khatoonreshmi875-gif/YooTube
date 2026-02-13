@@ -12,8 +12,8 @@ const FormSelect = ({
   onClick,
   accept,
   isData = false,
+  message = "",
 }) => {
-  console.log("daa of ", data);
   return (
     <div className="relative">
       <label
@@ -33,11 +33,12 @@ const FormSelect = ({
         onChange={onChange}
       >
         {data?.map((d, index) => (
-          <option value={isData ? d.title : d} key={index}>
+          <option value={d?._id} key={index}>
             {isData ? d.title : d}
           </option>
         ))}
       </select>
+      {message}
       {error && (
         <p role="alert" className="text-red-500 font-serif text-sm">
           {error.message}

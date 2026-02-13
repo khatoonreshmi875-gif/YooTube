@@ -40,7 +40,7 @@ const TweetSection = () => {
       setLoading(false);
     }
   };
-
+console.log("all tweet data",)
   useEffect(() => {
     setCount(0);
     getTweetOfSubscribers(0);

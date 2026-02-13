@@ -24,20 +24,11 @@ const Subscription = () => {
       handleAxiosError(err, navigate);
     }
   };
-  const handleSubscribeUserPage = async (userId) => {
-    try {
-      const res = await totalSubcribeChannel(user._id);
-      setUserFolower(res.data.data.subscriberOfEachChannel);
-      console.log("subscription", res.data.data);
-    } catch (err) {
-      handleAxiosError(err, navigate);
-    }
-  };
-
+  
   useEffect(() => {
     handleSubscribePage(userId);
-    handleSubscribeUserPage(user._id);
-  }, []);
+   
+  }, [userId]);
 
   return (
     <div className="w-full flex flex-col  ">

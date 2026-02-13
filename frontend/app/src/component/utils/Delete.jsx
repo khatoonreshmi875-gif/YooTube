@@ -24,6 +24,6 @@ const Delete = ({ videoId, setDownloads }) => {
     setDownloads(updated);
   };
 
-  return <button onClick={handleDelete}>delete</button>;
+  return <button onClick={handleDelete}>Delete</button>;
 };
 export default Delete;

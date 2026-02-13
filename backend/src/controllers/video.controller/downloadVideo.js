@@ -10,7 +10,10 @@ export const downloadVideo = asynchandler(async (req, res) => {
     if (!video) {
       return res.status(404).json({ message: "Video not found" });
     }
-
+    console.log(
+      "data of vidoe filepath........................................",
+      video.filePath,
+    );
     // Absolute path to file
     const filePath = path.resolve(video.filePath);
 

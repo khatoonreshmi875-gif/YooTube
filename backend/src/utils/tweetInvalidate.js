@@ -20,14 +20,15 @@ export const tweetInvalidateLike = async (tweetId, ownerId, userId) => {
     invalidateVideoComments(
       `/api/v1/tweets/subscriber-tweet?page=*:${ownerId}`,
     ),
+    invalidateVideoComments(`/api/v1/tweets/subscriber-tweet?page=*:${userId}`),
     invalidateVideoComments(
       `/api/v1/comments/tweet-comment/${tweetId}?page=*?${ownerId}`,
     ),
     client.del(`/api/v1/tweets/c/${tweetId}:${ownerId}`),
     client.del(`/api/v1/tweets/tweets-page/${ownerId}`),
 
-    client.del(`/api/v1/dislikes/state-tweet-dislike/${tweetId}:${ownerId}`),
-    client.del(`/api/v1/likes/state-tweet-like/${tweetId}:${ownerId}`),
+    client.del(`/api/v1/dislikes/state-tweet-dislike/${tweetId}:${userId}`),
+    client.del(`/api/v1/likes/state-tweet-like/${tweetId}:${userId}`),
   ]);
   console.log("res of tweet invalidate of like", res);
 };

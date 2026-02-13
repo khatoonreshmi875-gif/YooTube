@@ -15,10 +15,9 @@ export const useVideo = () => {
   const [count, setcount] = useState(0);
   const getallvideo = async (page) => {
     setLoad(true);
+    console.log("it runs data ....................", page);
     try {
       const result3 = await RecommendedVideo(page);
-      console.log("all video for main page", result3.data.data);
-
       if (result3.data.data.length === 0) {
         sethasNomore(true);
       } else if (result3.data.data.length !== 0) {
@@ -33,6 +32,10 @@ export const useVideo = () => {
       setLoad(false);
     }
   };
+  useEffect(() => {
+    console.log("Initial load triggered");
+    getallvideo(0); // fetch first page when component mounts
+  }, []);
   const fetchNext = () => {
     if (hasNomore) return;
     setcount((prev) => {
@@ -43,11 +46,13 @@ export const useVideo = () => {
   };
 
   useEffect(() => {
+    console.log("add the use effect////////////////////////",hasNomore)
     const handleScroll = () => {
       if (
         window.scrollY + window.innerHeight >= document.body.scrollHeight &&
         !hasNomore
       ) {
+        console.log("it runs or not....................",count);
         fetchNext();
         console.log("hasNomore", hasNomore);
       }

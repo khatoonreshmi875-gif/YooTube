@@ -26,13 +26,13 @@ const PlaylistCard = ({ infoPlaylist, userId }) => {
       {infoPlaylist?.data?.map((playlist, index) => (
         <div
           key={playlist._id}
-          className=" hover:bg-blue-50 bg-gradient-to-br from-slate-800 via-black to-slate-800 m-4 p-2 rounded-lg hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md shadow-md "
+          className=" hover:bg-blue-50 bg-gradient-to-br from-slate-800 via-black to-slate-800  rounded-lg hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md shadow-md "
         >
-          <div className=" w-full relative">
+          <div className=" w-full relative p-3">
             {/* image */}
             <img
-              src={playlist.thumbnail || "/download.jpg"}
-              className=" h-[15rem] w-full  rounded-t-lg  object-cover cursor-pointer mx-auto "
+              src={playlist.thumbnail}
+              className=" aspect-video w-full  rounded-t-lg  object-cover cursor-pointer mx-auto "
               ref={(el) => (playlistRef.current[playlist._id] = el)}
               onClick={() => {
                 if (playlistRef.current[playlist._id]) {
@@ -50,7 +50,7 @@ const PlaylistCard = ({ infoPlaylist, userId }) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="w-4/5 mt-3">
+            <div className="w-4/5 mt-3 p-3">
               <p className=" font-medium lg:text-lg font-serif text-md  text-gray-100">
                 {playlist.name}
               </p>

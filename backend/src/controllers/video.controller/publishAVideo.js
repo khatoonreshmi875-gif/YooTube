@@ -47,14 +47,14 @@ const publishAVideo = asynchandler(async (req, res) => {
   if (!thumbnail) {
     console.log("thumbnail.url is not found");
   }
+  console.log("upload result data.;;;;;;;;;;;;;;;;", video);
   //
   // create new video document in DB
   const newVideo = await Video.create({
     title,
     description,
-    videoFile: video.uploadResult.url,
+    videoFile: video.uploadResult.secure_url,
     thumbnail: thumbnail.url,
-    fallbackFile: `http://localhost:5173/videos/${videofile.originalname}`,
     duration: video.uploadResult.duration,
     publicId: video.uploadResult.public_id,
     owner: req.user?._id,
@@ -66,7 +66,7 @@ const publishAVideo = asynchandler(async (req, res) => {
   res
     .status(201)
     .json(new ApiResponse(201, videoData, "Video uploaded successfully"));
-  await publishVideoInvalidate(newVideo._id, req.user._id)
+  await publishVideoInvalidate(newVideo?._id, req.user._id)
     .then(() => console.log("cache invalidated"))
     .catch((err) => console.error("cache invalidation failed ", err));
 });

@@ -58,7 +58,7 @@ const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
         src={p.thumbnail}
        
         alt={p.title}
-        className="h-48 w-full object-cover"
+        className="aspect-video w-full object-cover"
       />
       <div className="p-4">
         <p className="md:text-lg font-semibold  text-sm font-serif text-white">

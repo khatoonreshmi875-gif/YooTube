@@ -7,6 +7,7 @@ import FormField from "../Video/UserVideo/form/FormField";
 import FormButton from "../Video/UserVideo/form/FormButton";
 import FormSelect from "../Video/UserVideo/form/FormSelect";
 import FormInput from "../Video/UserVideo/form/FormInput";
+import { uploadTweet } from "../../Api/TweetApi";
 
 const CreateTweet = () => {
   const {
@@ -25,10 +26,11 @@ const CreateTweet = () => {
     for (const img of form.image) {
       formData.append("image", img);
     }
+    console.log("form", form?.videoId);
     const token = localStorage.getItem("token");
     const tweet = await uploadTweet(formData);
     if (tweet.data.success === true) {
-      navigate(`/curr-user/${result.data.data.owner}/tweet-home`);
+      navigate(`/curr-user/${tweet.data.data.owner}/tweet-home`);
     }
   };
   const handleclick = async () => {
@@ -38,10 +40,10 @@ const CreateTweet = () => {
       })
       .catch((err) => handleAxiosError(err, navigate));
   };
-  const data = video?.videos;
+  const data = video;
   console.log("data", data);
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 sm:mb-0 mb-24">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl space-y-6"
@@ -88,6 +90,9 @@ const CreateTweet = () => {
           multiple={true}
           accept="image/*"
           watch={watch}
+          message={
+            " Please upload an image in 1080×1920 resolution (9:16 ratio). This size is required to ensure your tweet displays correctly"
+          }
         />
 
         {/* Submit Button */}

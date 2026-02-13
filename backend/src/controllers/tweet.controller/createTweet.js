@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Tweet } from "../../models/tweet.model.js";
 import ApiError from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
@@ -12,14 +13,16 @@ export const createTweet = asynchandler(async (req, res) => {
     ? Imagefile.map((file) => file.path)
     : [];
   const image = ImageLocalPath.length
-    ? await Promise.all(ImageLocalPath.map(uploadOnCloudinary))
+    ? await Promise.all(
+        ImageLocalPath.map((path) => uploadOnCloudinary(path, "tweet")),
+      )
     : null;
   const newTweet = await Tweet.create({
     content,
     owner: req.user?._id,
     createdAt: new Date(),
     image: image ? image.map((i) => i?.url || null) : null,
-    video: videoId || null,
+    video:new mongoose.Types.ObjectId(videoId) || null,
   });
   if (!newTweet) {
     throw new ApiError(500, "Failed to create tweet");

@@ -3,7 +3,9 @@ import asynchandler from "../../utils/asynchandler.js";
 import { Report } from "../../models/report.model.js";
 export const postReport = asynchandler(async (req, res) => {
   const { content } = req.body;
+
   const { videoId } = req.params;
+  console.log(content, "videoid", videoId);
   if (!content) {
     return res
       .status(400)

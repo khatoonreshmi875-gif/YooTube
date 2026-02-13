@@ -1,9 +1,15 @@
-import asynchandler from "../../utils/asynchandler.js";
-import { ApiResponse } from "../../utils/ApiResponse.js";
 import { Dislike } from "../../models/dislike.model.js";
+import { ApiResponse } from "../../utils/ApiResponse.js";
+import asynchandler from "../../utils/asynchandler.js";
 export const stateOfTweetDisLike = asynchandler(async (req, res) => {
   const { tweetId } = req.params;
-  const dislike = await Dislike.findOne({ tweet: tweetId });
+  const userId = req.user._id; // assuming you attach user to reqdislikedBy
+
+  const dislike = await Dislike.findOne({
+    tweet: tweetId,
+    dislikedBy: userId,
+  });
+
   if (!dislike) {
     return res
       .status(200)
@@ -15,9 +21,10 @@ export const stateOfTweetDisLike = asynchandler(async (req, res) => {
         ),
       );
   }
-  res
+
+  return res
     .status(200)
     .json(
-      new ApiResponse(200, { isTweetdisLike: true }, `tweet  dislike found`),
+      new ApiResponse(200, { isTweetdisLike: true }, "tweet dislike found"),
     );
 });

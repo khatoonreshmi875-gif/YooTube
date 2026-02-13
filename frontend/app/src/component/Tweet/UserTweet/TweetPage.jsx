@@ -9,7 +9,6 @@ import EmptytweetPage from "./TweetPageComponent/EmptyTweetPage.jsx";
 import TweetLike from "./TweetPageComponent/TweetLike.jsx";
 import TweetPageBtn from "./TweetPageComponent/TweetPageBtn.jsx";
 
-
 const tweetDataPage = () => {
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ const tweetDataPage = () => {
     const handletweetDataPage = async () => {
       try {
         setLoading(true);
-        const result = await TweetPageApi(user._id);
+        const result = await TweetPageApi(userId);
         setTweetData(result?.data?.data);
       } catch (err) {
         handleAxiosError(err, navigate);
@@ -39,7 +38,7 @@ const tweetDataPage = () => {
       }
     };
     handletweetDataPage();
-  }, [user]);
+  }, [userId]);
 
   useEffect(() => {
     const initial = {};
@@ -67,9 +66,9 @@ const tweetDataPage = () => {
               <div key={t._id} className="">
                 <div className=" bg-gradient-to-br from-slate-800 via-black to-slate-800 text-white rounded-xl   transform hover:scale-105 transition-all duration-300  p-5 shadow-md shadow-blue-200  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 hover:shadow-blue-300 hover:shadow-lg">
                   {/* Media */}
-                 
-                    <TweetMedia tweet={t} isTweet={true} />
-                 
+
+                  <TweetMedia tweet={t} isTweet={true} />
+
                   {/* Content */}
                   <div className="p-4">
                     <p className="text-white font-serif lg:text-lg  text-sm line-clamp-2 mb-2">

@@ -8,9 +8,9 @@ const FormImageField = ({
   rules,
   alt,
   watch,
+  message="",
   multiple = false,
   accept,
- 
 }) => {
   return (
     <>
@@ -38,7 +38,6 @@ const FormImageField = ({
               type="file"
               multiple={multiple}
               accept={accept}
-           
               {...register(name, rules)}
               className="border-black border-2 h-fit w-full p-2 rounded-l-lg bg-gradient-to-l   w-[566px]:text-sm text-[12px] from-black via-slate-800 to-cyan-950 font-serif text-white text-xs md:text-lg"
             />
@@ -48,6 +47,8 @@ const FormImageField = ({
             </button>
           </div>
         </div>
+        {message}
+
         {error && (
           <p role="alert" className="text-red-500 font-serif text-sm">
             {error.message}

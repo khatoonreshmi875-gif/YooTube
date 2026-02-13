@@ -115,13 +115,13 @@ const AddPlaylist = () => {
                 {prevData?.map((item, index) => (
                   <div
                     key={index}
-                    className="flex flex-col items-center bg-white rounded-lg shadow-sm p-3 m-2 w-36 hover:shadow-md hover:bg-blue-50 transition-all duration-300"
+                    className="flex flex-col items-center bg-white rounded-lg shadow-sm  m-2 w-36 hover:shadow-md hover:bg-blue-50 transition-all duration-300"
                     onClick={() => setOpen(index)}
                   >
                     <img
                       src={item.thumbnail}
                       alt="Current thumbnail"
-                      className="w-32 h-32 object-cover rounded-md border-2 border-gray-200 hover:border-blue-400 transition"
+                      className="w-36 aspect-video object-cover rounded-md border-2 border-gray-200 hover:border-blue-400 transition"
                     />
                     <p
                       className={`mt-2 text-[11px] text-gray-700 text-center w-28 truncate ${
@@ -143,11 +143,6 @@ const AddPlaylist = () => {
             onClick={handleclick}
             {...registerPlaylistVideo("videoId", {
               required: true,
-              valueAsArray: true,
-              validate: (value) =>
-                Array.isArray(value) && value.length <= 5
-                  ? true
-                  : "You can select a maximum of 5 videos",
             })}
             className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             multiple
@@ -194,11 +189,11 @@ const AddPlaylist = () => {
               </option>
             ))}
           </select>
-          {errors.videoId && (
+          {/* {errors.videoId && (
             <p className="text-red-500 text-sm mt-1">
               Video selection is required
             </p>
-          )}
+          )} */}
         </div>
 
         {/* Submit Button */}

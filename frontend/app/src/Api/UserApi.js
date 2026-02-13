@@ -188,10 +188,11 @@ export const Assign_Moderator = async (userdata) => {
   }
 };
 export const Report = async (userdata, userId) => {
+  console.log("userdata of", userdata, import.meta.VITE_BACKEND_URL);
   try {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      `${process.env.BACKEND_URL}/api/v1/reports/report/${userId}`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/reports/report/${userId}`,
       userdata,
       {
         headers: {
@@ -211,7 +212,7 @@ export const getReport = async () => {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.get(
-      `${process.env.BACKEND_URL}/api/v1/reports/report`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/reports/report`,
 
       {
         headers: {
@@ -231,7 +232,7 @@ export const getReportByDate = async (userdata) => {
   try {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      `${process.env.BACKEND_URL}/api/v1/reports/report-by-date`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/reports/report-by-date`,
       userdata,
 
       {
@@ -391,11 +392,14 @@ export const DeleteAccount = async () => {
 export const DeleteAccountById = async (userId) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.delete(`${BASE_URL}/delete-account/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await axios.delete(
+      `${BASE_URL}/delete-account/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     console.log("user delete account successfully", response);
     return response;

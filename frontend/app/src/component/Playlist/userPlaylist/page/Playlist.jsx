@@ -14,11 +14,14 @@ const Playlist = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [infoPlaylist, setInfoPlaylist] = useState([]);
+
   useEffect(() => {
     const getPlaylistThroughUserId = async (userId) => {
       setLoading(true);
       try {
+        console.log(userId);
         const url = await getPlaylistByUsingUserId(userId);
+        console.log("data of frontend", url.data);
         localStorage.removeItem("playlistid");
         setInfoPlaylist(url.data);
       } catch (err) {
@@ -28,8 +31,8 @@ const Playlist = () => {
         console.log("setloading", loading);
       }
     };
-    getPlaylistThroughUserId(user._id);
-  }, [user]);
+    getPlaylistThroughUserId(userId);
+  }, [userId]);
   if (loading) {
     return <LoadingSpinner label="Fetching Playlist" isData={true} />;
   }
@@ -38,7 +41,7 @@ const Playlist = () => {
       {infoPlaylist?.data?.length == 0 ? (
         <EmptyPlaylist userId={userId} user={user._id} />
       ) : (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 space-y-4 w-full  ">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 space-y-4 w-full  gap-8">
           <PlaylistCard infoPlaylist={infoPlaylist} userId={userId} />
         </div>
       )}
