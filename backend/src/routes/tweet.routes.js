@@ -11,7 +11,8 @@ import { upload } from "../middlewares/multer.middleware.js";
 import cacheMiddleware from "../middlewares/cache.middleware.js";
 import { Tweet } from "../models/tweet.model.js";
 import { authorizationMiddleware } from "../middlewares/authorization.middleware.js";
-import { getTweetBySubscriber } from "../controllers/tweet.controller/getTweetBysubscriber.js";
+import { getTweetBySubscriber } from "../controllers/tweet.controller/getTweetBySubscriber.js";
+getTweetBySubscriber
 
 const tweetRouter = Router();
 tweetRouter.use(verifyJWT);
