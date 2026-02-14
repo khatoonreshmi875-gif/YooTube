@@ -20,16 +20,16 @@ const EmptyPlaylist = ({ userId, user }) => {
               d="M9 19V6h13M9 6l7 7-7 7"
             />
           </svg>
-          <h2 className="mt-4 text-2xl font-semibold text-gray-400">
+          <h2 className="mt-4 sm:text-xl text-sm  font-semibold text-gray-400">
             No playlists yet
           </h2>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500  sm:text-base text-xs">
             Create your first playlist to get started!
           </p>
           {userId === user ? (
             <button
               onClick={() => navigate("/create-playlist")}
-              className="mt-6 px-6 py-2 bg-blue-100 text-gray-900 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              className="mt-6 px-6 py-2 bg-blue-100 text-gray-900 rounded-lg hover:bg-blue-700 transition-colors duration-200 sm:text-base text-xs"
             >
               Create Playlist
             </button>

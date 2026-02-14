@@ -33,12 +33,12 @@ const Layout = ({
         className={`${
           isDownload
             ? "flex sm:flex-row flex-col"
-            : "flex sm:flex-col xs:h-[28rem] h-[24rem] sm:h-[32rem] mb-6"
+            : "flex flex-col h-auto mb-6 p-1"
         }
       bg-gradient-to-tl from-slate-800 via-black to-slate-800
       rounded-xl shadow-md hover:shadow-lg transition
       hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950
-      shadow-blue-200 hover:shadow-blue-300 sm:pb-0 space-x-4`}
+      shadow-blue-200 hover:shadow-blue-300 sm:pb-0`}
       >
         {/* Video Section */}
         <div onClick={() => handleVideoPage(s._id, s?.owner?._id)}>
@@ -82,10 +82,7 @@ const Layout = ({
 
             {/* Video Title */}
             <p
-              className={`font-semibold text-white font-serif cursor-pointer hover:underline hover:text-cyan-700 transition-colors duration-200 ${
-                isDownload
-                  ? "md:text-base text-lg line-clamp-2"
-                  : "md:text-lg text-sm"
+              className={`font-semibold text-white font-serif cursor-pointer hover:underline hover:text-cyan-700 transition-colors duration-200"md:text-lg text-sm line-clamp-2 leading-snug h-[3rem]"
               }`}
             >
               {s?.title}

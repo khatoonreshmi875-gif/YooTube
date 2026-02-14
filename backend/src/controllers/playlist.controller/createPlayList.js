@@ -36,10 +36,7 @@ export const createPlayList = asynchandler(async (req, res) => {
     category,
     createdAt: new Date(),
     owner: req.user?._id,
-    thumbnail: {
-      cover: thumbnail.url.cover,
-      video: thumbnail.url.video,
-    },
+    thumbnail: thumbnail.url,
   });
 
   return res

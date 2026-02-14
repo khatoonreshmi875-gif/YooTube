@@ -1,4 +1,4 @@
-import { lazy,Suspense } from "react";
+import { lazy, Suspense } from "react";
 import StatCard from "../StatCard";
 
 import SearchBox from "../component/SearchBox";
@@ -10,20 +10,17 @@ const Graph = lazy(() => import("../component/Graph"));
 
 const SubscriberPage = () => {
   const { stats } = useSubscribers();
-  console.log("data of stats", stats);
   return (
     <>
       {stats ? (
         <main className="flex flex-col  lg:space-x-6  px-4 sm:px-6 lg:px-10 w-full ">
           {/* Chart Section */}
           <div className="flex flex-col lg:flex-row lg:space-x-6  px-4 sm:px-6">
-            {" "}
             <Suspense
               fallback={
                 <div className="xs:w-[95%] w-[95%]  ss:w-[90%] sx:w-[95%] sm:w-[95%] md:w-[95%] lg:w-[70%] h-[20rem] sm:h-[25rem] lg:h-[33rem] p-6 bg-gray-200 rounded-2xl shadow-lg border border-gray-200 shadow-gray-500 mx-auto mt-2 animate-pulse "></div>
               }
             >
-              {" "}
               <Graph />
             </Suspense>
             {/* Stats Section */}

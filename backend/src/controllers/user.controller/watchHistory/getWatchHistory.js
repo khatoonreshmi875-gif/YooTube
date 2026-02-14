@@ -11,7 +11,7 @@ export const getWatchHistory = asynchandler(async (req, res) => {
       options: { sort: { _id: 1 }, limit: 5 },
       populate: {
         path: "videoId",
-        select: "title thumbnail publicId description views duration",
+        select: "title thumbnail publicId description views duration _id",
         populate: {
           path: "owner",
           select: "avatar channelName",

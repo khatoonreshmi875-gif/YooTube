@@ -7,7 +7,7 @@ import VideoMenu from "./HomePage.jsx/HomePageComponent/VideoMenu.jsx";
 import { AppContext } from "./utils/contextApi.js";
 
 const Home = ({ v, index, watchedAt }) => {
-  const { setChannelOwnerId, sethistory } = useContext(AppContext);
+  const { setChannelOwnerId, sethistory, history } = useContext(AppContext);
   const navigate = useNavigate();
   const videoref = useRef([]);
 
@@ -20,7 +20,9 @@ const Home = ({ v, index, watchedAt }) => {
   }, [isImageIndex]);
 
   const handleDeleteAVideoWatchHistory = async (videoId) => {
-    sethistory((prev) => prev.filter((item) => item._id !== videoId));
+    console.log("run");
+    console.log("data of history", history);
+    sethistory((prev) => prev.filter((item) => item.videoId._id !== videoId));
     const res = await getRemoveAVideoInWatchhistory(videoId);
   };
 
@@ -52,4 +54,3 @@ const Home = ({ v, index, watchedAt }) => {
 };
 
 export { Home };
-

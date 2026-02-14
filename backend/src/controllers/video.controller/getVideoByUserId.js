@@ -19,8 +19,7 @@ export const getVideoByUserid = asynchandler(async (req, res) => {
   if (videos.length === 0) {
     throw new ApiError(404, "Video not found");
   }
-  console.log("videos", videos);
-  //console.log("video", videos);
+ 
   return res
     .status(200)
     .json(new ApiResponse(200, { videos }, "video fetched successfully"));

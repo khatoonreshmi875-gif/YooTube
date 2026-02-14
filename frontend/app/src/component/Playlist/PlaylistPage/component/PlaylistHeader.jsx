@@ -60,7 +60,9 @@ const PlaylistHeader = ({ allPlaylist }) => {
       <div className="flex space-x-8 mt-4  sm:font-medium font-normal font-serif text-sm sm:text-base text-white px-4">
         <p>Playlist</p>
         <p>{allPlaylist?.playlist?.videos?.length} videos</p>
-        <p>{allPlaylist?.totalViews}Views</p>
+        <p>
+          {allPlaylist?.totalView || allPlaylist?.playlist?.totalViews}Views
+        </p>
       </div>
 
       <hr className="my-6 border-gray-300" />

@@ -1,8 +1,7 @@
-import asynchandler from "../../utils/asynchandler.js";
+import { Video } from "../../models/video.model.js";
 import ApiError from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { Video } from "../../models/video.model.js";
-import client from "../../utils/redis.js";
+import asynchandler from "../../utils/asynchandler.js";
 import { toggleDislikeHelper } from "../../utils/toggleDislikeHelper.js";
 import { videoInvalidate } from "../../utils/videoInvalidate.js";
 export const toggleVideoDisLike = asynchandler(async (req, res) => {
@@ -19,7 +18,7 @@ export const toggleVideoDisLike = asynchandler(async (req, res) => {
     dislikeField: "videoDislikeCount",
   });
 
-  await videoInvalidate(videoId, req.user._id);
+  await videoInvalidate(videoId, req.user._id, req.user._id);
   return res.status(200).json(
     new ApiResponse(
       200,

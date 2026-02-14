@@ -9,7 +9,10 @@ export default function useHistory() {
       const lastId =
         history.length !== 0 ? history[history.length - 1]._id : [];
       const result = await getWatchHistory(lastId);
-      sethistory((prev) => [...prev, ...result.data.data.watchHistory]);
+      console.log(result, "result of hhistory");
+      sethistory(
+        result.data.data.watchHistory.filter((prev) => prev.videoId !== null),
+      );
     } catch (err) {
       console.error("History fetch failed", err);
     }

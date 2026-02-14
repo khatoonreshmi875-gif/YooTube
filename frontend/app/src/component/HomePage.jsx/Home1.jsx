@@ -22,17 +22,17 @@ const Home1 = () => {
     import("../Video/Search/SearchPage.jsx");
   }, []);
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        await onHandle();
-        await getallvideo(0);
-      } catch (error) {
-        handleAxiosError(error, navigate);
-      }
-    };
-    fetchVideos();
-  }, []);
+  // useEffect(() => {
+  //   const fetchVideos = async () => {
+  //     try {
+  //       await onHandle();
+  //       await getallvideo(0);
+  //     } catch (error) {
+  //       handleAxiosError(error, navigate);
+  //     }
+  //   };
+  //   fetchVideos();
+  // }, []);
 
   return (
     <div>

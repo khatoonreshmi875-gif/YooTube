@@ -5,11 +5,11 @@ import asynchandler from "../../utils/asynchandler.js";
 export const getUserTweet = asynchandler(async (req, res) => {
   const { userId } = req.params;
   const tweet = await Tweet.find({ owner: userId })
-    .sort({ createdAt: 1 })
+    .sort({ createdAt: -1 })
     .populate("video")
     .populate({
       path: "owner",
-      select: "_id channelName avatar",
+      select: "_id channelName avatar ",
     });
   if (!tweet) {
     throw new ApiError(404, "No tweet found for this user");

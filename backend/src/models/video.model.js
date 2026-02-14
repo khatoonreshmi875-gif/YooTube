@@ -48,7 +48,6 @@ const videoSchema = new Schema(
     tags: [
       {
         type: String,
-        required: true,
       },
     ],
 

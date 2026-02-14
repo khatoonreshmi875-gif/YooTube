@@ -81,16 +81,8 @@ const UploadVideo = () => {
     formData.append("videofile", data.videofile?.[0] || null); // FileList → first file
     formData.append("thumbnail", data.thumbnail?.[0] || null);
     const token = localStorage.getItem("token");
-    const result = await axios.post(
-      "http://localhost:8000/api/v1/videos/upload-video",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-
+    const result = await upload_Video(formData);
+    console.log("data of create video", result);
     if (result?.data?.success) {
       navigate("/");
     }
@@ -153,7 +145,6 @@ const UploadVideo = () => {
           register={registerVideo}
           name="tagsSelect"
           error={errors.tagsSelect}
-          rules={{ required: "tags is required" }}
           multiple={true}
           data={tags[stateValue]}
         />

@@ -45,9 +45,10 @@ const Home2 = ({ index, v, s, playlist }) => {
 
       <div className="my-6 ">
         <div className="w-full h-full px-2 ">
-          <div className="bg-gradient-to-tl from-slate-800 via-black to-slate-800  rounded-lg  hover:shadow-lg transition-shadow duration-300  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md w-full shadow-md h-full">
+          <div className="bg-gradient-to-tl from-slate-800 via-black to-slate-800  rounded-lg  hover:shadow-lg transition-shadow duration-300  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md w-full shadow-md h-full ">
             {/* Video / Thumbnail */}{" "}
             {playingSlot ? (
+              
               <HoverVideo
                 video={p}
                 videoref={videoref}

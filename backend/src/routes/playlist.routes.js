@@ -38,8 +38,8 @@ playlistRouter
 playlistRouter.route("/add/:playlistId").post(addVideoToPlayList);
 playlistRouter
   .route("/user-playlist/:userId")
-  .get(cacheMiddleware, getUserPlayListByID);
-playlistRouter.route("/user-playlist").get(cacheMiddleware, getUserPlayList);
+  .get(getUserPlayListByID);
+playlistRouter.route("/user-playlist").get(getUserPlayList);
 playlistRouter
   .route("/playlist-video/:playlistId")
   .get(cacheMiddleware, getPlayListById);

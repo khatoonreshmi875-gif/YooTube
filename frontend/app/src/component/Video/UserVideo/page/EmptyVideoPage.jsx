@@ -20,16 +20,16 @@ const EmptyVideoPage = ({ userId }) => {
           d="M15 10l4.553 2.276a1 1 0 010 1.789L15 17.333V10zM4 6h16M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6"
         />
       </svg>
-      <h2 className="text-xl font-semibold text-gray-300">
+      <h2 className="sm:text-xl text-sm font-semibold text-gray-300">
         No videos available
       </h2>
-      <p className="text-gray-400 mt-2 text-center px-4">
+      <p className="text-gray-400 mt-2 text-center px-4 sm:text-base text-xs" >
         You haven’t uploaded any videos yet. Start by creating your first video!
       </p>
       {userId === user._id ? (
         <button
           onClick={() => navigate("/upload-video")}
-          className="mt-6 px-6 py-2 bg-blue-100 text-gray-900 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          className="mt-6 px-6 py-2 bg-blue-100 text-gray-900 rounded-lg hover:bg-blue-700 transition-colors duration-200 sm:text-base text-xs"
         >
           Upload Video
         </button>

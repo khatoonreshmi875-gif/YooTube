@@ -17,7 +17,9 @@ export const useAuth = () => {
     console.log("data of onhandle", result);
     handleUserSubscribePage(result.data.data._id);
   };
-
+  useEffect(() => {
+    onHandle();
+  }, []);
   return {
     user,
     setuser,

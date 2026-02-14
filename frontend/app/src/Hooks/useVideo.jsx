@@ -13,25 +13,49 @@ export const useVideo = () => {
   const [hasNomore, sethasNomore] = useState(false);
   const [load, setLoad] = useState(false);
   const [count, setcount] = useState(0);
+  // const getallvideo = async (page) => {
+  //   setLoad(true);
+  //   console.log("it runs data ....................", page);
+  //   try {
+  //     const result3 = await RecommendedVideo(page);
+  //     if (result3.data.data.length === 0) {
+  //       sethasNomore(true);
+  //     } else if (result3.data.data.length !== 0) {
+  //       setgetvideo((prev) => [...prev, ...result3.data.data]);
+  //     } else {
+  //       console.warn("No data returned");
+  //     }
+  //   } catch (error) {
+  //     console.log("error of res", error.response?.data?.message);
+  //     throw error;
+  //   } finally {
+  //     setLoad(false);
+  //   }
+  // };
   const getallvideo = async (page) => {
     setLoad(true);
-    console.log("it runs data ....................", page);
+    console.log(">>> Calling API for page:", page);
     try {
       const result3 = await RecommendedVideo(page);
+      console.log("API returned:", result3.data.data.length, "items");
       if (result3.data.data.length === 0) {
         sethasNomore(true);
-      } else if (result3.data.data.length !== 0) {
-        setgetvideo((prev) => [...prev, ...result3.data.data]);
+        console.log(">>> No more data, stopping");
       } else {
-        console.warn("No data returned");
+        setgetvideo((prev) => [...prev, ...result3.data.data]);
+        console.log(
+          ">>> Updated video list length:",
+          prev.length + result3.data.data.length,
+        );
       }
     } catch (error) {
-      console.log("error of res", error.response?.data?.message);
-      throw error;
+      console.log("Error fetching videos:", error.response?.data?.message);
     } finally {
       setLoad(false);
+      console.log(">>> Load finished");
     }
   };
+
   useEffect(() => {
     console.log("Initial load triggered");
     getallvideo(0); // fetch first page when component mounts
@@ -46,13 +70,14 @@ export const useVideo = () => {
   };
 
   useEffect(() => {
-    console.log("add the use effect////////////////////////",hasNomore)
+    console.log("add the use effect////////////////////////", hasNomore);
     const handleScroll = () => {
       if (
-        window.scrollY + window.innerHeight >= document.body.scrollHeight &&
+        window.scrollY + window.innerHeight >= document.body.scrollHeight-50 &&
         !hasNomore
       ) {
-        console.log("it runs or not....................",count);
+        console.log(">>> Scroll trigger fired, count:", count);
+
         fetchNext();
         console.log("hasNomore", hasNomore);
       }
@@ -61,7 +86,7 @@ export const useVideo = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [hasNomore]);
+  }, [hasNomore,count,load]);
 
   const onHandleVideo = async () => {
     const result3 = await getVideoByUserId();

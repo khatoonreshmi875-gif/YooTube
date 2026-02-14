@@ -13,11 +13,17 @@ export const getUserPlayList = asynchandler(async (req, res) => {
   if (!playlist) {
     throw new ApiError(404, "playlist  is not found");
   }
+  const playlistsWithViews = playlist.map((playlist) => {
+    const totalViews = playlist.videos.reduce(
+      (sum, video) => sum + (video.views || 0),
+      0,
+    );
+    return { ...playlist.toObject(), totalViews };
+  });
+
   return res
     .status(200)
-    .json(new ApiResponse(200, playlist, "Playlist fetched successfully"));
+    .json(
+      new ApiResponse(200, playlistsWithViews, "Playlist fetched successfully"),
+    );
 });
-
-
-
- 

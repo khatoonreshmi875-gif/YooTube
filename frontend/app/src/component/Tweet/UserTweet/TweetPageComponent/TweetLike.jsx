@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
   const navigate = useNavigate();
   // usestate
-
+  console.log("tweet data of like", initialDislikeCount, initialLikeCount);
   const [reaction, setReaction] = useState({
     likeCount: initialLikeCount,
     dislikeCount: initialDislikeCount,
@@ -23,6 +23,14 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
   // effect
 
   useEffect(() => {
+    setReaction((prev) => ({
+      ...prev,
+      likeCount: initialLikeCount ?? 0,
+      dislikeCount: initialDislikeCount ?? 0,
+    }));
+  }, [initialLikeCount, initialDislikeCount]);
+
+  useEffect(() => {
     const fetchInitialState = async () => {
       if (!tweetId) return;
       console.log(tweetId);
@@ -30,7 +38,7 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
         const likeRes = await stateOfTweetLike(tweetId);
         console.log(`like res of tweet of ${tweetId}`, likeRes);
         const dislikeRes = await stateOfTweetDisike(tweetId);
-  console.log(`like res of tweet of ${tweetId}`, dislikeRes);
+        console.log(`like res of tweet of ${tweetId}`, dislikeRes);
         setReaction((prev) => ({
           ...prev,
           liked: likeRes.data?.data?.isTweetLike ?? false,

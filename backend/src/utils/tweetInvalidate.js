@@ -26,7 +26,7 @@ export const tweetInvalidateLike = async (tweetId, ownerId, userId) => {
     ),
     client.del(`/api/v1/tweets/c/${tweetId}:${ownerId}`),
     client.del(`/api/v1/tweets/tweets-page/${ownerId}`),
-
+    client.del(`/api/v1/likes/liked-videos:${userId}`),
     client.del(`/api/v1/dislikes/state-tweet-dislike/${tweetId}:${userId}`),
     client.del(`/api/v1/likes/state-tweet-like/${tweetId}:${userId}`),
   ]);

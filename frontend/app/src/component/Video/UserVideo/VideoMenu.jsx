@@ -13,7 +13,7 @@ const VideoMenu = ({ v, isOpen, index }) => {
 
   const handleDelete = async (v) => {
     // Optimistic UI update
-    setvideo((prev) => prev.videos.filter((p) => p._id !== v._id));
+    setvideo((prev) => prev?.filter((p) => p._id !== v._id));
 
     // Show loading toast
     const toastId = toast.loading("Deleting video...");

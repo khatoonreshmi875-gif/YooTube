@@ -57,12 +57,12 @@ const LikeVideo = () => {
         <div className="min-h-screen   text-gray-900 ">
           {/* Header */}
           <div className="flex justify-between items-center p-5  shadow-md cursor-pointer">
-            <span
-              className="sm:text-lg text-sm font-semibold text-white"
-              onClick={() => setIsopen(!Isopen)}
-            >
-              <Bars3Icon className="mx-h-6 w-6 text-white mx-2" />
-            </span>
+          <span
+            className="sm:text-lg text-sm font-semibold text-white"
+            onClick={() => setIsopen(!Isopen)}
+          >
+            <Bars3Icon className="mx-h-6 w-6 text-white mx-2" />
+          </span>
             <p className="bg-gradient-to-tr from-cyan-700 to-slate-800 px-4 py-2 rounded-lg font-poppins sm:text-xl text-sm font-medium text-white font-serif">
               Total liked videos :{likeVideos?.[0]?.count?.[0].totalLike}
             </p>

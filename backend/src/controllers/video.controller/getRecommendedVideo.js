@@ -50,6 +50,7 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
           "watchHistoryVideo.createdAt": 1,
           "watchHistoryVideo.owner": 1,
           "watchHistoryVideo._id": 1,
+          "watchHistoryVideo.duration": 1,
           owner: {
             channelName: "$owners.channelName",
             avatar: "$owners.avatar",
@@ -101,6 +102,7 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
           thumbnail: 1,
           publicId: 1,
           videoFile: 1,
+          duration: 1,
           owner: {
             channelName: "$owners.channelName",
             avatar: "$owners.avatar",
@@ -195,7 +197,7 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
         createdAt: 1,
         thumbnail: 1,
         publicId: 1,
-
+        duration: 1,
         owner: {
           channelName: "$owners.channelName",
           avatar: "$owners.avatar",

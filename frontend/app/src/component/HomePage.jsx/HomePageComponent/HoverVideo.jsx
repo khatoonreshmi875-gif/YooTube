@@ -9,6 +9,12 @@ const HoverVideo = ({
   videoref,
   isData,
 }) => {
+   const formatTime = (seconds) => {
+     const min = Math.floor(seconds / 60);
+     const sec = Math.floor(seconds % 60);
+     return `${min}:${sec.toString().padStart(2, "0")}`;
+   };
+
   return isImageIndex === video?._id ? (
     <div className="px-4 py-4 w-full aspect-video ">
       <video
@@ -41,12 +47,16 @@ const HoverVideo = ({
         onMouseEnter={() => setisImageIndex(video?._id)}
         onClick={onClick}
       />
-      {isData && (
-        <div className="w-[95%] ">
-          <div className="absolute bottom-3 w-[93%] bg-gradient-to-r from-gray-100 via-blue-200 to-slate-200 shadow-[4px_4px_6px_black,-4px_-4px_6px_gray,0_0_8px_blue]  flex font-serif  text-sm font-semibold p-4 rounded-b-lg">
+      {isData ? (
+      
+          <div className="absolute bottom-3 w-fit h-fit bg-white/30      flex font-serif  text-sm font-semibold  rounded-sm px-2">
             Total videos:{video?.videos?.length}
           </div>
-        </div>
+      
+      ) : (
+        <p className="absolute bottom-4 right-6 bg-black/60 text-white text-xs px-2 py-1 rounded">
+          {formatTime(video?.duration)}
+        </p>
       )}
     </div>
   );

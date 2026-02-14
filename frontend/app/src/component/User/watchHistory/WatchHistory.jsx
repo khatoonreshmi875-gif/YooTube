@@ -20,7 +20,6 @@ const WatchHistory = () => {
     sethistory([]);
     const res = await clearAllWatchhistory();
   };
-  
   return (
     <>
       <div className=" w-full  flex flex-col  min-h-screen">

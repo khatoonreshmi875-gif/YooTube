@@ -86,7 +86,18 @@ const CreateTweet = () => {
           name="image"
           className="w-full"
           error={errors.image}
-          rules={{ required: "At least one image is required" }}
+          rules={{
+            required: "At least one image is required",
+            validate: (files) => {
+              if (!files || files.length === 0) {
+                return "At least one image is required";
+              }
+              if (files.length > 4) {
+                return "You can upload a maximum of 4 images";
+              }
+              return true;
+            },
+          }}
           multiple={true}
           accept="image/*"
           watch={watch}

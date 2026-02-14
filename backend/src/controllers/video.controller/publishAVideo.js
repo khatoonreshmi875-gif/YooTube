@@ -58,7 +58,7 @@ const publishAVideo = asynchandler(async (req, res) => {
     duration: video.uploadResult.duration,
     publicId: video.uploadResult.public_id,
     owner: req.user?._id,
-    tags,
+    tags:tags ?? null,
     category,
   });
 

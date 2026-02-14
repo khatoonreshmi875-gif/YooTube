@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { getAllPlaylists } from "../Api/Playlistapi";
 export const usePlaylist = () => {
   const [allPlaylist, setallPlaylist] = useState([]);
@@ -7,5 +7,8 @@ export const usePlaylist = () => {
     setallPlaylist(result.data.data.sortedPlaylists);
     console.log("playlist of dts", result.data.data);
   };
+  useEffect(() => {
+    getAllPlaylist();
+  }, []);
   return { allPlaylist, setallPlaylist, getAllPlaylist };
 };
