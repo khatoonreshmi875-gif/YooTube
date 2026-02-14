@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Report } from "../../Api/UserApi";
 
 export const ReportPage = () => {
-  const { userId} = useParams();
-
+  const { userId } = useParams();
+  const navigate = useNavigate();
   // initialize useForm
   const {
     register,
@@ -19,7 +19,9 @@ export const ReportPage = () => {
       const res = await Report({ content: data.content }, userId);
       console.log(res.data);
       alert("✅ Report submitted successfully!");
+
       reset(); // clears the form
+      navigate("/");
     } catch (err) {
       alert(
         "❌ Error submitting report: " +
