@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const EmptySubscription = ({userId,user}) => {
+const EmptySubscription = ({ userId, user }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -19,15 +19,17 @@ const EmptySubscription = ({userId,user}) => {
             d="M19 9l-7 7-7-7"
           />
         </svg>
-        <h2 className="text-xl font-semibold">No subscriptions yet</h2>
-        <p className="text-gray-400 mt-2 text-center px-4">
+        <h2 className="sm:text-xl text-sm  font-semibold">
+          No subscriptions yet
+        </h2>
+        <p className="text-gray-400 mt-2 text-center px-4 sm:text-base text-xs">
           You haven’t subscribed to any channels. Discover creators and
           subscribe to stay updated!
         </p>
         {userId === user ? (
           <button
             onClick={() => navigate("/")}
-            className="mt-6 px-6 py-2 bg-blue-100 text-gray-900 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            className="mt-6 px-6 py-2 bg-blue-100 text-gray-900 rounded-lg hover:bg-blue-700 transition-colors duration-200 sm:text-base text-xs"
           >
             Explore Channels
           </button>
