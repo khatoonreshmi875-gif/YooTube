@@ -79,7 +79,6 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
       {
         $sort: {
           views: -1,
-          createdAt: -1,
         },
       },
       {
