@@ -14,7 +14,15 @@ const useSubscribers = () => {
     const totalSubcribeChannel = async () => {
       try {
         const res = await totalSubcribe();
-        setStats(res.data.data);
+        if (res.data.data.subscriber) {
+          const validSubscriber = res.data.data.subscriber.filter(
+            (m) => m.userInfo !== null,
+          );
+          setStats({
+            ...res.data.data,
+            subscriber: validSubscriber,
+          });
+        }
       } catch (err) {
         handleAxiosError(err, navigate);
       }

@@ -6,16 +6,16 @@ const NavbarLayout = () => {
   const token = localStorage.getItem("token");
 
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col w-screen">
+    <div className="bg-slate-50 min-h-screen flex flex-col ">
       <div className="h-14">{token && <Navbar />}</div>
 
       <div className="flex flex-row flex-1 w-full">
         {token && (
-          <div className="hidden xs:block xs:w-20">
+          <div className="hidden ss:block ss:w-20">
             <Sidebar />
           </div>
         )}
-        <main className="flex-1 sm:mb-0 overflow-y-auto">
+        <main className="flex-1 sm:mb-0 ">
           <Outlet />
         </main>
       </div>

@@ -12,14 +12,10 @@ import Button from "../../Tweet/UserTweet/Button.jsx";
 import { useNavigate } from "react-router-dom";
 
 const WatchHistory = () => {
-  const { history, user, sethistory } = useContext(AppContext);
-  const [loading, setLoading] = useState(true);
+  const { history, user, sethistory, loading } = useContext(AppContext);
+
   const navigate = useNavigate();
-  useEffect(() => {
-    // Simulate loading delay (replace with actual API call if needed)
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+
   const handleDeleteAVideoWatchHistory = async (videoId) => {
     console.log("run");
     console.log("data of history", history);
@@ -47,6 +43,7 @@ const WatchHistory = () => {
       </div>
     );
   }
+  console.log("history", history);
   return (
     <div className="min-h-screen bg-slate-50 mt-2 pb-16">
       <div className=" mx-auto px-6 space-y-6">
