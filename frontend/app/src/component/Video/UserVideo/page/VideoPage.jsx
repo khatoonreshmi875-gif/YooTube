@@ -5,17 +5,17 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { AppContext } from "../../../utils/contextApi.js";
 import LoadingSpinner from "../../../utils/LoadingSpinner.jsx";
 import VideoMenu from "../VideoMenu.jsx";
-import EmptyVideoPage from "./EmptyVideoPage.jsx";
 import { sortVideos } from "../../../Like/sortVideo";
 import SortMenu from "../../../Like/SortMenu.jsx";
 import HoverVideo from "../../../HomePage.jsx/HomePageComponent/HoverVideo.jsx";
 import VideoInfo from "../../../HomePage.jsx/HomePageComponent/VideoInfo.jsx";
+import EmptySkeleton from "../../../utils/EmptySkeleton.jsx";
+import { MdVideoLibrary } from "react-icons/md";
 
 const VideoPage = () => {
   const [sort, setSort] = useState("");
   const { userId } = useParams();
   const { video, user } = useContext(AppContext);
-  const [IsOpen, setIsOpen] = useState(null);
   const navigate = useNavigate();
   const videoRef = useRef([]);
   const [isImageIndex, setIsImageIndex] = useState(null);
@@ -24,21 +24,31 @@ const VideoPage = () => {
   const goToVideoPage = async (videoId, userId) => {
     navigate(`/video-rec-page/${videoId}/user/${userId}`);
   };
-  if (video === null) {
+  if (video === null ) {
     return <LoadingSpinner label="Fetching Videos" />;
   }
   if (video.length === 0) {
     // data fetched but no videos
-    return <EmptyVideoPage userId={userId} />;
+    return (
+      <div className="bg-white w-fit h-fit mx-auto border-slate-300 shadow-md rounded-lg p-3">
+        <EmptySkeleton
+          Icon={MdVideoLibrary}
+          button_msg=" Upload Video"
+          msg="You haven’t uploaded any videos yet. Start by creating your first video!"
+          heading_text="  No videos available"
+          onClick={() => navigate("/upload-video")}
+          userId={userId}
+        />
+      </div>
+    );
   }
-
   return (
     <>
       <span
         className="sm:text-lg text-sm font-semibold text-white"
         onClick={() => setIsOpenMenu(!isOpenMenu)}
       >
-        <Bars3Icon className="mx-h-6 w-6 text-white mx-2" />
+        <Bars3Icon className="mx-h-6 w-6 text-slate-700 mx-2" />
       </span>
       <SortMenu
         setSort={setSort}
@@ -50,7 +60,8 @@ const VideoPage = () => {
         {sortVideos(video, sort).map((v, index) => (
           <div
             key={index}
-            className="bg-gradient-to-tl from-slate-800 via-black to-slate-800 rounded-xl shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md "
+            className="bg-white rounded-xl shadow-sm border border-gray-200 
+                        hover:shadow-md transition w-full h-full"
           >
             {" "}
             <HoverVideo
@@ -67,17 +78,7 @@ const VideoPage = () => {
                 user.role === "admin" ||
                 user.role === "moderator") && (
                 <div className="">
-                  <button
-                    onClick={() => setIsOpen(IsOpen === index ? null : index)}
-                    className="text-2xl ml-auto text-white hover:text-gray-300 transition "
-                  >
-                    {IsOpen === index ? (
-                      <XMarkIcon className="h-6 w-10 text-white" />
-                    ) : (
-                      <EllipsisVerticalIcon className="h-6 w-10 text-white " />
-                    )}
-                  </button>
-                  <VideoMenu v={v} isOpen={IsOpen} index={index} />
+                  <VideoMenu v={v} index={index} />
                 </div>
               )}
             </div>

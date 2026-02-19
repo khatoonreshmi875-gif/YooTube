@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
 import { getDB } from "../../indexdb";
 import Layout from "../../Layout";
 import EmotyDownloadSkeleton from "../components/EmotyDownloadSkeleton";
+import EmptySkeleton from "../../utils/EmptySkeleton";
+import { CloudArrowDownIcon } from "@heroicons/react/24/outline";
+import { AppContext } from "../../utils/contextApi";
+import { Home } from "../../Home";
+import { useNavigate } from "react-router-dom";
 const DownloadPage = () => {
   const [downloads, setDownloads] = useState();
-
+  const { user } = useContext(AppContext);
+  const navigate=useNavigate()
   useEffect(() => {
-    
     try {
       const saved = JSON.parse(localStorage.getItem("downloads")) || [];
       setDownloads(saved);
@@ -29,32 +33,46 @@ const DownloadPage = () => {
     videoEl.src = url;
     videoEl.play();
   };
-  console.log(downloads);
+
+  if (downloads?.length === 0) {
+    // data fetched but no videos
+    return (
+      <div className="bg-white flex  w-full h-full justify-center items-center">
+        <EmptySkeleton
+          Icon={CloudArrowDownIcon}
+          button_msg="  Browse Videos"
+          msg="  Start exploring and save your favorite videos here."
+          heading_text="  No videos downloaded yet"
+          onClick={() => navigate("/")}
+          userId={user._id}
+        />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen w-full  mb-24 sm:mb-0">
       <div className=" h-full  ">
-        {downloads?.length === 0 ? (
-          <EmotyDownloadSkeleton className="h-full w-full " />
-        ) : (
-          <ul>
-            {downloads?.map((v, index) => (
-              <div className=" sm:p-3 py-3">
-                {" "}
-                <li key={v._id}>
-                  <div>
-                    <Layout
-                      s={v}
-                      index={index}
-                      func={() => playOffline(v._id)}
-                      isDownload={true}
-                      setDownloads={setDownloads}
-                    />
-                  </div>
-                </li>
-              </div>
-            ))}
-          </ul>
-        )}
+        <ul>
+          {downloads?.map((v, index) => (
+            <div className=" sm:p-3 py-3">
+              {" "}
+              <li key={v._id}>
+                <div className="w-full sm:block hidden">
+                  <Layout
+                    v={v}
+                    index={index}
+                    func={() => playOffline(v._id)}
+                    isDownload={true}
+                    setDownloads={setDownloads}
+                  />
+                </div>
+                <div className="w-full block sm:hidden">
+                  <Home v={v} key={v._id} setDownloads={setDownloads} />
+                </div>
+              </li>
+            </div>
+          ))}
+        </ul>
       </div>
     </div>
   );

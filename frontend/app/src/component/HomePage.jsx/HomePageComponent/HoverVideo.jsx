@@ -4,26 +4,30 @@ const HoverVideo = ({
   video,
   onClick,
   setisImageIndex,
-
+  isDownload,
   isImageIndex,
   videoref,
   isData,
 }) => {
-   const formatTime = (seconds) => {
-     const min = Math.floor(seconds / 60);
-     const sec = Math.floor(seconds % 60);
-     return `${min}:${sec.toString().padStart(2, "0")}`;
-   };
+  const formatTime = (seconds) => {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec.toString().padStart(2, "0")}`;
+  };
 
   return isImageIndex === video?._id ? (
-    <div className="px-4 py-4 w-full aspect-video ">
+    <div
+      className={`${
+        isDownload ? "sm:w-96 w-full" : "w-full"
+      }px-4 py-4 w-full aspect-video`}
+    >
       <video
         controls
         autoPlay
         muted
         playsInline
         onClick={onClick}
-        className="w-full aspect-video rounded-lg object-cover"
+        className="w-full aspect-video rounded-lg object-cover border border-gray-200 shadow-sm hover:shadow-md transition"
         onMouseLeave={() => setisImageIndex(null)}
         ref={(el) => (videoref.current[video?._id] = el)}
         preload="none"
@@ -39,27 +43,32 @@ const HoverVideo = ({
       </video>
     </div>
   ) : (
-    <div className="px-4 py-4 relative w-full aspect-video  ">
+    <div
+      className={`${
+        isDownload ? "sm:w-96 w-full" : "w-full"
+      }px-4 py-4 w-full aspect-video relative`}
+    >
       <img
         src={video?.thumbnail}
         alt={video?.title}
-        className="w-full aspect-video rounded-lg object-cover cursor-pointer  shadow-[4px_4px_6px_black,-4px_-4px_6px_black,0_0_8px_blue] "
+        className="w-full aspect-video rounded-lg object-cover cursor-pointer 
+                 border border-gray-200 shadow-sm hover:shadow-md transition"
         onMouseEnter={() => setisImageIndex(video?._id)}
         onClick={onClick}
       />
+
       {isData ? (
-      
-          <div className="absolute bottom-3 w-fit h-fit bg-white/30      flex font-serif  text-sm font-semibold  rounded-sm px-2">
-            Total videos:{video?.videos?.length}
-          </div>
-      
+        <div className="absolute bottom-4 left-0 bg-white/80 text-gray-700 text-xs
+                      sm:text-sm font-medium rounded px-2 py-1 shadow-sm">
+          Total videos: {video?.videos?.length}
+        </div>
       ) : (
-        <p className="absolute bottom-4 right-6 bg-black/60 text-white text-xs px-2 py-1 rounded">
+        <p className="absolute bottom-4 right-0 bg-gray-800/80 text-white 
+                   text-xs px-2 py-1 rounded shadow-sm">
           {formatTime(video?.duration)}
         </p>
       )}
     </div>
-  );
-};
-
-export default React.memo(HoverVideo);
+  )
+}
+  export default HoverVideo;

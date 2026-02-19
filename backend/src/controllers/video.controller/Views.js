@@ -1,11 +1,14 @@
 import { Video } from "../../models/video.model.js";
+import ApiError from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import asynchandler from "../../utils/asynchandler.js";
 import { videoInvalidate } from "../../utils/videoInvalidate.js";
 
 export const Views = asynchandler(async (req, res) => {
   const { videoId } = req.params;
-
+  if (!videoId) {
+    throw new ApiError(404, "videoId is not found");
+  }
   const updatedVideo = await Video.findByIdAndUpdate(
     videoId,
     {
@@ -18,7 +21,7 @@ export const Views = asynchandler(async (req, res) => {
     },
   );
 
-  await videoInvalidate(videoId, updatedVideo.owner, req.user._id);
+  await videoInvalidate(videoId, updatedVideo.owner, req?.user?._id);
   res
     .status(200)
     .json(new ApiResponse(200, { updatedVideo }, "View increase successfully"));

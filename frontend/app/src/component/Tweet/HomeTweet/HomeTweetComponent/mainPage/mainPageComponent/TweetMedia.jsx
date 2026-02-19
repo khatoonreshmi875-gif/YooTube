@@ -2,7 +2,7 @@ import React from "react";
 import { useTweetMedia } from "./useMedia";
 import { TweetByTweetId } from "../../../../../../Api/TweetApi";
 import { useNavigate } from "react-router-dom";
-
+import { BiRightArrowAlt } from "react-icons/bi"; 
 const TweetMedia = ({ tweet, isTweet = false }) => {
   const {
     showVisibleIndex,
@@ -33,7 +33,7 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
             {}
             {getFileType(p) === "mp4" ? (
               <video
-                className="w-full aspect-square object-cover "
+                className="w-full aspect-video object-cover "
                 autoPlay
                 playsInline
                 ref={videoRef}
@@ -76,16 +76,16 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
                 [tweet._id]: (prev[tweet._id] + 1) % merge(tweet).length || 0,
               }))
             }
-            className="absolute bottom-4 right-4 bg-white sm:px-4 sm:py-2 p-2 rounded shadow hover:bg-gray-200 z-40"
+            className="absolute bottom-2 right-2 bg-white/40 sm:p-0.5 rounded shadow hover:bg-gray-200 z-40 text-xs"
           >
-            ➡
+           <BiRightArrowAlt/>
           </button>
 
           {/* Counter */}
           <p
-            className={`absolute bottom-20 right-4 bg-white px-4 py-2 rounded shadow text-xs font-medium z-40 text-black sm:text-sm `}
+            className={`absolute top-0 right-0 bg-white/40 px-2 shadow text-[12px]  z-40 text-black font-light text-xs`}
           >
-            {(showVisibleIndex[tweet?._id] ?? 0) + 1} of {merge(tweet).length}
+            {(showVisibleIndex[tweet?._id] ?? 0) + 1} / {merge(tweet).length}
           </p>
         </div>
       ))}

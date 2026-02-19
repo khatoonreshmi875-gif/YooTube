@@ -19,7 +19,7 @@ const MainPage = ({ tweet, isNested, tweetByTweetId }) => {
       <div className={`${isNested ? "" : "h-screen"}`}>
         {/* Tweet Card */}
         <div
-          className={`${isNested ? " w-full aspect-auto " : "h-[95%] mt-24"} bg-gradient-to-br from-cyan-900 via-black to-cyan-900 shadow-md rounded-xl overflow-hidden shadow-blue-300 hover:from-black hover:via-cyan-900 hover:to-black hover:shadow-lg hover:shadow-blue-200 mt-2`}
+          className={`${isNested ? " w-full aspect-auto " : "h-[95%] "} bg-white shadow-sm rounded-xl overflow-hidden shadow-slate-500 mt-2`}
         >
           {/* Header */}
           <TweetHeader tweet={tweet} />

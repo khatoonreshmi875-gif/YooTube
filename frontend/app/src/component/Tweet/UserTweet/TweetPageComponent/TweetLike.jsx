@@ -8,6 +8,7 @@ import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { stateOfTweetLike, toggleTweetLike } from "../../../../Api/LikeApi.js";
 import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
 import { useNavigate } from "react-router-dom";
+import LikeDislike from "../LikeDislike.jsx";
 
 const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
   const navigate = useNavigate();
@@ -116,40 +117,17 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
   );
 
   return (
-    <div className="flex flex-row items-center ">
-      <button
-        onClick={() => {
+    <>
+      <LikeDislike
+        onClick1={() => {
           tweetLike(tweetId);
         }}
-        className="md:m-5 text-sm  text-white  flex space-x-2 "
-      >
-        {reaction.liked ? (
-          <ThumbsUp fill="white" stroke="white" size={16} />
-        ) : (
-          <ThumbsUp size={16} />
-        )}
-
-        <span className="text-gray-200 text-xs md:text-sm">
-          {reaction.likeCount}
-        </span>
-      </button>
-      <button
-        className="text-sm text-white flex  space-x-2 "
         onClick={() => {
           toggleDislike(tweetId);
         }}
-      >
-        {reaction.disliked ? (
-          <ThumbsDown fill="white" stroke="white" size={16} />
-        ) : (
-          <ThumbsDown size={16} />
-        )}
-
-        <span className="text-gray-200 text-xs md:text-sm">
-          {reaction.dislikeCount}
-        </span>
-      </button>
-    </div>
+        reaction={reaction}
+      />
+    </>
   );
 };
 

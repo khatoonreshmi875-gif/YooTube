@@ -9,8 +9,8 @@ const SearchBox = () => {
     <div>
       <input
         type="text"
-        placeholder="🔍 Search channels..."
-        className="w-full  mx-auto block h-12 rounded-lg text-base sm:text-lg p-3 border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        placeholder=" Search channels..."
+        className="w-full  mx-auto block h-12 bg-white border border-slate-200 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-600 transition text-slate-700 placeholder-slate-400 outline-none text-sm"
         value={part}
         onChange={(e) => {
           handleSearchChannel(e.target.value);

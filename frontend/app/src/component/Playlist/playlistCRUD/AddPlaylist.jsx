@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../utils/contextApi.js";
 import { Navigate } from "react-router-dom";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import Heading from "../../utils/form/Heading.jsx";
 const AddPlaylist = () => {
   const { playlistId } = useParams();
   const { video, onHandleVideo, user } = useContext(AppContext);
@@ -59,11 +60,7 @@ const AddPlaylist = () => {
 
         {prevData && preview?.length > 0 && (
           <>
-            {
-              <h1 className="text-lg font-semibold text-gray-700  ml-5">
-                Your Playlist Collection
-              </h1>
-            }
+            <Heading label="Your Playlist Collection" />
             <div
               className="overflow-x-auto whitespace-nowrap scroll-smooth [&::-webkit-scrollbar]:hidden flex gap-4 bg-gradient-to-r from-gray-100 via-white to-blue-50 rounded-xl mx-5 p-4 shadow-md  "
               onMouseLeave={() => setIsOpen(null)}

@@ -11,11 +11,13 @@ export const getSimilarVideo = asynchandler(async (req, res) => {
   console.log("page number", page);
   const CurrVideo = await Video.findById(videoId);
   const doc = nlp(CurrVideo.title);
+  const tags = Array.isArray(CurrVideo.tags) ? CurrVideo.tags : [];
+
   const nouns = doc.nouns().out("array");
   const regexp = nouns.map((n) => `\\b${n}\\b`).join("|");
   const simVideoQuery = [
     { category: CurrVideo.category },
-    { tags: { $in: CurrVideo.tags } },
+    { tags: { $in: tags } },
     { owner: CurrVideo.owner },
   ];
   if (regexp) {
@@ -42,7 +44,11 @@ export const getSimilarVideo = asynchandler(async (req, res) => {
               $cond: [
                 {
                   $gt: [
-                    { $size: { $setIntersection: ["$tags", CurrVideo.tags] } },
+                    {
+                      $size: {
+                        $ifNull: [{ $setIntersection: ["$tags", tags] }, []],
+                      },
+                    },
                     0,
                   ],
                 },

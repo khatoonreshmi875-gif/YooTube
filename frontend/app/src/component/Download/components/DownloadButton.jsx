@@ -2,7 +2,7 @@ import { getDB } from "../../indexdb";
 const DownloadButton = ({ video }) => {
   const handleDownload = async () => {
     // Fetch video file from server
-    console.log(video,"data of videofile.................")
+    console.log(video, "data of videofile.................");
     const response = await fetch(video.videoFile);
     const blob = await response.blob();
 
@@ -17,7 +17,8 @@ const DownloadButton = ({ video }) => {
       title: video.title,
       thumbnail: video.thumbnail,
       videoFile: video.videoFile,
-      view: video.view,
+      description: video.description,
+      views: video.views,
       createdAt: video.createdAt,
       owner: {
         avatar: video.owner.avatar,

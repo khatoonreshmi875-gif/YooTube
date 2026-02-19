@@ -17,9 +17,6 @@ const SearchPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const {
-    // allvideo,
-    // setallvideo,
-    selectedItem,
 
     setsimilarVideos,
   } = useContext(AppContext);
@@ -104,7 +101,7 @@ const SearchPage = () => {
       apiCall: getSimilarVideo,
       fetchNextVideo: fetchNextVideo,
       setallvideo: setallvideo,
-      setsimilarVideos: setsimilarVideos,
+     
       navigate: navigate,
     });
   };
@@ -133,8 +130,8 @@ const SearchPage = () => {
   });
   return (
     <div className="w-[100%]  pb-24">
-      <div className="flex flex-col space-y-6 bg-gradient-to-bl from-slate-950 to-slate-900 sm:p-4 p-1 ">
-        {sortVideo(allvideo, selectedItem?.label)?.map((s, index) => {
+      <div className="flex flex-col space-y-6 sm:p-4 p-1 ">
+        {sortVideo(allvideo, type)?.map((s, index) => {
           const tweetPost = index === 4;
           return (
             <div key={index} className="w-full">
@@ -154,13 +151,13 @@ const SearchPage = () => {
             No more videos are available
           </p>
         )}
-        {loading && (
+        {/* {loading && (
           <div>
             {Array.from({ length: 3 }).map((_, i) => (
               <SearchSkeleton key={i} />
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

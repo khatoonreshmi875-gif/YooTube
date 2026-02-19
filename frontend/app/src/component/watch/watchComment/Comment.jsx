@@ -61,8 +61,8 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
     <div
       className={`${
         isNested
-          ? "  bg-gradient-to-br from-black via-cyan-950 to-black  rounded-lg shadow-sm hover:from-cyan-900 hover:via-gray-900 hover:to-cyan-950  "
-          : "bg-gradient-to-tl from-slate-800 via-black to-slate-800 rounded-xl shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md  ml-4 "
+          ? "bg-slate-50 border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+          : "bg-white border border-slate-300 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ml-4"
       }`}
     >
       <div className={`flex flex-col ${isNested ? "p-5" : "py-5 px-3"}`}>
@@ -81,11 +81,11 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
           setIsOpen={setIsOpen}
         />
 
-        <div className="flex items-center  mt-8 mb-[-0.8rem] text-sm text-gray-700 w-full justify-between  ">
+        <div className="flex items-center  mt-8 mb-[-1rem]  text-slate-700 w-full justify-between  ">
           <CommentLike c={c} isNested={isNested} />
 
           <div
-            className="text-sm font-medium text-blue-600 mt-2 active:text-blue-300 p-2 "
+            className="lg:text-base   xs:text-sm text-xs font-medium text-blue-600 mt-2 active:text-blue-400 p-2 "
             onClick={() => {
               setAllreply((prev) => {
                 const state = prev === null ? index : null;
@@ -100,12 +100,12 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
               });
             }}
           >
-            <button className="flex">
-              <div className="flex xs:text-sm text-[13px]  ">
+            <button className="flex items-center space-x-1">
+              <div className="flex lg:text-base   xs:text-sm text-xs  ">
                 {c.ReplyCount > 1
                   ? `${c.ReplyCount} replies`
                   : `${c.ReplyCount} reply`}
-                <ChevronRightIcon className="h-5 w-5 mt-1" />
+                <ChevronRightIcon className=" sm:w-5 w-3 aspect-square mt-0.5 text-blue-600" />
               </div>
             </button>
           </div>

@@ -1,6 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import ApiError from "./ApiError.js";
 import axios from "axios";
+import { checkDuration } from "./checkDuration.js";
+import path from "path";
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -8,11 +12,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
+  console.log(localFilePath);
   try {
+    // const ext = path.extname(localFilePath).toLowerCase(); // ".mp4"
+
+    // const duration = await checkDuration(localFilePath);
+    // if (ext === "mp4" && duration > 120) {
+    //   throw new ApiError(400, "video is more than 2 not be able to uploaded");
+    // }
+
     if (!localFilePath || !fs.existsSync(localFilePath)) {
       console.error("❌ File not found:", localFilePath);
       return null;
     }
+
     const uploadResult = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
       tags: [tag],
@@ -51,6 +64,8 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
             { effect: "sharpen" },
           ],
         });
+      } else if (tag === "thumbnail") {
+        url = cloudinary.url(uploadResult.public_id);
       } else if (tag === "tweet") {
         url = cloudinary.url(uploadResult.public_id, {
           transformation: [
@@ -73,8 +88,7 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
             transformation: [
               {
                 width: 600,
-                height: 338,
-
+                aspect_ratio: "16:9",
                 crop: "limit",
                 quality: "auto:best",
                 fetch_format: "auto",
@@ -94,7 +108,7 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
                 // target width
                 width: 600,
                 height: 338,
-                crop: "fit", // keep aspect ratio, don’t distort
+                crop: "limit", // keep aspect ratio, don’t distort
                 // sharpen edges
                 quality: "auto:best", // best visual quality
                 fetch_format: "auto", // serve WebP/AVIF when supported
@@ -108,7 +122,12 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
       }
     }
 
-    return { uploadResult, url };
+    return {
+      secure_url: uploadResult.secure_url,
+      duration: uploadResult.duration,
+      public_id: uploadResult.public_id,
+      url,
+    };
   } catch (error) {
     console.log("Cloudinary upload Failed : ", error);
     if (fs.existsSync(localFilePath)) {

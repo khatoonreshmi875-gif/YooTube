@@ -227,18 +227,20 @@ export const downloadVideo = async (videoId) => {
 };
 
 export const getViews = async (videoId) => {
+  console.log("video id in get view", videoId);
   try {
     const token = localStorage.getItem("token");
 
-    const response = await axios.patch(
-      `${BASE_URL}/views/${videoId}`,
+   const response = await axios.patch(
+     `${BASE_URL}/views/${videoId}`,
+     {}, // no body needed
+     {
+       headers: {
+         Authorization: `Bearer ${token}`,
+       },
+     },
+   );
 
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
 
     console.log("response of view : ", response.data);
 

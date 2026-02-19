@@ -27,7 +27,6 @@ const ModeratorRoleList = () => {
   const FetchAllUser = async () => {
     try {
       const res = await getUserByModerator();
-      console.log("data of all user", res);
       setUserData(res.data.data);
     } catch (err) {
       handleAxiosError(err, navigate);

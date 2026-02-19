@@ -2,14 +2,17 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { toggleVideoDislike } from "../../../Api/DislikeApi.js";
 import { toggleLike } from "../../../Api/LikeApi.js";
 
-import { ThumbsUp,ThumbsDown  } from "lucide-react";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { AppContext } from "../../utils/contextApi.js";
 import {
   SubscribeBtn,
   toggleSubcribeWithId,
 } from "../../../Api/Subscription.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
+import LikeDislike from "../../Tweet/UserTweet/LikeDislike.jsx";
+import Button from "../../Tweet/UserTweet/Button.jsx";
 
 const VideoLike = ({
   videoId,
@@ -17,6 +20,7 @@ const VideoLike = ({
   initialDislikeCount,
   initialLike,
   initialDislike,
+  userId,
 }) => {
   const [reaction, setreaction] = useState({
     likeCount: initialLikeCount,
@@ -36,7 +40,7 @@ const VideoLike = ({
     });
   }, [initialLikeCount, initialDislikeCount, initialLike, initialDislike]);
 
-  const { userId, user } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   const [videoState, setvideoState] = useState({
     initialState: false,
     SubscribeValue: {},
@@ -58,6 +62,7 @@ const VideoLike = ({
     }
   }, [user._id, stateOfSubscribeButton]); // ✅
   const toggleSubscribeBtn = useCallback(async (channelId) => {
+    console.log("subscribe buttob ", channelId);
     setvideoState((prev) => ({
       ...prev,
       SubscribeValue: !prev.SubscribeValue,
@@ -140,62 +145,31 @@ const VideoLike = ({
     ? videoState.SubscribeValue
     : videoState.SubValue;
   return (
-    <div className="flex xs:space-x-8 space-x-4 xs:flex-1 ">
-      <button
-        className="bg-red-700 text-white px-2 py-0.5 rounded-md  border-white/40 hover:border-black font-serif text-xs sm:text-base "
+    <div className="flex xs:space-x-8 space-x-4 xs:flex-1">
+      {/* Subscribe Button */}
+      <Button
+        bg={
+          isCurrentlySubscribed
+            ? "bg-red-100 text-red-700 hover:bg-red-700 hover:text-white"
+            : "bg-slate-200 text-slate-700 hover:bg-slate-400 hover:text-white"
+        }
         onClick={() => {
           toggleSubscribeBtn(userId);
-          setvideoState((prev) => ({
-            ...prev,
-            initialState: true,
-          }));
+          setvideoState((prev) => ({ ...prev, initialState: true }));
         }}
-      >
-        {isCurrentlySubscribed ? "Subscribed" : "UnSubscribe"}
-      </button>
+        label={isCurrentlySubscribed ? "Subscribed" : "Unsubscribe"}
+      />
 
-      <button
-        onClick={() => {
-          toggleLikeVideo(videoId);
-        }}
-      >
-        {
-          <>
-            <div className="flex items-center  text-white space-x-2   ">
-              <p>
-                {reaction.liked ? (
-                  <ThumbsUp fill="white" stroke="white" size={16} />
-                ) : (
-                  <ThumbsUp size={16} />
-                )}
-              </p>
-
-              <p className="text-sm ">{reaction.likeCount}</p>
-            </div>
-          </>
-        }
-      </button>
-      <button
+      {/* Like Button */}
+      <LikeDislike
         onClick={() => {
           toggleDislike(videoId);
         }}
-      >
-        {
-          <>
-            <div className="flex items-center  text-white space-x-2    ">
-              <p>
-                {reaction.disliked ? (
-                  <ThumbsDown fill="white" stroke="white" size={16} />
-                ) : (
-                  <ThumbsDown size={16} />
-                )}
-              </p>
-
-              <p className="text-sm ">{reaction.dislikeCount}</p>
-            </div>
-          </>
-        }
-      </button>
+        onClick1={() => {
+          toggleLikeVideo(videoId);
+        }}
+        reaction={reaction}
+      />
     </div>
   );
 };

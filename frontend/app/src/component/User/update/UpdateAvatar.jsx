@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { getUpdateAvatar } from "../../../Api/UserApi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
-import FormButton from "../../Video/UserVideo/form/FormButton";
 import { AppContext } from "../../utils/contextApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
 import { RecommendedVideo } from "../../../Api/VideoApi";
+import FormButton from "../../utils/form/FormButton";
+import Heading from "../../utils/form/Heading";
 
 const UpdateAvatar = () => {
   const { user, setgetvideo, onHandle } = useContext(AppContext);
@@ -46,9 +47,7 @@ const UpdateAvatar = () => {
         encType="multipart/form-data"
       >
         {" "}
-        <h1 className="sm:text-3xl text-xl font-serif font-bold text-center text-blue-900  ">
-          Uplaod Profile Image
-        </h1>
+        <Heading label="Update Profile Image" />
         <UpdateFormThumbnail
           label=" Upload Avatar"
           register={registerVideo}

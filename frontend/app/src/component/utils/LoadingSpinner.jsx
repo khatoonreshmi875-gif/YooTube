@@ -9,15 +9,15 @@ const LoadingSpinner = ({ label, isData = false }) => {
     return () => clearInterval(timeUpdate);
   }, []);
   return (
-    <div className="flex flex-col justify-center items-center  space-y-6 h-screen">
+    <div className="flex flex-col justify-center items-center  space-y-6 h-full">
       {/* Spinner */}
       <div
-        className={`animate-spin rounded-full ${isData ? "sm:w-14 w-10" : "w-20"} aspect-square border-t-4 border-b-4 border-blue-700 border-solid`}
+        className={`animate-spin rounded-full ${isData ? "sm:w-14 w-10" : "sm:w-20 w-14"} aspect-square border-t-4 border-b-4 border-blue-700 border-solid`}
       ></div>
 
       {/* Loading Text */}
       <p
-        className={`text-blue-300  ${isData ? "text-base" : "text-lg"} font-bold tracking-wide animate-pulse`}
+        className={`text-blue-300  ${isData ? "text-base" : "sm:text-lg text-base"} font-bold tracking-wide animate-pulse`}
       >
         {label}
         {dots}

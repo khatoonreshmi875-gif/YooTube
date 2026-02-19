@@ -13,9 +13,9 @@ const TweetContent = ({ tweet }) => {
   }, []);
   return (
     <>
-      <div className={`p-4 h-auto`}>
+      <div className={`sm:p-4 p-2 h-[4.3rem]`}>
         <p
-          className={`text-white font-serif font-thin text-sm ${readMore ? "" : "line-clamp-2"}  `}
+          className={`text-slate-700 xs:text-sm text-[12px] ${readMore ? "" : "line-clamp-2"}  `}
           ref={textRef}
         >
           {tweet?.content}
@@ -23,7 +23,7 @@ const TweetContent = ({ tweet }) => {
         {isClamped && (
           <button
             onClick={() => setReadMore(!readMore)}
-            className="text-blue-200 text-xs"
+            className="text-blue-400 text-xs"
           >
             {readMore ? "read less" : "read more"}
           </button>

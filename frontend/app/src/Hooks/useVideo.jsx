@@ -9,29 +9,11 @@ import {
 
 export const useVideo = () => {
   const [getvideo, setgetvideo] = useState([]);
-  const [video, setvideo] = useState([]);
+  const [video, setvideo] = useState(null);
   const [hasNomore, sethasNomore] = useState(false);
   const [load, setLoad] = useState(false);
   const [count, setcount] = useState(0);
-  // const getallvideo = async (page) => {
-  //   setLoad(true);
-  //   console.log("it runs data ....................", page);
-  //   try {
-  //     const result3 = await RecommendedVideo(page);
-  //     if (result3.data.data.length === 0) {
-  //       sethasNomore(true);
-  //     } else if (result3.data.data.length !== 0) {
-  //       setgetvideo((prev) => [...prev, ...result3.data.data]);
-  //     } else {
-  //       console.warn("No data returned");
-  //     }
-  //   } catch (error) {
-  //     console.log("error of res", error.response?.data?.message);
-  //     throw error;
-  //   } finally {
-  //     setLoad(false);
-  //   }
-  // };
+const token = localStorage.getItem("token");  
   const getallvideo = async (page) => {
     setLoad(true);
     console.log(">>> Calling API for page:", page);
@@ -59,7 +41,7 @@ export const useVideo = () => {
   useEffect(() => {
     console.log("Initial load triggered");
     getallvideo(0); // fetch first page when component mounts
-  }, []);
+  }, [token]);
   const fetchNext = () => {
     if (hasNomore) return;
     setcount((prev) => {
@@ -73,7 +55,8 @@ export const useVideo = () => {
     console.log("add the use effect////////////////////////", hasNomore);
     const handleScroll = () => {
       if (
-        window.scrollY + window.innerHeight >= document.body.scrollHeight-50 &&
+        window.scrollY + window.innerHeight >=
+          document.body.scrollHeight - 50 &&
         !hasNomore
       ) {
         console.log(">>> Scroll trigger fired, count:", count);
@@ -86,7 +69,7 @@ export const useVideo = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [hasNomore,count,load]);
+  }, [hasNomore, count, load]);
 
   const onHandleVideo = async () => {
     const result3 = await getVideoByUserId();

@@ -1,15 +1,24 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
-const SidebarItem = ({itemName,path,Icon,onClick}) => {
+const SidebarItem = ({ itemName, path, Icon, onClick }) => {
   return (
     <NavLink to={path} onClick={onClick} aria-label={itemName}>
-      <div className="sm:w-16 sm:h-16 xs:w-14 xs:h-14  w-9 h-9 rounded-full  bg-gradient-to-tr from-cyan-950 via-black to-cyan-950   hover:from-black hover:via-cyan-950 hover:to-black  text-white text-sm flex flex-col items-center justify-center  shadow-md shadow-blue-200 active:shadow-black hover:border-white hover:border-2 hover:scale-105 duration-300 hover:opacity-70 my-1">
-        <Icon className="sm:h-7 sm:w-7 w-5 h-5" />
-        <span className="text-xs font-serif hidden xs:block">{itemName}</span>
+      <div
+        className="sm:w-16 xs:w-14  w-7 aspect-square 
+                   rounded-lg bg-white border border-slate-200 
+                   flex flex-col items-center justify-center 
+                   text-slate-600 sm:text-sm  shadow-sm hover:shadow-md 
+                   hover:border-blue-400 hover:text-blue-600 
+                   transition-transform duration-200 hover:scale-105 my-1 hover:bg-slate-100 active:shadow-transparent"
+      >
+        <Icon className=" sm:w-7 w-5 aspect-square " />
+        <span className="text-xs font-medium hidden xs:block">{itemName}</span>
       </div>
-      <span className="text-xs font-serif text-white xs:hidden block">{itemName}</span>
+      <span className="text-[9px] font-medium text-gray-700 xs:hidden block mt-1 text-center">
+        {itemName}
+      </span>
     </NavLink>
   );
-}
+};
 
-export default SidebarItem
+export default SidebarItem;

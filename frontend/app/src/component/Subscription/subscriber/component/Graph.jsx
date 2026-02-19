@@ -43,71 +43,96 @@ const Graph = () => {
   const xMin = currentData.length > 0 ? currentData[0].x : undefined;
   const xMax =
     currentData.length > 0 ? currentData[currentData.length - 1].x : undefined;
-
+  const isSmallScreen = window.innerWidth < 640;
   return (
     <>
-      {/* <div className="lg:w-[70%] md:max-w-96 h-48 w-72 lg:h-[5rem] sm:h-52 p-6 bg-white rounded-2xl shadow-lg border border-gray-200"> */}
-      <div className="xs:w-[95%] w-[95%]  ss:w-[90%] sx:w-[95%] sm:w-[95%] md:w-[95%] lg:w-[70%] h-[20rem] sm:h-[25rem] lg:h-[33rem] p-6 bg-white rounded-2xl shadow-lg border border-gray-200 mx-auto mt-2">
-        <Line
-          data={{
-            datasets: [
-              {
-                label: "Subscribers",
-                data: currentData,
-                borderColor: "#EC4899",
-                backgroundColor: "rgba(236, 72, 153, 0.3)",
-                tension: 0.3,
-                fill: true,
-                pointRadius: 5,
+      <div className="w-full flex justify-center">
+        <div
+          className="w-[95%] lg:w-[95%] h-[20rem] sm:h-[25rem] lg:h-[33rem] 
+                 p-6 bg-white rounded-2xl shadow-sm hover:shadow-md 
+                 border border-slate-200 mx-auto mt-4 transition"
+        >
+          <Line
+            data={{
+              datasets: [
+                {
+                  label: "Subscribers",
+                  data: currentData,
+                  borderColor: "#EC4899",
+                  backgroundColor: "rgba(236, 72, 153, 0.3)",
+                  tension: 0.3,
+                  fill: true,
+                  pointRadius: 5,
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  labels: {
+                    color: "#374151",
+                    font: { size: isSmallScreen ? 8 : 11 },
+                  },
+                },
+                title: {
+                  display: true,
+                  text: "Weekly Subscriber Growth",
+                  color: "#374151",
+                  font: { size: isSmallScreen ? 12 : 16, weight: "600" },
+                },
               },
-            ],
-          }}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { labels: { color: "#374151" } },
-              title: {
-                display: true,
-                text: "Weekly Subscriber Growth",
-                color: "#374151",
+              scales: {
+                x: {
+                  type: "time",
+                  time: { unit: "day", displayFormats: { week: "MMM d" } },
+                  ticks: {
+                    color: "#374151",
+                    font: { size: isSmallScreen ? 8 : 11 },
+                  },
+                  grid: { color: "rgba(0,0,0,0.05)" },
+                  min: xMin,
+                  max: xMax,
+                },
+                y: {
+                  type: "linear",
+                  min: 0,
+                  max: 15,
+                  ticks: {
+                    color: "#374151",
+                    font: { size: isSmallScreen ? 8 : 11 },
+                  },
+                  grid: { color: "rgba(0,0,0,0.05)" },
+                },
               },
-            },
-            scales: {
-              x: {
-                type: "time",
-                time: { unit: "day", displayFormats: { week: "MMM d" } },
-                ticks: { color: "#374151" },
-                grid: { color: "rgba(0,0,0,0.1)" },
-                min: xMin,
-                max: xMax,
-              },
-              y: {
-                type: "linear",
-                min: 0,
-                max: 15,
-                ticks: { color: "#374151" },
-                grid: { color: "rgba(0,0,0,0.1)" },
-              },
-            },
-          }}
-        />
-        <div className="flex justify-between ">
-          <button
-            onClick={() => setpage((prev) => Math.max(prev - 1, 0))}
-            disabled={page === 0}
-            className="px-4 py-2 bg-blue-200 active:bg-blue-400 text-blue-700 rounded-lg hover:bg-blue-200 disabled:opacity-50 transition w-fit"
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => setpage((prev) => prev + 1)}
-            disabled={end >= groupedData.length}
-            className="px-4 py-2 bg-blue-200 active:bg-blue-400 text-blue-700 rounded-lg hover:bg-blue-200 disabled:opacity-50 transition w-fit"
-          >
-            Next
-          </button>
-        </div>{" "}
+            }}
+          />
+
+          {/* Pagination Controls */}
+          <div className="flex justify-between items-center mt-4">
+            <button
+              onClick={() => setpage((prev) => Math.max(prev - 1, 0))}
+              disabled={page === 0}
+              className=" sm:px-4 sm:py-2 p-1 bg-white border border-slate-300 
+                     text-slate-700 sm:text-sm rounded-lg shadow-sm text-xs 
+                     hover:bg-blue-50 hover:text-blue-600 
+                     disabled:opacity-50 transition"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => setpage((prev) => prev + 1)}
+              disabled={end >= groupedData.length}
+              className="sm:px-4 sm:py-2 p-1  bg-white border border-slate-300 
+                     text-slate-700 sm:text-sm rounded-lg shadow-sm text-xs
+                     hover:bg-blue-50 hover:text-blue-600 
+                     disabled:opacity-50 transition"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -7,6 +7,8 @@ export const useAuth = () => {
   const [user, setuser] = useState("");
   const [subscribers, setSubscribers] = useState([]);
   const [isLoggedin, setisLoggedin] = useState();
+  const token = localStorage.getItem("token");
+
   const handleUserSubscribePage = async (userId) => {
     const res = await totalSubcribeChannel(userId);
     setSubscribers(res?.data?.data);
@@ -19,7 +21,7 @@ export const useAuth = () => {
   };
   useEffect(() => {
     onHandle();
-  }, []);
+  }, [token]);
   return {
     user,
     setuser,

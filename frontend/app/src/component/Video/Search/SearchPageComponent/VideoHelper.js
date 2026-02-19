@@ -9,18 +9,13 @@ export const fetchAndUpdateVideos = async ({
   handleAxiosError,
   isDirectData = false,
   hasNoVideo,
-  navigate
+  navigate,
 }) => {
-  try {
+  try {console.log("the similar ivdoe page run")
     const res = Id ? await apiCall(Id, page) : await apiCall(page);
     const videoData = isDirectData ? res.data.data : res.data.data.video;
-
-    if (setsimilarVideos) {
-      setsimilarVideos(videoData);
-    }
-
+console.log("videoData",videoData)
     if (videoData.length === 0) {
-    
       if (isDirectData) {
         setHasNoVideo?.(true); // safe optional call
       } else {

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Layout from "../../../Layout";
+import { Home } from "../../../Home";
+
 const VideoItem = ({ s, index, isDownload }) => {
   const navigate = useNavigate();
   if (s === null) {
@@ -27,10 +29,13 @@ const VideoItem = ({ s, index, isDownload }) => {
         </div>
       ) : (
         <div>
-          <div className="w-full">
-            
-              <Layout s={s} key={s._id} isDownload={true} />
-           
+          <div className="w-full ">
+            <div className="w-full sm:block hidden">
+              <Layout v={s} key={s._id} isDownload={true} />
+            </div>
+            <div className="w-full block sm:hidden">
+              <Home v={s} key={s._id}  />
+            </div>
           </div>
         </div>
       )}

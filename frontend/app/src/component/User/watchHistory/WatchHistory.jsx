@@ -1,65 +1,87 @@
 import { useContext, useEffect, useState } from "react";
-import { clearAllWatchhistory } from "../../../Api/UserApi.js";
-import { AppContext } from "../../utils/contextApi.js";
+import { MdHistory } from "react-icons/md";
+import {
+  clearAllWatchhistory,
+  getRemoveAVideoInWatchhistory,
+} from "../../../Api/UserApi.js";
 import { Home } from "../../Home.jsx";
-import Videoskeleton from "../../Video/Videoskeleton.jsx";
-import EmptyWatchHistory from "./EmptyWatchHistory.jsx";
+import { AppContext } from "../../utils/contextApi.js";
+import EmptySkeleton from "../../utils/EmptySkeleton.jsx";
+import Videoskeleton from "../../utils/Videoskeleton.jsx";
+import Button from "../../Tweet/UserTweet/Button.jsx";
+import { useNavigate } from "react-router-dom";
 
 const WatchHistory = () => {
-  const { history, allHistory, setallHistory, sethistory } =
-    useContext(AppContext);
+  const { history, user, sethistory } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Simulate loading delay (replace with actual API call if needed)
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+  const handleDeleteAVideoWatchHistory = async (videoId) => {
+    console.log("run");
+    console.log("data of history", history);
+    sethistory((prev) => prev.filter((item) => item.videoId._id !== videoId));
+    const res = await getRemoveAVideoInWatchhistory(videoId);
+  };
 
   const handleDeleteWatchhistory = async () => {
     sethistory([]);
     const res = await clearAllWatchhistory();
   };
+  if (history.length === 0) {
+    // data fetched but no videos
+    return (
+      <div className="bg-white flex  w-full h-full justify-center items-center">
+        <EmptySkeleton
+          Icon={MdHistory}
+          button_msg="  Browse Videos"
+          msg="  You haven’t watched any videos yet. Start exploring and your history
+            will appear here. "
+          heading_text=" No Watch History"
+          onClick={() => navigate("/")}
+          userId={user._id}
+        />
+      </div>
+    );
+  }
   return (
-    <>
-      <div className=" w-full  flex flex-col  min-h-screen">
-        {history.length === 0 && <EmptyWatchHistory />}
+    <div className="min-h-screen bg-slate-50 mt-2 pb-16">
+      <div className=" mx-auto px-6 space-y-6">
+        {/* Header + Delete Button */}
 
-        {history.length !== 0 && (
-          <button
-            className=" 
-               bg-red-600 text-white  w-full mt-3 p-3 rounded-lg shadow-md shadow-red-200 active:bg-slate-900"
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Watch History
+          </h2>
+          <Button
             onClick={handleDeleteWatchhistory}
-          >
-            Delete WatchHistory
-          </button>
-        )}
+            label=" Clear History"
+            bg="bg-red-100 text-red-600 hover:bg-red-600"
+          />
+        </div>
 
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 sm:space-x-5 space-y-5 pt-3 pb-20 ">
-          {loading ? (
-            // Skeleton loader
-            <>
-              {" "}
-              {Array.from({ length: 9 }).map((_, i) => (
-                <Videoskeleton key={i} />
-              ))}
-            </>
-          ) : (
-            history.map((v, index) => {
-              return (
+        {/* Videos Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {loading
+            ? Array.from({ length: 9 }).map((_, i) => <Videoskeleton key={i} />)
+            : history.map((v, index) => (
                 <Home
                   key={index}
                   v={v.videoId}
                   index={index}
                   watchedAt={v.watchedAt}
                   s={v._id}
+                  handleDeleteAVideoWatchHistory={
+                    handleDeleteAVideoWatchHistory
+                  }
                 />
-              );
-            })
-          )}
+              ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

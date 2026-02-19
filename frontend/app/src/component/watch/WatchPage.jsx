@@ -28,19 +28,35 @@ const WatchPage = () => {
 
           {/* Mobile: toggle between comments and similar videos */}
           <div className="xl:hidden mt-3 ">
-            <div className="flex justify-center space-x-4 mb-2 ">
-              <button
-                onClick={() => setShowComments(true)}
-                className={`px-3 py-1 text-sm rounded ${showComments ? "bg-cyan-900 text-white" : "bg-gray-200"}`}
-              >
-                Comments
-              </button>
-              <button
-                onClick={() => setShowComments(false)}
-                className={`px-3 py-1 text-sm rounded ${!showComments ? "bg-cyan-900 text-white" : "bg-gray-200"}`}
-              >
-                Similar Videos
-              </button>
+            <div className="xl:hidden mt-3">
+              <div className="flex">
+                <ul className="flex justify-around items-center w-full p-2 bg-white text-slate-700 sm:text-base text-[12px] font-medium border-b border-slate-200 shadow-sm">
+                  <li>
+                    <button
+                      onClick={() => setShowComments(true)}
+                      className={`px-3 py-1 rounded-md transition ${
+                        showComments
+                          ? "bg-blue-50 text-blue-600"
+                          : "hover:bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      Comments
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => setShowComments(false)}
+                      className={`px-3 py-1 rounded-md transition ${
+                        !showComments
+                          ? "bg-blue-50 text-blue-600"
+                          : "hover:bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      Similar Videos
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             {showComments ? (
@@ -65,7 +81,7 @@ const WatchPage = () => {
         </div>
 
         {/* Right side: only visible on large screens */}
-        <div className="hidden lg:flex flex-col mr-2 ">
+        <div className="hidden xl:flex flex-col mr-2 ">
           {fromPlaylist && (
             <button
               onClick={() => setFromPlaylist(false)}

@@ -1,11 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { MdMessage } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { TweetPageApi } from "../../../Api/TweetApi.js";
 import { AppContext } from "../../utils/contextApi.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
 import LoadingSpinner from "../../utils/LoadingSpinner.jsx";
+import EmptySkeleton from "../../utils/EmptySkeleton.jsx";
 import TweetMedia from "../HomeTweet/HomeTweetComponent/mainPage/mainPageComponent/TweetMedia.jsx";
-import EmptytweetPage from "./TweetPageComponent/EmptyTweetPage.jsx";
 import TweetLike from "./TweetPageComponent/TweetLike.jsx";
 import TweetPageBtn from "./TweetPageComponent/TweetPageBtn.jsx";
 
@@ -55,7 +56,18 @@ const tweetDataPage = () => {
   return (
     <>
       {tweetData?.length === 0 ? (
-        <EmptytweetPage userId={userId} user={user?._id} />
+        <div className="bg-white w-fit h-fit mx-auto border-slate-300 shadow-md rounded-lg p-3">
+          {" "}
+          <EmptySkeleton
+            Icon={MdMessage}
+            button_msg=" Create Tweet"
+            msg="This channel hasn’t posted any tweets yet. Check back later or explore
+          other content!"
+            heading_text="   No tweets available"
+            onClick={() => navigate("/create-tweet")}
+            userId={userId}
+          />
+        </div>
       ) : (
         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 p-6 justify-center">
           {tweetData?.map((t) => {
@@ -63,15 +75,15 @@ const tweetDataPage = () => {
               ref.current[t._id] = [];
             }
             return (
-              <div key={t._id} className="">
-                <div className=" bg-gradient-to-br from-slate-800 via-black to-slate-800 text-white rounded-xl   transform hover:scale-105 transition-all duration-300  p-5 shadow-md shadow-blue-200  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 hover:shadow-blue-300 hover:shadow-lg">
+              <div key={t._id}>
+                <div className=" bg-white text-slate-700 rounded-xl h-auto   transform hover:scale-105 transition-all duration-300  p-5 shadow-md border-slate-300">
                   {/* Media */}
 
                   <TweetMedia tweet={t} isTweet={true} />
 
                   {/* Content */}
-                  <div className="p-4">
-                    <p className="text-white font-serif lg:text-lg  text-sm line-clamp-2 mb-2">
+                  <div className="p-4 ">
+                    <p className=" xs:text-sm text-[12px] line-clamp-2 mb-2  h-[4rem]">
                       {t?.content}
                     </p>
 

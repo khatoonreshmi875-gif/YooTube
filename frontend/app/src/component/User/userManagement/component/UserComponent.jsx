@@ -17,7 +17,7 @@ const UserComponent = ({ setUserData, userData, selectedChannelId }) => {
         cellPadding="10"
         className="hidden lg:table w-full text-white border-collapse"
       >
-        <thead className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 font-serif">
+        <thead className="bg-blue-100 text-slate-900 font-medium">
           <tr>
             <th className="py-3 text-center">Avatar</th>
             <th className="py-3 text-center">Channel Name</th>
@@ -34,9 +34,9 @@ const UserComponent = ({ setUserData, userData, selectedChannelId }) => {
               key={user.email}
               className={`${
                 index % 2 === 0
-                  ? "bg-gradient-to-tr from-black via-slate-900 to-black hover:from-cyan-700 hover:to-cyan-700"
-                  : "bg-gradient-to-tr from-black via-cyan-950 to-black hover:from-cyan-700 hover:to-cyan-700"
-              } transition font-serif text-center`}
+                  ? "bg-white hover:bg-slate-100"
+                  : "bg-slate-50 hover:bg-slate-100"
+              } transition  text-center`}
             >
               <UserTable
                 setUserData={setUserData}
@@ -53,7 +53,7 @@ const UserComponent = ({ setUserData, userData, selectedChannelId }) => {
         {prioritizedUsers?.map((user) => (
           <div
             key={user.email}
-            className="bg-gradient-to-tr from-black via-slate-900 to-black p-4 rounded-lg shadow text-white"
+            className="bg-white border border-slate-200 p-4 rounded-lg shadow text-slate-700 hover:bg-slate-50 transition"
           >
             <UserCard
               setUserData={setUserData}

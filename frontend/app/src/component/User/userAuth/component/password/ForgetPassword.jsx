@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { forgetPassword } from "../../../../../Api/UserApi";
 import { handleAxiosError } from "../../../../utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
-import FormField from "../form/FormField";
+import FormField from "../../../../utils/form/FormField";
+import Heading from "../../../../utils/form/Heading";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
@@ -53,10 +54,8 @@ const ForgetPassword = () => {
       >
         <div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-xl shadow-lg p-8">
           {/* Title */}
-          <h2 className="text-2xl font-bold text-center text-white mb-6">
-            Welcome Back 👋
-          </h2>
-
+          <Heading label=" Welcome Back"/>
+ 
           {/* Email Field */}
           <FormField
             label="Email"
@@ -87,13 +86,13 @@ const ForgetPassword = () => {
           </button>
           {isSubmitting && (
             <div className="mt-6 text-center">
-              <p className="text-lg font-mono text-indigo-400 animate-pulse">
+              <p className="text-lg font-mono text-slate-400 animate-pulse">
                 ⏳ Resend available in {count}
               </p>
             </div>
           )}
           {/* Footer */}
-          <p className="mt-4 text-center text-sm text-gray-300">
+          <p className="mt-4 text-center text-sm text-slate-700">
             Don’t have an account?{" "}
             <span
               className="text-indigo-400 hover:underline cursor-pointer "

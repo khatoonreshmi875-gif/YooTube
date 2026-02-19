@@ -1,27 +1,48 @@
-import {
-  CloudArrowDownIcon
-} from "@heroicons/react/24/solid";
+import { CloudArrowDownIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+
 const EmotyDownloadSkeleton = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  <EmptySkeleton
+    Icon={CloudArrowDownIcon}
+    button_msg="  Browse Videos"
+    msg="  Start exploring and save your favorite videos here."
+    heading_text="  No videos downloaded yet"
+    onClick={() => navigate("/")}
+    userId={user._id}
+  />;
   return (
-    <div>
-      <div className=" flex justify-center sm:items-center space-y-4 h-screen">
-        <div className="flex justify-center flex-col items-center ">
-          <div className="text-5xl text-white ">
-            <CloudArrowDownIcon />
-          </div>
-          <p className="text-lg font-semibold text-gray-200 sm:text-xl">
-            No videos downloaded yet
-          </p>
-          <p className="text-sm sm:text-base text-gray-400">
-            Start exploring and save your favorites here!
-          </p>
-          <button className="mt-4 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition sm:text-base text-sm" onClick={()=>navigate("/")}>
-            Browse Videos
-          </button>
+    <div className="flex items-center justify-center min-h-screen bg-slate-50">
+      <div className="flex flex-col items-center text-center space-y-4">
+        {/* Icon */}
+        <div
+          className="w-16 h-16 flex items-center justify-center 
+                        rounded-full bg-blue-50"
+        >
+          <CloudArrowDownIcon className="w-8 h-8 text-blue-600" />
         </div>
-      </div>{" "}
+
+        {/* Title */}
+        <h2 className="text-xl sm:text-2xl font-semibold text-slate-900">
+          No videos downloaded yet
+        </h2>
+
+        {/* Subtitle */}
+        <p className="text-sm sm:text-base text-slate-500 max-w-sm">
+          Start exploring and save your favorite videos here.
+        </p>
+
+        {/* Button */}
+        <button
+          onClick={() => navigate("/")}
+          className="mt-2 px-5 py-2.5 
+                     bg-blue-600 hover:bg-blue-700 
+                     text-white text-sm font-medium 
+                     rounded-lg transition duration-200"
+        >
+          Browse Videos
+        </button>
+      </div>
     </div>
   );
 };

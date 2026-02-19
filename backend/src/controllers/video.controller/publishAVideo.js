@@ -18,6 +18,7 @@ const publishAVideo = asynchandler(async (req, res) => {
   const videofile = req.files?.videofile?.[0];
   const thumbnailFile = req.files?.thumbnail?.[0];
   console.log("videofile", videofile);
+
   console.log("thumbnail", thumbnailFile);
 
   //get file path of video and thumbnail
@@ -34,7 +35,7 @@ const publishAVideo = asynchandler(async (req, res) => {
 
   //video and thumbnail upload on cloudinary
   const [video, thumbnail] = await Promise.all([
-    uploadOnCloudinary(videofilePath),
+    uploadOnCloudinary(videofilePath, "thumbnail"),
     uploadOnCloudinary(thumbnailFilePath, "video"),
   ]);
 
@@ -53,12 +54,12 @@ const publishAVideo = asynchandler(async (req, res) => {
   const newVideo = await Video.create({
     title,
     description,
-    videoFile: video.uploadResult.secure_url,
+    videoFile: video.secure_url,
     thumbnail: thumbnail.url,
-    duration: video.uploadResult.duration,
-    publicId: video.uploadResult.public_id,
+    duration: video.duration,
+    publicId: video.public_id,
     owner: req.user?._id,
-    tags:tags ?? null,
+    tags: tags ?? null,
     category,
   });
 

@@ -8,28 +8,37 @@ const CommentHeader = ({ setIsOpen, IsOpen, c }) => {
   return (
     <div>
       <div className="flex items-start space-x-3">
-        <div className="sm:w-16 sm:h-16 w-9 aspect-square rounded-full overflow-hidden    ">
+        {/* Avatar */}
+        <div className="sm:w-16 sm:h-16 w-9 aspect-square rounded-full overflow-hidden">
           <img
             src={c.owner.avatar}
-           
             alt="avatar"
-            className="sm:w-16  xs:w-12 w-9 aspect-square rounded-full object-cover  "
+            className="sm:w-16 xs:w-12 w-9 aspect-square rounded-full object-cover"
           />
         </div>
 
+        {/* Channel Info */}
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center">
             <div className="flex space-x-4 mt-3">
-              <p className="sm:text-sm xs:text-[13px] text-xs font-semibold text-white font-serif hover:text-gray-200">
+              <p
+                className="lg:text-sm text-xs font-medium 
+                            text-slate-900  hover:text-blue-600 transition-colors"
+              >
                 {c.owner.channelName}
               </p>
-              <p className="sm:text-xs xs:text-[12px] text-white text-[10px] hover:text-gray-200 ">
+              <p
+                className="sm:text-xs xs:text-[12px] text-slate-600 text-[10px] 
+                            hover:text-blue-500 transition-colors"
+              >
                 {FormatTime(c.createdAt)}
               </p>
             </div>
+
+            {/* Menu Icon */}
             <CiMenuKebab
               onClick={() => setIsOpen(!IsOpen)}
-              className="cursor-pointer text-white hover:text-gray-200"
+              className="cursor-pointer text-slate-700 hover:text-blue-600 transition-colors"
             />
           </div>
         </div>
@@ -39,3 +48,4 @@ const CommentHeader = ({ setIsOpen, IsOpen, c }) => {
 };
 
 export default CommentHeader;
+

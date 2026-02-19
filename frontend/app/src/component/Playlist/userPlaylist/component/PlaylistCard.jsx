@@ -11,7 +11,7 @@ import { getPlaylistByPlaylistId } from "../../../../Api/Playlistapi";
 import HoverVideo from "../../../HomePage.jsx/HomePageComponent/HoverVideo";
 import VideoInfo from "../../../HomePage.jsx/HomePageComponent/VideoInfo";
 
-const PlaylistCard = ({ infoPlaylist, userId }) => {
+const PlaylistCard = ({ infoPlaylist, userId, setInfoPlaylist }) => {
   const { FormatTime, user } = useContext(AppContext);
   const navigate = useNavigate();
   const [isOpen, setisOpen] = useState(null);
@@ -27,10 +27,11 @@ const PlaylistCard = ({ infoPlaylist, userId }) => {
   return (
     <>
       {" "}
-      {infoPlaylist?.data?.map((playlist, index) => (
+      {infoPlaylist?.map((playlist, index) => (
         <div
           key={playlist._id}
-          className=" hover:bg-blue-50 bg-gradient-to-br from-slate-800 via-black to-slate-800  rounded-lg hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md shadow-md "
+          className=" bg-white rounded-xl shadow-sm border border-gray-200 
+                        hover:shadow-md transition w-full h-full "
         >
           <HoverVideo
             video={playlist}
@@ -41,30 +42,19 @@ const PlaylistCard = ({ infoPlaylist, userId }) => {
             isData={true}
           />
 
-          <div className="flex items-center justify-between">
+          <div className="flex justify-between relative">
             <VideoInfo v={playlist} showImage={false} />
             {(user._id === userId ||
               user.role === "admin" ||
               user.role === "moderator") && (
-              <div
-                className=" text-white relative"
-                onClick={() => {
-                  setisOpen(isOpen === index ? null : index);
-                }}
-              >
-                {isOpen === index ? (
-                  <XMarkIcon className="h-6 w-10 text-white" />
-                ) : (
-                  <EllipsisVerticalIcon className="h-6 w-10 text-white " />
-                )}
-                <PlaylistMenu
-                  isOpen={isOpen}
-                  setRefresh={setRefresh}
-                  playlist={playlist}
-                  refresh={refresh}
-                  index={index}
-                />
-              </div>
+              <PlaylistMenu
+                setRefresh={setRefresh}
+                playlist={playlist}
+                refresh={refresh}
+                index={index}
+                userId={userId}
+                setInfoPlaylist={setInfoPlaylist}
+              />
             )}
           </div>
         </div>

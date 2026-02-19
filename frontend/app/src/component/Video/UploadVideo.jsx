@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { upload_Video } from "../../Api/VideoApi.js";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { upload_Video } from "../../Api/VideoApi.js";
 import { tags } from "./EditVideo/CategoryTag.js";
-import FormField from "./UserVideo/form/FormField.jsx";
-import FormInput from "./UserVideo/form/FormInput.jsx";
-import FormSelect from "./UserVideo/form/FormSelect.jsx";
-import FormButton from "./UserVideo/form/FormButton.jsx";
+
+import FormField from "../utils/form/FormField.jsx";
+import FormImageField from "../utils/form/FormImageField";
+import FormButton from "../utils/form/FormButton";
+import FormSelect from "../utils/form/FormSelect";
+import Heading from "../utils/form/Heading.jsx";
 const UploadVideo = () => {
   const [stateValue, setstateValue] = useState("");
   const categories = [
@@ -90,103 +91,112 @@ const UploadVideo = () => {
 
   return (
     <>
-      <form
-        onSubmit={handleVideoSubmit(onSubmit)}
-        className="flex flex-col justify-center sm:space-y-8 space-y-3 bg-white shadow-lg sm:rounded-xl  sm:mx-auto sm:w-[80%] sm:mt-4 w-full h-fit  py-28 px-2  "
-        encType="multipart/form-data"
-      >
-        {" "}
-        <h1 className="sm:text-3xl text-xl font-serif font-bold text-center text-blue-900  ">
-          Create your Video Post
-        </h1>
-        {/* Title */}
-        <FormInput
-          label="Title"
-          name="title"
-          placeholder="Enter your title here..."
-          error={errors.title}
-          register={registerVideo}
-          rules={{
-            required: "title is required",
-            minLength: {
-              value: 2,
-              message: "title must be at least 2 words ",
-            },
-          }}
-        />
-        {/* Description */}
-        <FormInput
-          label="Description"
-          name="description"
-          placeholder="Enter your description here..."
-          error={errors.description}
-          register={registerVideo}
-          rules={{
-            required: "description is required",
-            minLength: {
-              value: 2,
-              message: "Name must be at least 25 words ",
-            },
-          }}
-        />
-        {/* Category */}
-        <FormSelect
-          label="  Category"
-          register={registerVideo}
-          name="category"
-          error={errors.category}
-          rules={{ required: "category is required" }}
-          data={categories}
-          onChange={(e) => setstateValue(e.target.value)}
-        />
-        {/* Tags Select */}
-        <FormSelect
-          label="  Tags"
-          register={registerVideo}
-          name="tagsSelect"
-          error={errors.tagsSelect}
-          multiple={true}
-          data={tags[stateValue]}
-        />
-        {/* Tags Input */}
-        <FormInput
-          label=" Custom Tags"
-          name="tagsInput"
-          placeholder="Enter your tagsInput here..."
-          error={errors.tagsInput}
-          register={registerVideo}
-          rules={{
-            required: "tagsInput is required",
-            minLength: {
-              value: 2,
-              message: "tags must be at least 2 words ",
-            },
-          }}
-        />
-        {/* Video Upload */}
-        <FormField
-          label="  Upload Video"
-          register={registerVideo}
-          name="videofile"
-          className="w-full"
-          error={errors.videofile}
-          rules={{ required: "video is required" }}
-          watch={watch}
-          isVideo={true}
-        />
-        {/* Thumbnail Upload */}
-        <FormField
-          label=" Upload Thumbnail"
-          register={registerVideo}
-          className="w-full"
-          name="thumbnail"
-          error={errors.thumbnail}
-          rules={{ required: "thumbnail is required" }}
-          watch={watch}
-        />
-        {/* Buttons */}
-        <FormButton navigate={navigate} issubmitting={issubmittingVideo} />
-      </form>
+      <div className="bg-white mx-auto   items-center     md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24">
+        <form
+          onSubmit={handleVideoSubmit(onSubmit)}
+          encType="multipart/form-data"
+        >
+          {" "}
+          <Heading label="Upload Video" />
+          <div className="grid grid-cols-1 lg:grid-cols-2   mt-4 md:mr-6  ">
+            {/* Title */}
+            <div className="flex flex-col justify-center space-y-3 min-w-0  ">
+              {" "}
+              <FormField
+                label="Title"
+                name="title"
+                placeholder="Enter your title here..."
+                error={errors.title}
+                register={registerVideo}
+                rules={{
+                  required: "title is required",
+                  minLength: {
+                    value: 2,
+                    message: "title must be at least 2 words ",
+                  },
+                }}
+              />
+              {/* Description */}
+              <FormField
+                label="Description"
+                name="description"
+                placeholder="Enter your description here..."
+                register={registerVideo}
+                error={errors.description}
+                type="text"
+                rules={{
+                  required: "description is required",
+                  minLength: {
+                    value: 25,
+                    message: "Name must be at least 25 words ",
+                  },
+                }}
+              />
+              {/* Category */}
+              <FormSelect
+                label="  Category"
+                register={registerVideo}
+                name="category"
+                error={errors.category}
+                rules={{ required: "category is required" }}
+                data={categories}
+                onChange={(e) => setstateValue(e.target.value)}
+              />
+              {/* Tags Select */}
+              <FormSelect
+                label="  Tags"
+                register={registerVideo}
+                name="tagsSelect"
+                error={errors.tagsSelect}
+                multiple={true}
+                data={tags[stateValue]}
+              />
+              {/* Tags Input */}
+              <FormField
+                label=" Custom Tags"
+                name="tagsInput"
+                placeholder="Enter your tagsInput here..."
+                error={errors.tagsInput}
+                register={registerVideo}
+                rules={{
+                  required: "tagsInput is required",
+                  minLength: {
+                    value: 2,
+                    message: "tags must be at least 2 words ",
+                  },
+                }}
+              />
+            </div>
+            <div className="w-full mt-8 space-y-8">
+              {" "}
+              <FormImageField
+                label="  Upload Video"
+                register={registerVideo}
+                name="videofile"
+                className="w-full"
+                error={errors.videofile}
+                rules={{ required: "video is required" }}
+                watch={watch}
+                isVideo={true}
+                message="You can't upload videos longer than 3 minutes."
+              />
+              {/* Thumbnail Upload */}
+              <FormImageField
+                label=" Upload Thumbnail"
+                register={registerVideo}
+                className="w-full"
+                name="thumbnail"
+                error={errors.thumbnail}
+                rules={{ required: "thumbnail is required" }}
+                watch={watch}
+              />
+            </div>
+          </div>
+          {/* Video Upload */}
+          {/* Buttons */}
+          <FormButton navigate={navigate} issubmitting={issubmittingVideo} />
+        </form>
+      </div>
     </>
   );
 };

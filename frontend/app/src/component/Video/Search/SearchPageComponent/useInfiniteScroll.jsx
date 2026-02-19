@@ -11,9 +11,7 @@ const useInfiniteScroll = ({
 }) => {
   const [count, setCount] = useState(0);
   const fetchNext = () => {
-    // if (!selectedItem?.id) {
-    //   return;
-    // }
+   
     console.log("api run ");
     setLoading(true);
     setCount((prev) => {

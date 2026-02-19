@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   AddComment,
   getAllCommentOfSpecificVideo,
@@ -18,7 +18,7 @@ const CommentThread = () => {
   const hasFetchedFirst = useRef(false);
   const { user, FormatTime } = useContext(AppContext);
   const [commentsWithLikes, setCommentsWithLikes] = useState([]);
-
+  const navigate = useNavigate();
   const [contentData, setcontentData] = useState("");
   const [contents, setcontents] = useState("");
   const allData = (data, id) => {
@@ -39,30 +39,39 @@ const CommentThread = () => {
 
   useEffect(() => {
     console.log("curr video id", videoId);
+    api(videoId, 0);
+    hasFetchedFirst.current = true;
   }, [videoId]);
 
-  useEffect(() => {
-    if (videoId) {
-      hasNomore.current = false;
-      setCommentsWithLikes([]);
 
-      hasFetchedFirst.current = false;
-    }
-  }, [videoId]);
-  console.log("add comment");
   const addcomment = useCallback(
     async (videoId, userdata) => {
-      const res = await AddComment(videoId, userdata);
-      console.log("add comment", res.data.data);
+      const text = (userdata?.content || "").trim();
+      if (!text) return;
 
-      setCommentsWithLikes((prev) => [
-        allData(contentData, res.data.data._id),
-        ...prev,
-      ]);
+      // generate a unique temporary id per call
+      const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
+      // optimistic update
+      setCommentsWithLikes((prev) => [allData(text, tempId), ...prev]);
+
+      try {
+        const res = await AddComment(videoId, { content: text });
+        const created = res?.data?.data;
+
+        if (created && created._id) {
+          setCommentsWithLikes((prev) =>
+            prev.map((c) => (c._id === tempId ? created : c)),
+          );
+        }
+      } catch (err) {
+        setCommentsWithLikes((prev) => prev.filter((c) => c._id !== tempId));
+        console.error("Comment add failed", err);
+        handleAxiosError(err, navigate);
+      }
     },
-    [contentData],
+    [allData, handleAxiosError, navigate],
   );
-  console.log("Child received replyApi:", getReplycomment);
 
   //call api when it hit the bottom of similar video
 
@@ -95,16 +104,12 @@ const CommentThread = () => {
   );
 
   const handleScroll = useCallback(() => {
-    if (hasFetchedFirst.current === false) {
-      api(videoId, 0);
-      hasFetchedFirst.current = true;
-    }
-
     if (
-      window.scrollY + window.innerHeight >= document.body.scrollHeight &&
+      window.scrollY + window.innerHeight >= document.body.scrollHeight-50 &&
       hasNomore.current === false &&
       hasFetchedFirst.current === true
     ) {
+      console.log("it run")
       setCount((prev) => {
         const newValue = prev + 1;
         //console.log("add value count increae", videoId);
@@ -136,22 +141,21 @@ const CommentThread = () => {
       />
       {/* Input */}
       <div className="w-full">
-        
-          {commentsWithLikes?.map((c, index) => (
-            <Comment
-              key={index}
-              index={index}
-              c={c}
-              isNested={false}
-              replyApi={getReplycomment}
-              commentsWithLikes={commentsWithLikes}
-              setCommentsWithLikes={setCommentsWithLikes}
-            />
-          ))}
+        {commentsWithLikes?.map((c, index) => (
+          <Comment
+            key={c._id}
+            index={index}
+            c={c}
+            isNested={false}
+            replyApi={getReplycomment}
+            commentsWithLikes={commentsWithLikes}
+            setCommentsWithLikes={setCommentsWithLikes}
+          />
+        ))}
       </div>
       {hasNomore.current && (
-        <p className="text-2xl text-center  font-serif w-full bg-slate-700">
-          No more are available
+        <p className="sm:text-xl text-sm text-center text-blue-600  font-serif w-full bg-blue-100 ">
+          No comments are available
         </p>
       )}
       {loading && (

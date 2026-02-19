@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // adjust import paths
-
+import Heading from "../../../utils/form/Heading";
 import { getReport, getReportByDate } from "../../../../Api/UserApi";
 import { handleAxiosError } from "../../../utils/erroeHandler";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
@@ -60,21 +60,19 @@ const ReportAdminPage = () => {
   }
 
   return (
-    <div className="w-full  px-6 mb-24">
+    <div className="w-full  sm:px-6 mb-24">
       {/* Page Heading */}
-      <h1 className="text-2xl font-bold text-center mb-6 text-cyan-700">
-        Complaints Overview
-      </h1>
+      <Heading label=" Complaints Overview" />
 
       {/* Date Filter */}
       <div className="flex items-center gap-4 mb-6">
-        <label htmlFor="reportDate" className="text-white font-semibold">
+        <label htmlFor="reportDate" className="text-slate-700 font-semibold">
           Selected Date:
         </label>
         <input
           id="reportDate"
           type="date"
-          className="p-2 rounded-lg border border-gray-600 bg-slate-900 text-white focus:ring-2 focus:ring-cyan-500"
+          className="p-2 rounded-lg border border-gray-600 bg-white text-slate-700 focus:ring-2 focus:ring-cyan-500"
           value={selectedDate}
           onChange={handleDateChange}
         />
@@ -91,10 +89,7 @@ const ReportAdminPage = () => {
           {/* Card View (Small/Medium Screens) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:hidden">
             {reports.map((report) => (
-              <div
-                key={report._id}
-                className="bg-gradient-to-tr from-gray-900 via-slate-800 to-black p-6 rounded-xl shadow-lg text-white hover:scale-[1.02] transition-transform"
-              >
+              <div key={report._id} className="bg-white">
                 {/* Video Title */}
 
                 <ReportCard report={report} />

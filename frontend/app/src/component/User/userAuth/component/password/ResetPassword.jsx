@@ -1,10 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import FormField from "../form/FormField";
 import { useNavigate, useParams } from "react-router-dom";
 import { resetPassword } from "../../../../../Api/UserApi";
 import { handleAxiosError } from "../../../../utils/erroeHandler";
+import FormField from "../../../../utils/form/FormField";
+
 const ResetPassword = () => {
+
   const { token } = useParams();
   const navigate = useNavigate();
   const {

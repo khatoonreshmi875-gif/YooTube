@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../../../../Api/UserApi.js";
 import axios from "axios";
-import FormField from "../form/FormField.jsx";
-import FormImageField from "../form/FormImageField.jsx";
+
 import { useNavigate } from "react-router-dom";
+import FormButton from "../../../../utils/form/FormButton.jsx";
+import FormImageField from "../../../../utils/form/FormImageField.jsx";
+import FormField from "../../../../utils/form/FormField.jsx";
+import Heading from "../../../../utils/form/Heading.jsx";
+
 const Register = () => {
   const {
     register: registerLogin,
@@ -38,11 +42,9 @@ const Register = () => {
     }, 1000);
   }, [issubmittingRegister]);
   return (
-    <div className="bg-red-100 mx-auto   items-center   bg-gradient-to-r from-cyan-950 via-black to-slate-700  md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pt-24 pb-24">
+    <div className="bg-white mx-auto   items-center     md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24">
       <form onSubmit={handleRegisterSubmit(onRegister)} className="">
-        <h1 className="font-bold md:text-3xl  text-2xl text-center p-4 font-serif text-gray-400 bg-gradient-to-br from-blue-50 to-slate-600 bg-clip-text text-transparent">
-          Create Your Account
-        </h1>
+        <Heading label="Create Your Account" />
         <div className="grid grid-cols-1 lg:grid-cols-2   mt-4 md:mr-6  ">
           <div className="flex flex-col justify-center space-y-3 min-w-0  ">
             {" "}
@@ -187,13 +189,7 @@ const Register = () => {
             />
           </div>
         </div>
-
-        <button
-          type="submit"
-          className="bg-gradient-to-r from-cyan-400 via-slate-300 to-cyan-950 w-2/5 p-2 mx-auto rounded-xl block text-white  mt-24 font-serif"
-        >
-          {issubmittingRegister ? `isSubmitting${dots}` : "Submit"}
-        </button>
+        <FormButton navigate={navigate} issubmitting={issubmittingRegister} />
       </form>
     </div>
   );

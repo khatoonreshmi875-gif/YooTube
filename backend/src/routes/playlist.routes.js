@@ -36,10 +36,8 @@ playlistRouter
   .route("/delete/:playlistId/video/:videoId")
   .delete(removeVideoToPlayList);
 playlistRouter.route("/add/:playlistId").post(addVideoToPlayList);
-playlistRouter
-  .route("/user-playlist/:userId")
-  .get(getUserPlayListByID);
-playlistRouter.route("/user-playlist").get(getUserPlayList);
+playlistRouter.route("/user-playlist/:userId").get(cacheMiddleware,getUserPlayListByID);
+playlistRouter.route("/user-playlist").get(cacheMiddleware,getUserPlayList);
 playlistRouter
   .route("/playlist-video/:playlistId")
   .get(cacheMiddleware, getPlayListById);

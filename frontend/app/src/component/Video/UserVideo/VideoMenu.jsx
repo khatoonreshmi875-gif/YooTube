@@ -5,10 +5,14 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { AppContext } from "../../utils/contextApi";
 import { deleteVideo } from "../../../Api/VideoApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
+import DropDownItem from "../../HomePage.jsx/HomePageComponent/DropDownItem";
+import { EllipsisVerticalIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
-const VideoMenu = ({ v, isOpen, index }) => {
+const VideoMenu = ({ v, index }) => {
   const { setvideo, user } = useContext(AppContext);
   const { userId } = useParams();
+  const [isOpen, setIsOpen] = useState(null);
   const navigate = useNavigate();
 
   const handleDelete = async (v) => {
@@ -45,35 +49,44 @@ const VideoMenu = ({ v, isOpen, index }) => {
       });
     }
   };
-  console.log(user._id, userId, user._id === userId);
   return (
     <>
-      {" "}
+      <button
+        onClick={() => setIsOpen(isOpen === index ? null : index)}
+        className="p-2 rounded-full hover:bg-slate-100 transition duration-200"
+      >
+        {isOpen === index ? (
+          <XMarkIcon className="aspect-square sm:w-5 w-4 text-slate-700" />
+        ) : (
+          <EllipsisVerticalIcon className="aspect-square sm:w-5 w-4 text-slate-700" />
+        )}
+      </button>
+
       {isOpen === index && (
-        <div className="flex flex-col bg-black/70 z-50 text-white absolute  top-9  rounded-md  w-36 shadow-lg right-0">
+        <div
+          className="flex flex-col bg-white border border-slate-200 
+                 z-50 text-slate-700 absolute top-9 right-0 
+                 rounded-md w-40 shadow-lg"
+        >
           {user._id === userId && (
-            <button
+            <DropDownItem
+              bg=" text-slate-700 hover:bg-slate-100 "
+              label="Edit"
               onClick={() =>
                 navigate("/edit-video", {
-                  state: {
-                    videoId: v._id,
-                    video: v,
-                  },
+                  state: { videoId: v._id, video: v },
                 })
               }
-              className="flex items-center hover:bg-gray-700 px-4 py-2 w-full transition"
-            >
-              <MdEdit className="text-lg mr-2" />
-              Edit
-            </button>
+              Icon={MdEdit}
+            />
           )}
-          <button
+
+          <DropDownItem
+            bg=" text-red-500 hover:bg-red-50  "
+            label="   Delete"
             onClick={() => handleDelete(v)}
-            className="flex items-center hover:bg-gray-700 px-4  py-1 w-full transition"
-          >
-            <MdDelete className="text-lg mr-2" />
-            Delete
-          </button>
+            Icon={MdDelete}
+          />
         </div>
       )}
     </>

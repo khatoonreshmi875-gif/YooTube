@@ -1,45 +1,52 @@
 import React from "react";
 import MenuLink from "./MenuLink";
 
+
 const CreateMenu = ({ setContent, setlikeVideos, content }) => {
   return (
-    <>
-      {" "}
-      <div
+    <div className="relative">
+      {/* Create Button */}
+      <button
         onClick={() => {
           setlikeVideos(false);
           setContent(!content);
         }}
-        className="font-serif md:text-xl sm:hover:border-white sm:border-2 h-fit w-fit p-1 rounded-lg text-blue-50 sm:text-lg xs:text-base text-sm bg-black/20 sm:ml-4 shadow-md shadow-cyan-700 active:shadow-black"
+        className="bg-blue-600 hover:bg-blue-700 
+                   text-white sm:text-sm font-medium 
+                   sm:px-4 sm:py-2 sm:rounded-lg text-xs px-1 py-1 rounded-md
+                   transition duration-200 shadow-sm"
       >
-        +Create
-      </div>
+        + Create
+      </button>
+
+      {/* Dropdown */}
       {content && (
-        <div className="right-20 top-20 absolute text-gray-500 bg-white list-none py-4 rounded-xl text-sm px-1 font-serif">
+        <div
+          className="absolute right-0 mt-2 w-48 
+                     bg-white border border-slate-200 
+                     rounded-lg shadow-lg 
+                     py-2 z-50 text-slate-700 font-normal list-none"
+        >
           <MenuLink
             to="/upload-video"
-            label="create Video"
-            onClick={() => {
-              setContent(false);
-            }}
+            label="Create Video"
+            onClick={() => setContent(false)}
           />
+
           <MenuLink
             to="/create-playlist"
-            label="create Playlist"
-            onClick={() => {
-              setContent(false);
-            }}
+            label="Create Playlist"
+            onClick={() => setContent(false)}
           />
+
           <MenuLink
             to="/create-tweet"
-            label=" create Tweet"
-            onClick={() => {
-              setContent(false);
-            }}
+            label="Create Tweet"
+            onClick={() => setContent(false)}
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

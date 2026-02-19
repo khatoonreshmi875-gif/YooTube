@@ -7,8 +7,6 @@ import SubscriptionSearch from "../../../Subscription/subscription/componentSubs
 import { handleAxiosError } from "../../../utils/erroeHandler";
 import UserComponent from "../component/UserComponent";
 
-
-
 const UserRoleList = () => {
   const [userData, setUserData] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState("");
@@ -30,7 +28,6 @@ const UserRoleList = () => {
   const FetchAllUser = async () => {
     try {
       const res = await getUserByUserRole();
-      console.log("data of all user", res);
       setUserData(res.data.data);
     } catch (err) {
       handleAxiosError(err, navigate);
@@ -39,7 +36,6 @@ const UserRoleList = () => {
 
   useEffect(() => {
     FetchAllUser();
-    console.log("data", userData);
   }, []);
   return (
     <div>
@@ -54,13 +50,12 @@ const UserRoleList = () => {
             handleSearchChannel={handleSearchChannel}
             channel={channel}
           />
-         
-            <UserComponent
-              selectedChannelId={selectedChannelId}
-              setUserData={setUserData}
-              userData={userData}
-            />
-       
+
+          <UserComponent
+            selectedChannelId={selectedChannelId}
+            setUserData={setUserData}
+            userData={userData}
+          />
         </div>
       </div>
     </div>

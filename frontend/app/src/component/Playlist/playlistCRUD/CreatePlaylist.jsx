@@ -6,9 +6,10 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../utils/contextApi";
 
 import { handleAxiosError } from "../../utils/erroeHandler";
-import FormButton from "../../Video/UserVideo/form/FormButton";
-import FormField from "../../Video/UserVideo/form/FormField";
-import FormInput from "../../Video/UserVideo/form/FormInput";
+import FormButton from "../../utils/form/FormButton.jsx";
+import FormField from "../../utils/form/FormField.jsx";
+import FormImageField from "../../utils/form/FormImageField.jsx";
+import Heading from "../../utils/form/Heading.jsx";
 
 const CreatePlaylist = () => {
   const [dots, setdots] = useState(".");
@@ -20,7 +21,6 @@ const CreatePlaylist = () => {
     watch,
     formState: { errors, isSubmitting: issubmittingPlaylist },
   } = useForm();
-
   const onSubmit = async (form) => {
     const result = await onHandleVideo();
     console.log("playlist currUser", result);
@@ -47,17 +47,15 @@ const CreatePlaylist = () => {
     }, 1000);
   }, [issubmittingPlaylist]);
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-24">
+    <div className="mx-auto      md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24 flex justify-center items-center min-h-screen bg-gray-100 ">
       <form
         onSubmit={handlePlaylistSubmit(onSubmit)}
-        className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl space-y-6"
+        className="sm:bg-white sm:shadow-lg sm:rounded-lg sm:p-8 w-full sm:max-w-2xl sm:space-y-6"
       >
-        <h2 className="sm:text-2xl font-semibold text-gray-800 sm:mb-4 mx-auto text-xl">
-          Create Playlist
-        </h2>
+        <Heading label="Create Playlist" />
 
         {/* Name */}
-        <FormInput
+        <FormField
           label="Name"
           name="name"
           placeholder="Enter name here..."
@@ -72,7 +70,7 @@ const CreatePlaylist = () => {
           }}
         />
         {/* Description */}
-        <FormInput
+        <FormField
           label="Description"
           name="description"
           placeholder="Enter your description here..."
@@ -88,7 +86,7 @@ const CreatePlaylist = () => {
         />
 
         {/* Category */}
-        <FormInput
+        <FormField
           label="Category"
           name="category"
           placeholder="Enter category here..."
@@ -104,7 +102,7 @@ const CreatePlaylist = () => {
         />
 
         {/* Thumbnail Upload */}
-        <FormField
+        <FormImageField
           label=" Upload Thumbnail"
           register={registerPlaylist}
           className="w-full"
@@ -113,7 +111,7 @@ const CreatePlaylist = () => {
           message={
             "Recommended size:600× 338.  If not, the image may appear cropped or distorted."
           }
-         
+          isMargin={false}
           watch={watch}
         />
 

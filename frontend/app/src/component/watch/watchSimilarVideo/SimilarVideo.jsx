@@ -91,12 +91,20 @@ const SimilarVideo = () => {
       {similarVideos?.map((s, index) => (
         <div
           key={index}
-          className="flex sm:flex-row flex-col lg:flex-row justify-between space-x-3 p-2 rounded-lg bg-gradient-to-tl from-slate-800 via-black to-slate-800 shadow-md  hover:shadow-lg transition pb-1 hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md  my-4  hover:cursor-pointer mx-8  sm:mx-0 relative"
+          className="flex sm:flex-row flex-col lg:flex-row justify-between 
+             space-x-3 p-3 rounded-xl 
+             bg-white border border-slate-200 
+             shadow-sm hover:shadow-md 
+             transition-all duration-300 ease-in-out 
+             hover:scale-[1.02] cursor-pointer 
+             mx-6 sm:mx-0 relative my-4"
         >
           <div className="flex sm:flex-row flex-col space-x-6">
             <video
               poster={s.thumbnail}
-              className="sm:w-56 sm:h-32 w-full h-48   rounded-xl shadow-md object-cover cursor-pointer"
+              className="sm:w-56 sm:h-32 w-full h-48 rounded-lg shadow-sm 
+                 object-cover cursor-pointer 
+                 hover:ring-2 hover:ring-blue-400 transition-all duration-200"
               ref={(el) => (videoref.current[index] = el)}
               onMouseOver={() => {
                 setisPlaying(index);
@@ -112,14 +120,20 @@ const SimilarVideo = () => {
             >
               <source src={s.videoFile} type="video/mp4" />
             </video>
+
             {/* Video Info */}
             <div className="flex sm:static relative">
               <div className="flex flex-col justify-between space-y-1 w-full my-2">
-                <p className="md:font-semibold text-md sm:text-sm  line-clamp-2  font-serif text-white hover:text-black">
+                <p
+                  className="font-semibold text-md sm:text-sm line-clamp-2 
+                     text-slate-900 hover:text-blue-600 transition-colors"
+                >
                   {s.title}
                 </p>
-                <p className="text-xs text-gray-200">{s.owner.channelName}</p>
-                <div className="flex text-xs text-gray-200 space-x-2">
+                <p className="lg:text-sm text-xs text-slate-600 font-medium">
+                  {s.owner.channelName}
+                </p>
+                <div className="flex text-xs text-slate-600 space-x-2">
                   <p>{s.views} views</p>
                   <p>{FormatTime(s.createdAt)}</p>
                 </div>
@@ -129,15 +143,15 @@ const SimilarVideo = () => {
               </div>
             </div>
           </div>
-          {/* Video Thumbnail */}
 
+          {/* Video Menu (Desktop) */}
           <div className="hidden sm:block">
             <VideoMenu index={index} v={s} />
           </div>
         </div>
       ))}
       {hasNomore.current && (
-        <p className="text-2xl text-center  font-serif w-full bg-slate-700">
+        <p className="sm:text-xl text-sm text-center text-blue-600  w-full bg-blue-100 ">
           No more videos are available
         </p>
       )}

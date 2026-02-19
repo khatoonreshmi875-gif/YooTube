@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
+import { MdPlaylistPlay } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPlaylistByUsingUserId } from "../../../../Api/Playlistapi.js";
 import { AppContext } from "../../../utils/contextApi.js";
 import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
 import LoadingSpinner from "../../../utils/LoadingSpinner.jsx";
-import EmptyPlaylist from "../component/EmptyPlaylist.jsx";
+import EmptySkeleton from "../../../utils/EmptySkeleton.jsx";
 import PlaylistCard from "../component/PlaylistCard.jsx";
 
 const Playlist = () => {
@@ -13,17 +14,15 @@ const Playlist = () => {
   const [loading, setLoading] = useState();
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [infoPlaylist, setInfoPlaylist] = useState([]);
+  const [infoPlaylist, setInfoPlaylist] = useState(null);
 
   useEffect(() => {
     const getPlaylistThroughUserId = async (userId) => {
       setLoading(true);
       try {
-        console.log(userId);
         const url = await getPlaylistByUsingUserId(userId);
-        console.log("data of frontend", url.data);
         localStorage.removeItem("playlistid");
-        setInfoPlaylist(url.data);
+        setInfoPlaylist(url.data.data);
       } catch (err) {
         handleAxiosError(err, navigate);
       } finally {
@@ -33,16 +32,30 @@ const Playlist = () => {
     };
     getPlaylistThroughUserId(userId);
   }, [userId]);
-  if (loading) {
+  if (infoPlaylist===null) {
     return <LoadingSpinner label="Fetching Playlist" isData={true} />;
   }
+  console.log("playlist all ", infoPlaylist);
   return (
     <>
-      {infoPlaylist?.data?.length == 0 ? (
-        <EmptyPlaylist userId={userId} user={user._id} />
+      {infoPlaylist?.length == 0 ? (
+        <div className="bg-white w-fit h-fit mx-auto border-slate-300 shadow-md rounded-lg p-3">
+          <EmptySkeleton
+            Icon={MdPlaylistPlay}
+            button_msg="  Create Playlist"
+            msg="   Create your first playlist to get started!"
+            heading_text="    No playlists yet"
+            onClick={() => navigate("/create-playlist")}
+            userId={userId}
+          />
+        </div>
       ) : (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 space-y-4 w-full  gap-8">
-          <PlaylistCard infoPlaylist={infoPlaylist} userId={userId} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2  lg:gap-5 ">
+          <PlaylistCard
+            infoPlaylist={infoPlaylist}
+            userId={userId}
+            setInfoPlaylist={setInfoPlaylist}
+          />
         </div>
       )}
     </>

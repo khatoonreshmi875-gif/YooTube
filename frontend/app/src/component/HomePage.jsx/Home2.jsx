@@ -34,7 +34,6 @@ const Home2 = ({ index, v, s, playlist }) => {
   const playlistIndex = Math.floor(index / 7); // 👈 correct
   const p = playlist[playlistIndex % playlist.length]; // cycle if needed
   const tweetPost = index === 12;
-
   return (
     <>
       {index === 12 && (
@@ -43,12 +42,14 @@ const Home2 = ({ index, v, s, playlist }) => {
         </div>
       )}
 
-      <div className="my-6 ">
-        <div className="w-full h-full px-2 ">
-          <div className="bg-gradient-to-tl from-slate-800 via-black to-slate-800  rounded-lg  hover:shadow-lg transition-shadow duration-300  hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 shadow-blue-200 hover:shadow-blue-300 hover-shadow-md w-full shadow-md h-full ">
-            {/* Video / Thumbnail */}{" "}
+      <div className="sm:my-6 my-3">
+        <div className="w-full h-full sm:px-2">
+          <div
+            className="bg-white rounded-xl shadow-sm border border-gray-200 
+                        hover:shadow-md transition w-full h-full"
+          >
+            {/* Video / Thumbnail */}
             {playingSlot ? (
-              
               <HoverVideo
                 video={p}
                 videoref={videoref}
@@ -67,7 +68,8 @@ const Home2 = ({ index, v, s, playlist }) => {
                 isData={false}
               />
             )}
-            {/* Video Info for single video */}
+
+            {/* Video Info */}
             {playingSlot ? (
               <VideoInfo v={p} />
             ) : (
@@ -76,8 +78,13 @@ const Home2 = ({ index, v, s, playlist }) => {
                 <VideoMenu v={v} isNested={true} index={index} />
               </div>
             )}
+
+            {/* Delete Option */}
             {s && (
-              <div onClick={() => handleDeleteAVideoWatchHistory(s)}>
+              <div
+                onClick={() => handleDeleteAVideoWatchHistory(s)}
+                className="text-sm text-red-500 cursor-pointer px-3 py-2 hover:bg-red-50 rounded-md transition"
+              >
                 Delete
               </div>
             )}
@@ -87,5 +94,4 @@ const Home2 = ({ index, v, s, playlist }) => {
     </>
   );
 };
-export { Home2 };
-
+export default Home2;

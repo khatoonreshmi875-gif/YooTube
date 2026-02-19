@@ -9,18 +9,17 @@ const TweetHeader = ({ tweet }) => {
       <div className="flex items-center p-4 border-b border-gray-200  h-[13%] ">
         <img
           src={tweet?.owner?.avatar}
-          
           onClick={() => {
             handleAvatar(tweet?.owner?._id);
           }}
           alt="avatar"
-          className="w-16 h-16 rounded-full object-cover"
+          className="w-12 aspect-square rounded-full object-cover"
         />
         <div className="ml-4">
-          <p className="font-light text-gray-300 font-serif ">
+          <p className=" text-slate-600  sm:text-sm text-xs font-medium   ">
             {tweet?.owner?.channelName || tweet?.user?.channelName}
           </p>
-          <p className="text-sm text-gray-400 italic font-light">
+          <p className="lg:text-sm text-xs text-slate-500">
             {FormatTime(tweet?.updatedAt)}
           </p>
         </div>

@@ -1,57 +1,104 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { deletePlaylist, editPlaylist } from "../../../../Api/Playlistapi";
 import { handleAxiosError } from "../../../utils/erroeHandler";
+import { AppContext } from "../../../utils/contextApi";
+import DropDownItem from "../../../HomePage.jsx/HomePageComponent/DropDownItem";
+import { toast } from "react-toastify";
+import { EllipsisVerticalIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
-const PlaylistMenu = ({ isOpen, setRefresh, playlist, refresh, index }) => {
+const PlaylistMenu = ({
+  setRefresh,
+  playlist,
+  refresh,
+  index,
+  userId,
+  setInfoPlaylist,
+}) => {
   const navigate = useNavigate();
+  const { user } = useContext(AppContext);
+  const [isOpen, setIsOpen] = useState(null);
+
   const Deletevideo = async (playlistId) => {
+    const toastId = toast.loading("Deleting playlist...");
     try {
+      setInfoPlaylist((prev) => prev.filter((p) => p._id !== playlistId));
       await deletePlaylist(playlistId);
+      toast.update(toastId, {
+        render: "playlist deleted ✅",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
     } catch (err) {
       handleAxiosError(err, navigate);
-      console.log("delete playlist error", err);
+      // setInfoPlaylist((prev) => [...prev, playlist]);
+      // Error toast
+      toast.update(toastId, {
+        render: "Failed to delete ❌",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
     }
   };
 
   return (
     <>
-      {" "}
+    <button
+        onClick={() => setIsOpen(isOpen === index ? null : index)}
+        className="p-2 rounded-full hover:bg-slate-100 transition duration-200 flex items-start"
+      >
+        {isOpen === index ? (
+          <XMarkIcon className="aspect-square sm:w-5 w-4 text-slate-700" />
+        ) : (
+          <EllipsisVerticalIcon className="aspect-square sm:w-5 w-4 text-slate-700" />
+        )}
+      </button>
       {isOpen === index && (
-        <div className="flex flex-col bg-black/50 z-50 text-white absolute  right-0  rounded-md  w-36 shadow-lg">
-          <div
+        <div
+          className="absolute right-0 top-14 w-44 
+                     bg-white border border-slate-200 
+                     rounded-lg shadow-lg py-2 z-50"
+        >
+          {/* Delete */}
+
+          <DropDownItem
+            bg=" text-red-500 hover:bg-red-50  "
+            label="Delete"
             onClick={() => {
               Deletevideo(playlist._id);
               setRefresh(!refresh);
             }}
-            className="text-white font-bold mx-4 cursor-pointer w-fit p-4 items-star+t"
-          >
-            Delete
-          </div>
-          <div
-            onClick={() =>
-              navigate(`/add-playlist/${playlist._id}`, {
-                state: {
-                  playlist: playlist,
-                },
-              })
-            }
-            className="text-white font-bold mx-4 cursor-pointer w-fit p-4"
-          >
-            Add Video
-          </div>
-          <div
-            onClick={() => {
-              navigate(`/edit-playlist/${playlist._id}`, {
-                state: {
-                  playlist: playlist,
-                },
-              });
-            }}
-            className="text-white font-bold mx-4 cursor-pointer w-fit p-4"
-          >
-            Edit
-          </div>
+          />
+
+          {userId === user._id && (
+            <>
+              <DropDownItem
+                label=" Add Video"
+                onClick={() =>
+                  navigate(`/add-playlist/${playlist._id}`, {
+                    state: {
+                      playlist: playlist,
+                    },
+                  })
+                }
+                bg=" text-slate-700 hover:bg-slate-100 "
+              />
+              <DropDownItem
+                label=" Edit"
+                onClick={() => {
+                  navigate(`/edit-playlist/${playlist._id}`, {
+                    state: {
+                      playlist: playlist,
+                    },
+                  });
+                }}
+                bg=" text-slate-700 hover:bg-slate-100 "
+              />
+            </>
+          )}
         </div>
       )}
     </>

@@ -9,16 +9,18 @@ const UserCard = ({ user, loggedInUser, setUserData }) => {
         <img
           src={user.avatar}
           alt="avatar"
-          className="w-16 h-16 rounded-full border-2 border-white"
+          className="w-16 h-16 rounded-full border-2 border-slate-100"
         />
         <div>
-          <h3 className="font-semibold">{user.channelName}</h3>
-          <p className="text-pink-300">Subscribers: {user.subscriberCount}</p>
-          <p className="text-purple-300">
+          <h3 className="font-semibold text-slate-900">{user.channelName}</h3>
+          <p className="text-slate-700 text-sm">
+            Subscribers: {user.subscriberCount}
+          </p>
+          <p className="text-slate-700 text-sm">
             Subscriptions: {user.subscribedToCount}
           </p>
-          <p className="text-cyan-300">Email: {user.email}</p>
-          <p className="text-green-300">Role: {user.role || "user"}</p>
+          <p className="text-slate-700 text-sm">Email: {user.email}</p>
+          <p className="text-slate-700 text-sm">Role: {user.role || "user"}</p>
         </div>
       </div>
       <div className="flex flex-col space-y-2">

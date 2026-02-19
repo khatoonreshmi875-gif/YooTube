@@ -5,6 +5,7 @@ import {
   RemoveModerator,
 } from "../../../../Api/UserApi";
 import { handleAxiosError } from "../../../utils/erroeHandler";
+import Button from "../../../Tweet/UserTweet/Button";
 
 const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
   const handleDeleteAccount = async (userId) => {
@@ -58,40 +59,29 @@ const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
       <div className="flex flex-col space-y-4">
         {loggedInUser === "admin" &&
           (user.role !== "moderator" ? (
-            <button
+            <Button
               onClick={() =>
                 handleAssignModerator({ email: user.email }, user._id)
               }
-              className="ml-2 px-3 py-1 text-sm font-semibold bg-gradient-to-r from-blue-300 to-blue-800 
-                 text-white rounded-lg shadow hover:from-blue-700 hover:to-blue-900 
-                 transform hover:scale-105 transition duration-200 ease-in-out"
-            >
-              ➕ Assign Moderator
-            </button>
+              label="  ➕ Assign Moderator"
+              bg="bg-blue-100 text-blue-600 hover:bg-blue-600"
+            />
           ) : (
-            <button
+            <Button
               onClick={() =>
                 handleRemoveModerator({ email: user.email }, user._id)
               }
-              className="ml-2 px-3 py-1 text-sm font-semibold 
-  bg-gradient-to-r from-purple-500 to-orange-700 
-  text-white rounded-lg shadow 
-  hover:from-orange-600 hover:to-orange-800 
-  transform hover:scale-105 transition duration-200 ease-in-out"
-            >
-              ✖ Remove Moderator
-            </button>
+              label=" ✖ Remove Moderator"
+              bg="bg-red-100 text-red-600 hover:bg-red-600"
+            />
           ))}
 
         {user.role !== "admin" && (
-          <button
-            className=" ml-2 px-3 py-1 text-sm font-semibold  bg-gradient-to-tr from-red-500 via-red-900 to-red-500 
-                 text-white rounded-lg shadow hover:from-red-700 hover:to-red-900 
-                 transform hover:scale-105 transition duration-200 ease-in-out"
+          <Button
             onClick={() => handleDeleteAccount(user._id)}
-          >
-            <span className="text-white">🗑</span> Delete Account
-          </button>
+            label="Delete Account"
+            bg="bg-red-100 text-red-600 hover:bg-red-600"
+          />
         )}
       </div>
     </div>

@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { AppContext } from "../utils/contextApi";
 import { handleAxiosError } from "../utils/erroeHandler";
-import FormField from "../Video/UserVideo/form/FormField";
-import FormButton from "../Video/UserVideo/form/FormButton";
-import FormSelect from "../Video/UserVideo/form/FormSelect";
-import FormInput from "../Video/UserVideo/form/FormInput";
+import FormButton from "../utils/form/FormButton";
+import FormField from "../utils/form/FormField";
+import FormSelect from "../utils/form/FormSelect";
+
 import { uploadTweet } from "../../Api/TweetApi";
+import FormImageField from "../utils/form/FormImageField";
+import Heading from "../utils/form/Heading";
 
 const CreateTweet = () => {
   const {
@@ -18,7 +20,6 @@ const CreateTweet = () => {
   } = useForm();
   const { video, onHandleVideoUserId, user } = useContext(AppContext);
   const navigate = useNavigate();
-  console.log(video);
   const onSubmit = async (form) => {
     const formData = new FormData();
     formData.append("content", form.content);
@@ -26,7 +27,6 @@ const CreateTweet = () => {
     for (const img of form.image) {
       formData.append("image", img);
     }
-    console.log("form", form?.videoId);
     const token = localStorage.getItem("token");
     const tweet = await uploadTweet(formData);
     if (tweet.data.success === true) {
@@ -41,19 +41,16 @@ const CreateTweet = () => {
       .catch((err) => handleAxiosError(err, navigate));
   };
   const data = video;
-  console.log("data", data);
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 sm:mb-0 mb-24">
+    <div className="mx-auto      md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24 flex justify-center items-center min-h-0 bg-gray-100 ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl space-y-6"
+        className="sm:bg-white sm:shadow-lg sm:rounded-lg sm:p-8 w-full sm:max-w-2xl space-y-6"
       >
-        <h2 className="sm:text-2xl text-xl font-semibold text-gray-700 mb-4 font-serif text-center ">
-          Create Tweet
-        </h2>
+        <Heading label="Create Tweet" />
 
         {/* Content */}
-        <FormInput
+        <FormField
           label="Content"
           name="content"
           placeholder="Enter content here..."
@@ -77,10 +74,12 @@ const CreateTweet = () => {
           data={data}
           onClick={handleclick}
           isData={true}
+          msg="No video available.
+You haven’t uploaded any video yet, so nothing can be displayed."
         />
 
         {/* Upload Images */}
-        <FormField
+        <FormImageField
           label="  Upload Images"
           register={register}
           name="image"
@@ -104,6 +103,7 @@ const CreateTweet = () => {
           message={
             " Please upload an image in 1080×1920 resolution (9:16 ratio). This size is required to ensure your tweet displays correctly"
           }
+          isMargin={false}
         />
 
         {/* Submit Button */}

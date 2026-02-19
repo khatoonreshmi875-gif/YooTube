@@ -7,7 +7,7 @@ const ReportTable = ({reports}) => {
     <div>
       <div className="overflow-x-auto hidden lg:block">
         <table className="min-w-full border border-gray-700 rounded-lg shadow-lg">
-          <thead className="bg-gradient-to-r from-cyan-800 via-slate-800 to-cyan-900 text-white font-serif">
+          <thead className="bg-blue-100  text-slate-900 font-medium">
             <tr>
               <th className="p-3 text-center">Video Title</th>
               <th className="p-3 text-center">Video Owner</th>
@@ -22,18 +22,18 @@ const ReportTable = ({reports}) => {
                 key={report._id}
                 className={`${
                   index % 2 === 0
-                    ? "bg-gradient-to-tr from-black via-slate-900 to-black"
-                    : "bg-gradient-to-tr from-black via-cyan-950 to-black"
-                } hover:bg-cyan-700 transition text-white`}
+                    ? "bg-white hover:bg-slate-100"
+                    : "bg-slate-50 hover:bg-slate-100"
+                }  transition  text-center`}
               >
                 <td className="border p-3 font-semibold">
                   {report.video?.title || "No Title"}
                 </td>
-                <td className="p-3 flex gap-1">
+                <td className="p-3 flex gap-2 items-center">
                   <img
                     src={report.video?.owner?.avatar}
                     alt="owner avatar"
-                    className="w-8 h-8 rounded-full ring-2 ring-cyan-500 cursor-pointer"
+                    className="w-8 h-8 rounded-full border border-slate-300 cursor-pointer"
                     onClick={() =>
                       navigate(`/curr-user/${report.video.owner._id}/video`)
                     }
@@ -42,14 +42,14 @@ const ReportTable = ({reports}) => {
                     {report.video?.owner?.channelName || "No Owner"}
                   </span>
                 </td>
-                <td className="border p-3 italic text-gray-300">
+                <td className="border p-3 italic text-slate-600">
                   {report.content || "No Content"}
                 </td>
                 <td className="p-3 flex items-center gap-2">
                   <img
                     src={report.reportedBy?.avatar}
                     alt="reporter avatar"
-                    className="w-8 h-8 rounded-full ring-2 ring-yellow-500 cursor-pointer"
+                    className="w-8 h-8 rounded-full border border-slate-300 cursor-pointer"
                     onClick={() =>
                       navigate(`/curr-user/${report.reportedBy._id}/video`)
                     }
@@ -58,7 +58,7 @@ const ReportTable = ({reports}) => {
                     {report.reportedBy?.channelName || "No Reporter"}
                   </span>
                 </td>
-                <td className="border p-3 text-sm text-gray-400">
+                <td className="border p-3 text-sm text-slate-500">
                   {report.createdAt
                     ? new Date(report.createdAt).toLocaleString()
                     : "No Date"}

@@ -54,12 +54,74 @@ const EditDeleteComment = ({
     console.log("commentId", commentId);
   };
   return (
-    <div className=" relative">
+    //   <div className=" relative">
+    //     {IsOpen && (
+    //       <div className="">
+    //         <div className="flex flex-col items-end space-y-2 rounded shadow-md w-fit sm:p-6 p-3 absolute z-50 right-5 bottom-0 bg-white border border-gray-300 ">
+    //           <button
+    //             className=" xs:text-sm text-xs text-blue-600 hover:underline"
+    //             onClick={async () => {
+    //               await getComment(c._id);
+    //               setEdit(index);
+    //               setIsOpen(false);
+    //             }}
+    //           >
+    //             Edit
+    //           </button>
+    //           <button
+    //             className="xs:text-sm text-xs  text-red-600 hover:underline"
+    //             onClick={() => {
+    //               handleDeleteCommment(c._id);
+    //               setIsOpen(false);
+    //             }}
+    //           >
+    //             Delete
+    //           </button>
+    //         </div>
+    //       </div>
+    //     )}
+    //     {Edit === index ? (
+    //       <div className="sm:mt-2 mt-1">
+    //         <input
+    //           type="text"
+    //           value={comment || ""}
+    //           onChange={(e) => setcomment(e.target.value)}
+    //           className="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    //         />
+    //         <div className="flex space-x-4 justify-end mt-2">
+    //           <button
+    //             className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+    //             onClick={() => {
+    //               handleEditCommment(c._id, { content: comment?.trim() });
+    //               setEdit(false);
+    //             }}
+    //           >
+    //             Save
+    //           </button>
+    //           <button
+    //             className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500"
+    //             onClick={() => setEdit(null)}
+    //           >
+    //             Cancel
+    //           </button>
+    //         </div>
+    //       </div>
+    //     ) : (
+    //       <div className=" text-white  mt-3 ml-4 xs:text-sm text-[13px]  ">
+    //         {c.content}
+    //       </div>
+    //     )}
+    //   </div>
+    <div className="relative">
       {IsOpen && (
-        <div className="">
-          <div className="flex flex-col items-end space-y-2 rounded shadow-md w-fit sm:p-6 p-3 absolute z-50 right-5 bottom-0 bg-white border border-gray-300 ">
+        <div>
+          <div
+            className="flex flex-col items-end space-y-2 rounded-lg shadow-md 
+                      w-fit sm:p-6 p-3 absolute z-50 right-5 bottom-0 
+                      bg-white border border-slate-200"
+          >
             <button
-              className=" xs:text-sm text-xs text-blue-600 hover:underline"
+              className="sm:text-sm text-xs text-blue-600 hover:text-blue-800 transition-colors"
               onClick={async () => {
                 await getComment(c._id);
                 setEdit(index);
@@ -69,7 +131,7 @@ const EditDeleteComment = ({
               Edit
             </button>
             <button
-              className="xs:text-sm text-xs  text-red-600 hover:underline"
+              className="sm:text-sm text-xs text-red-600 hover:text-red-800 transition-colors"
               onClick={() => {
                 handleDeleteCommment(c._id);
                 setIsOpen(false);
@@ -80,17 +142,19 @@ const EditDeleteComment = ({
           </div>
         </div>
       )}
+
       {Edit === index ? (
         <div className="sm:mt-2 mt-1">
           <input
             type="text"
             value={comment || ""}
             onChange={(e) => setcomment(e.target.value)}
-            className="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-slate-300 rounded px-2 py-1 
+                   focus:outline-none focus:ring-2 focus:ring-blue-500  sm:text-sm text-xs"
           />
           <div className="flex space-x-4 justify-end mt-2">
             <button
-              className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+              className=" text-blue-600 bg-blue-100 px-3 py-1 rounded hover:text-white p hover:bg-blue-600 transition-colors  sm:text-sm text-xs shadow-sm shadow-blue-600"
               onClick={() => {
                 handleEditCommment(c._id, { content: comment?.trim() });
                 setEdit(false);
@@ -99,7 +163,7 @@ const EditDeleteComment = ({
               Save
             </button>
             <button
-              className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500"
+              className="bg-slate-100 text-slate-600 hover:text-white px-3 py-1 rounded hover:bg-slate-500 transition-colors sm:text-sm text-xs shadow-sm shadow-slate-600"
               onClick={() => setEdit(null)}
             >
               Cancel
@@ -107,7 +171,7 @@ const EditDeleteComment = ({
           </div>
         </div>
       ) : (
-        <div className=" text-white  mt-3 ml-4 xs:text-sm text-[13px]  ">
+        <div className="text-slate-800 mt-3 ml-4 xs:text-sm text-[13px]">
           {c.content}
         </div>
       )}

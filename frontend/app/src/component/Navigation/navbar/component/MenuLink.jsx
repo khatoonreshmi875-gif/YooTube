@@ -7,7 +7,7 @@ const MenuLink = ({ to, label,onClick }) => {
       <li>
         <NavLink
           to={to}
-          className="py-2 hover:bg-gray-200 rounded-sm px-1 active:bg-gray-300 block"
+          className="py-2 hover:bg-gray-200 rounded-sm px-1 active:bg-gray-300 block sm:text-sm text-xs"
           onClick={onClick}
         >
           {label}

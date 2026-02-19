@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toggleVideoDislike } from "../../Api/DislikeApi";
 import { GetLikedVideos } from "../../Api/LikeApi";
 import Layout from "../Layout";
-import { handleAxiosError } from "../utils/erroeHandler";
-import { sortVideos } from "./sortVideo";
-import EmptyLIkeVideo from "./EmptyLIkeVideo";
-import SortMenu from "./SortMenu";
+import EmptySkeleton from "../utils/EmptySkeleton";
 import LoadingSpinner from "../utils/LoadingSpinner";
-import { Bars3Icon } from "@heroicons/react/24/outline";
-
+import { AppContext } from "../utils/contextApi";
+import SortMenu from "./SortMenu";
+import { sortVideos } from "./sortVideo";
+import { Home } from "../Home";
 const LikeVideo = () => {
+  const { user } = useContext(AppContext);
   const [sort, setSort] = useState("");
+  const formatdate = (date) => new Date(date).toLocaleString();
   const navigate = useNavigate();
   const [likeVideos, setlikeVideos] = useState(null);
   const [Isopen, setIsopen] = useState(false);
@@ -43,49 +46,54 @@ const LikeVideo = () => {
     allLikedVideo();
   }, []);
   if (!likeVideos) {
+    return <LoadingSpinner label="Fetching like videos" />;
+  }
+  if (likeVideos?.[0]?.videos?.length === 0) {
+    // data fetched but no videos
     return (
-      <div className="mt-96">
-        <LoadingSpinner label="Fetching like videos" />
+      <div className="bg-white flex  w-full h-full justify-center items-center">
+        <EmptySkeleton
+          Icon={HeartIcon}
+          button_msg=" Explore Channels"
+          msg=" You haven’t liked any videos yet. Start exploring and save your
+                 favorites."
+          heading_text="    No liked videos yet"
+          onClick={() => navigate("/")}
+          userId={user._id}
+        />
       </div>
     );
   }
   return (
     <>
-      {likeVideos?.[0]?.videos?.length === 0 ? (
-        <EmptyLIkeVideo />
-      ) : (
-        <div className="min-h-screen   text-gray-900 ">
-          {/* Header */}
-          <div className="flex justify-between items-center p-5  shadow-md cursor-pointer">
+      <div className="min-h-screen   text-gray-900 ">
+        {/* Header */}
+        <div className="flex justify-between items-center p-5  shadow-md cursor-pointer">
           <span
-            className="sm:text-lg text-sm font-semibold text-white"
+            className="sm:text-lg text-sm font-semibold text-slate-800"
             onClick={() => setIsopen(!Isopen)}
           >
-            <Bars3Icon className="mx-h-6 w-6 text-white mx-2" />
+            <Bars3Icon className="mx-h-6 w-6 text-slate-800 mx-2" />
           </span>
-            <p className="bg-gradient-to-tr from-cyan-700 to-slate-800 px-4 py-2 rounded-lg font-poppins sm:text-xl text-sm font-medium text-white font-serif">
-              Total liked videos :{likeVideos?.[0]?.count?.[0].totalLike}
-            </p>
-          </div>
-          <SortMenu setSort={setSort} setIsopen={setIsopen} Isopen={Isopen} />
-
-          <div className="sm:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortVideos(likeVideos?.[0]?.videos, sort)?.map((s, index) => (
-              <div
-                key={index}
-                className=" shadow-md rounded-lg sm:p-4 hover:shadow-lg transition pb-10"
-              >
-                <Layout
-                  s={s.video}
-                  index={index}
-                  likedAt={s.createdAt}
-                  dislikedVideo={dislikeVideo}
-                />
-              </div>
-            ))}
-          </div>
+          <p className="bg-blue-100 px-4 py-2 rounded-lg  sm:text-lg text-sm  text-blue-600">
+            Total liked videos : {likeVideos?.[0]?.count?.[0].totalLike}
+          </p>
         </div>
-      )}
+        <SortMenu setSort={setSort} setIsopen={setIsopen} Isopen={Isopen} />
+
+        <div className="sm:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sortVideos(likeVideos?.[0]?.videos, sort)?.map((s, index) => (
+            <div key={index}>
+              <Home
+                v={s.video}
+                index={index}
+                likedAt={s.createdAt}
+                dislikedVideo={dislikeVideo}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 };

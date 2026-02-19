@@ -44,7 +44,7 @@ const PlaylistVideoPage = () => {
     );
   }
   return (
-    <div className=" min-h-screen  bg-gradient-to-br from-slate-800 via-black to-slate-800 sm:m-4 rounded-lg  hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pb-24  ">
+    <div className=" min-h-screen bg-slate-50 sm:m-4 rounded-lg  hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pb-24  ">
       {/* Playlist Header */}
       <PlaylistHeader allPlaylist={allPlaylist} />
 

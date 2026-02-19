@@ -2,6 +2,16 @@ import { useEffect } from "react";
 import { getViews } from "../../../Api/VideoApi";
 
 const useView = (player, publicId, videoFile, userId) => {
+  console.log("videoId for view ", videoFile);
+  const views = async (videoId) => {
+    try {
+      await getViews(videoId);
+      console.log("✅ View recorded for:", videoId);
+    } catch (err) {
+      console.error("❌ Failed to record view:", err);
+    }
+  };
+
   useEffect(() => {
     if (!player || player.isDisposed?.() || typeof player.on !== "function") {
       console.log("❌ player not ready or disposed", player);
@@ -91,12 +101,12 @@ const useView = (player, publicId, videoFile, userId) => {
       if (!countValue || countValue.date !== today) {
         countValue = { data: 0, date: today };
       }
-      console.log("time 🏁", countValue.data);
+      console.log("time 🏁", countValue.data, videoFile);
       console.log("watch", watch, "fresh", fresh);
       if (watch >= 9000 && countValue.data < 4 && fresh) {
         hasCounted = true;
-        getViews(videoFile);
-
+        console.log("videoid inside this ", videoFile);
+       views(videoFile)
         countValue.data += 1;
         localStorage.setItem(countKey, JSON.stringify(countValue));
         console.log("✅ saved countKey", countValue);

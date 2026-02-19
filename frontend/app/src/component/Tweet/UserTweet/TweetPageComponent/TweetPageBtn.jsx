@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/contextApi";
+import Button from "../Button";
 
 const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
   const { user } = useContext(AppContext);
@@ -45,21 +46,18 @@ const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
         {(user._id === userId ||
           user.role === "admin" ||
           user.role === "moderator") && (
-          <button
+          <Button
             onClick={() => handleDelete(t._id)}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md  md:text-sm font-medium transition-colors duration-200 text-xs"
-          >
-            Delete
-          </button>
+            bg="bg-red-100 text-red-600 hover:bg-red-600"
+            label=" Delete"
+          />
         )}
-
-        <p
+        <Button
           onClick={() => tweetByTweetId(t._id)}
-          className="cursor-pointer md:text-sm font-medium text-xs bg-white text-indigo-600 px-3 py-1 rounded-md  hover:bg-indigo-100 transition-colors duration-200
-"
-        >
-          Comment
-        </p>
+          bg="bg-blue-100 text-blue-600 hover:bg-blue-600"
+          label="Comment"
+        />
+       
       </div>
     </>
   );

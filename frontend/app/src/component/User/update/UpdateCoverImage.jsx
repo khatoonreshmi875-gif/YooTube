@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { getUpdateCoverImage } from "../../../Api/UserApi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
-import FormButton from "../../Video/UserVideo/form/FormButton";
+import FormButton from "../../utils/form/FormButton";
+
 import { AppContext } from "../../utils/contextApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
 import { RecommendedVideo } from "../../../Api/VideoApi";
+import Heading from "../../utils/form/Heading";
 const UpdateCoverImage = () => {
   const { user, getallvideo, setgetvideo, onHandle } = useContext(AppContext);
-  console.log("user data.................", user.coverImage);
   const navigate = useNavigate();
   const [preview, setPreview] = useState(user.coverImage || "");
   const {
@@ -19,7 +20,6 @@ const UpdateCoverImage = () => {
     formState: { errors, isSubmitting: issubmittingVideo },
   } = useForm();
   async function onLogin(form) {
-    console.log(form);
     const formData = new FormData();
     if (form.coverImage.length > 0) {
       formData.append("coverImage", form.coverImage?.[0]);
@@ -43,13 +43,7 @@ const UpdateCoverImage = () => {
         className="flex flex-col justify-center sm:space-y-8 space-y-3 bg-white shadow-lg sm:rounded-xl  sm:mx-auto sm:w-[80%] sm:mt-4 w-full h-fit  py-28 px-2  "
         encType="multipart/form-data"
       >
-        {" "}
-        <h1 className="sm:text-3xl text-xl font-serif font-bold text-center text-blue-900  ">
-          Uplaod Cover Image
-        </h1>
-        {/* Title */}
-        {/* Video Upload */}
-        {/* Thumbnail Upload */}
+        <Heading label="Update Cover Image" />{" "}
         <UpdateFormThumbnail
           label=" Upload Cover Image"
           register={registerVideo}

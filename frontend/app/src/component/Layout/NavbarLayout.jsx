@@ -6,27 +6,22 @@ const NavbarLayout = () => {
   const token = localStorage.getItem("token");
 
   return (
-    <div className="bg-gradient-to-bl from-slate-950 to-slate-900 min-h-screen flex flex-col ">
-      <div className="h-24">
-        {token && (
-          <div className=" fixed top-0 z-50">
-            <Navbar />
-          </div>
-        )}
-      </div>
+    <div className="bg-slate-50 min-h-screen flex flex-col w-screen">
+      <div className="h-14">{token && <Navbar />}</div>
 
-      <div className="flex flex-row flex-1 ">
+      <div className="flex flex-row flex-1 w-full">
         {token && (
-          <div className="hidden fixed    xs:w-16 ss:block z-50 ">
+          <div className="hidden xs:block xs:w-20">
             <Sidebar />
           </div>
         )}
-        <main className="flex-1 ss:ml-16 sm:mb-0 ">
+        <main className="flex-1 sm:mb-0 overflow-y-auto">
           <Outlet />
         </main>
       </div>
+
       {token && (
-        <div className="ss:hidden fixed bottom-0 w-full h-16 bg-slate-900 ">
+        <div className="ss:hidden fixed bottom-0 w-full h-12 bg-slate-50">
           <Sidebar />
         </div>
       )}
@@ -35,3 +30,4 @@ const NavbarLayout = () => {
 };
 
 export default NavbarLayout;
+

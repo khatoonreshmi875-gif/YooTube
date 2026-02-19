@@ -4,11 +4,15 @@ const Navbar1 = () => {
   return (
     <div>
       <div className="flex ">
-        <ul className="flex justify-between items-center w-full p-1 bg-gradient-to-br from-cyan-700 via-slate-800 to-cyan-900 text-white sm:text-base text-sm ">
+        <ul className="flex justify-between items-center w-full p-2 bg-white text-slate-700 sm:text-base text-[12px] font-medium border-b border-slate-200 shadow-sm ">
           <li>
             <NavLink
               to="video"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-md transition ${
+                  isActive ? "bg-blue-50 text-blue-600" : "hover:bg-slate-100"
+                }`
+              }
             >
               Videos
             </NavLink>
@@ -16,7 +20,11 @@ const Navbar1 = () => {
           <li>
             <NavLink
               to="playlist-home"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-md transition ${
+                  isActive ? "bg-blue-50 text-blue-600" : "hover:bg-slate-100"
+                }`
+              }
             >
               Playlist
             </NavLink>
@@ -24,13 +32,26 @@ const Navbar1 = () => {
           <li>
             <NavLink
               to="tweet-home"
-              className={({ isActive }) => (isActive ? "underline" : "")}
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-md transition ${
+                  isActive ? "bg-blue-50 text-blue-600" : "hover:bg-slate-100"
+                }`
+              }
             >
               Tweets
             </NavLink>
           </li>
           <li>
-            <NavLink to="subscription-page">Subscriptions</NavLink>
+            <NavLink
+              to="subscription-page"
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-md transition ${
+                  isActive ? "bg-blue-50 text-blue-600" : "hover:bg-slate-100"
+                }`
+              }
+            >
+              Subscriptions
+            </NavLink>
           </li>
         </ul>
       </div>

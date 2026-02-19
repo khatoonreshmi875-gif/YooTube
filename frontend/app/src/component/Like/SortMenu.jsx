@@ -6,7 +6,7 @@ const SortMenu = ({ setSort, Isopen, setIsopen }) => {
   return (
     <>
       {Isopen && (
-        <div className="bg-white shadow-md rounded-md mx-5 mt-3 p-3 space-y-2">
+        <div className="bg-white shadow-md rounded-md my-3 p-3 space-y-2 text-slate-700">
           <p
             onClick={() => setSort("oldest")}
             className="cursor-pointer hover:text-blue-600 transition text-sm sm:text-base"

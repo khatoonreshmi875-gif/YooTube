@@ -12,11 +12,11 @@ const UserTable = ({ user, loggedInUser, setUserData }) => {
           className="w-20 aspect-square rounded-full border-2 border-white"
         />
       </td>
-      <td className="p-3 font-semibold text-white">{user.channelName}</td>
-      <td className="p-3 text-pink-300">{user.subscriberCount}</td>
-      <td className="p-3 text-purple-300">{user.subscribedToCount}</td>
-      <td className="p-3 text-cyan-300">{user.email}</td>
-      <td className="p-3 text-green-300">{user.role || "user"}</td>
+      <td className="p-3 font-semibold text-slate-900">{user.channelName}</td>
+      <td className="p-3 text-slate-700 text-sm">{user.subscriberCount}</td>
+      <td className="p-3 text-slate-700 text-sm">{user.subscribedToCount}</td>
+      <td className="p-3 text-slate-700 text-sm ">{user.email}</td>
+      <td className="p-3 text-slate-700 text-sm">{user.role || "user"}</td>
       <td className="p-3">
         {" "}
         <UserComponentActionBtn

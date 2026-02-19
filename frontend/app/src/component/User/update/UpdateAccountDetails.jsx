@@ -4,14 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { getUpdateAccountDetails } from "../../../Api/UserApi";
 import { AppContext } from "../../utils/contextApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
-import FormButton from "../../Video/UserVideo/form/FormButton";
-import FormInput from "../../Video/UserVideo/form/FormInput";
+import FormButton from "../../utils/form/FormButton";
+import FormField from "../../utils/form/FormField";
 
 const UpdateAccountDetails = () => {
   const { user, getallvideo } = useContext(AppContext);
-  console.log("user data.................", user.avatar);
   const navigate = useNavigate();
-  console.log(user);
   const {
     register: registerVideo,
     handleSubmit: handleVideoSubmit,
@@ -26,8 +24,7 @@ const UpdateAccountDetails = () => {
     },
   });
   async function onLogin(userdata) {
-    console.log("runnnnnnnnnnnnnnnnnnnnnnn");
-    console.log("userdta of account", userdata);
+    
     try {
       const result = await getUpdateAccountDetails(userdata);
       const result3 = await RecommendedVideo(0);
@@ -49,7 +46,7 @@ const UpdateAccountDetails = () => {
         <h1 className="sm:text-3xl text-xl font-serif font-bold text-center text-blue-900  ">
           Update Profile
         </h1>
-        <FormInput
+        <FormField
           label="fullName"
           name="fullName"
           placeholder="Enter your fullname here..."
@@ -63,7 +60,7 @@ const UpdateAccountDetails = () => {
             },
           }}
         />{" "}
-        <FormInput
+        <FormField
           label="Channel Name"
           name="channelName"
           placeholder="Enter your channel here..."
@@ -77,7 +74,7 @@ const UpdateAccountDetails = () => {
             },
           }}
         />{" "}
-        <FormInput
+        <FormField
           label="Email"
           name="email"
           placeholder="Enter your email here..."
@@ -96,7 +93,7 @@ const UpdateAccountDetails = () => {
         {/* Title */}
         {/* Video Upload */}
         {/* Thumbnail Upload */}
-        <FormInput
+        <FormField
           label="Description"
           name="description"
           placeholder="Enter your description here..."

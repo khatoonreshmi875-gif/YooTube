@@ -1,6 +1,4 @@
-import {
-  UserCircleIcon
-} from "@heroicons/react/24/solid";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../../Api/UserApi";
@@ -26,39 +24,57 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
   }
 
   const token = localStorage.getItem("token");
-  console.log("user role ", user.role, token);
+
   return (
-    <>
-      {" "}
+    <div className="relative">
+      {/* Profile Button */}
       <button
-        className="text-white text-3xl relative shadow-md shadow-cyan-900 active:shadow-black"
         onClick={() => {
           setlikeVideos((prev) => !prev);
           setContent(false);
         }}
+        className="flex items-center justify-center 
+                 sm:w-9 aspect-square w-5 rounded-full 
+                 bg-slate-100 hover:bg-slate-200 
+                 transition"
       >
-        <UserCircleIcon className="w-7 h-7 sm:w-9 sm:h-8"/>
+        <UserCircleIcon className="w-6 h-6 text-slate-600" />
       </button>
+
       {likeVideos && (
-        <div className="right-4 top-20 absolute text-gray-500 bg-white list-none py-4 rounded-xl text-sm px-1 font-serif z-50 ">
-          <li className="hover:bg-gray-300  rounded-sm px-1">
+        <ul
+          className="absolute right-0 mt-2 w-56 
+                   bg-white border border-slate-200 
+                   rounded-lg shadow-lg text-slate-700
+                   py-2 z-50 list-none"
+        >
+          {/* Logout / Login */}
+          <li
+            className="w-full text-left px-4 py-2 text-sm 
+                   text-slate-700 hover:bg-slate-100 font-normal 
+                   hover:text-blue-600 transition cursor-pointer"
+          >
             {token ? (
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout} className="w-full text-left">
+                Logout
+              </button>
             ) : (
-              <NavLink to="/login">Log-In</NavLink>
+              <NavLink to="/login">Log In</NavLink>
             )}
           </li>
+
           <MenuLink
             to="/change-password"
-            label="Change password"
+            label="Change Password"
             onClick={() => setlikeVideos(false)}
           />
 
           <MenuLink
             to="/register"
-            label=" Register"
+            label="Register"
             onClick={() => setlikeVideos(false)}
           />
+
           {user.role === "admin" && (
             <MenuLink
               to="/assign-moderator"
@@ -71,7 +87,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
             <>
               <MenuLink
                 to="/all-user"
-                label="User List "
+                label="User List"
                 onClick={() => setlikeVideos(false)}
               />
               <MenuLink
@@ -81,10 +97,11 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
               />
             </>
           )}
-        </div>
+        </ul>
       )}
-    </>
+    </div>
   );
+
 };
 
 export default AccountMenu;

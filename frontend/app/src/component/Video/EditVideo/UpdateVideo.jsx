@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { EditVideo } from "../../../Api/VideoApi";
-import FormButton from "../UserVideo/form/FormButton";
 import { handleAxiosError } from "../../utils/erroeHandler";
 import UpdateFormThumbnail from "./UpdateFormThumbnail";
-import FormInput from "../UserVideo/form/FormInput";
+import FormButton from "../../utils/form/FormButton";
+import FormField from "../../utils/form/FormField";
+import Heading from "../../utils/form/Heading";
 const UpdateVideo = () => {
   const { state } = useLocation();
   const videoId = state?.videoId;
@@ -52,15 +53,13 @@ const UpdateVideo = () => {
   const [preview, setPreview] = useState(video?.thumbnail || "");
 
   return (
-    <div className="sm:mx-auto sm:bg-slate-300 bg-white min-h-screen sm:flex  justify-center pt-2 mt-24 mb-24 sm:mb-0">
+    <div className="mx-auto      md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24 flex justify-center items-center min-h-0 bg-gray-100 ">
       <form
         onSubmit={handleUpdateVideoSubmit(onSubmit)}
-        className="bg-white sm:p-8 sm:w-[80%] w-full h-fit p-2 sm:shadow-md rounded-xl space-y-5  "
+        className="sm:bg-white sm:shadow-lg sm:rounded-lg sm:p-8 w-full sm:max-w-2xl space-y-6"
       >
-        <h2 className="sm:text-2xl text-xl font-serif font-medium sm:font-bold text-gray-600 sm:mb-6 text-center ">
-          Edit Video
-        </h2>
-        <FormInput
+        <Heading label="Edit Video" />
+        <FormField
           label="Title"
           name="title"
           placeholder="Enter your title here..."
@@ -75,7 +74,7 @@ const UpdateVideo = () => {
           }}
         />
         {/* Description */}
-        <FormInput
+        <FormField
           label="Description"
           name="description"
           placeholder="Enter your description here..."

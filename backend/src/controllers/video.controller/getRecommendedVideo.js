@@ -83,10 +83,10 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
         },
       },
       {
-        $skip: Pages * 6,
+        $skip: Pages * 9,
       },
       {
-        $limit: 6,
+        $limit: 9,
       },
       {
         $unwind: {
@@ -149,17 +149,29 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
       .json(new ApiResponse(200, popularVideos, "Recommended videos fetched"));
   }
 
-  const orCondition = userhistory.flatMap((vid) => [
-    { category: vid.category },
-    { tags: { $in: vid.tags } },
-    { owner: vid.owner },
-  ]);
+  const orCondition = userhistory.flatMap((vid) => {
+    const cond = [{ category: vid.category }, { owner: vid.owner }];
+    if (vid.tags) {
+      const tagsArray = Array.isArray(vid.tags) ? vid.tags : [vid.tags];
+      if (tagsArray.length) {
+        cond.push({
+          tags: {
+            $in: tagsArray,
+          },
+        });
+      }
+      return cond;
+    }
+  });
+  const cleanedOr = orCondition.filter(
+    (item) => item && typeof item === "object" && !Array.isArray(item),
+  );
 
   const recommendedVideos = await Video.aggregate([
     {
       $match: {
         _id: { $nin: watchIds },
-        $or: orCondition,
+        $or: cleanedOr,
       },
     },
     {
@@ -177,9 +189,9 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
         createdAt: -1,
       },
     },
-    { $skip: Pages * 6 },
+    { $skip: Pages * 9 },
     {
-      $limit: 6,
+      $limit: 9,
     },
     {
       $lookup: {

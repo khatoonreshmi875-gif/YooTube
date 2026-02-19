@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
-import { SortedTweet, TweetByTweetId } from "../../../Api/TweetApi";
-import { AppContext } from "../../utils/contextApi";
-import TweetSkeleton from "../../Tweet/TweetSkeleton";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SortedTweet, TweetByTweetId } from "../../../Api/TweetApi";
 import MainPage from "../../Tweet/HomeTweet/HomeTweetComponent/mainPage/MainPage";
+import TweetSkeleton from "../../Tweet/TweetSkeleton";
 import { handleAxiosError } from "../../utils/erroeHandler";
 
 const TweetSection = () => {
-  // const { allTweet, getTweetOfSubscriber, setAllTweet } =
-  //   useContext(AppContext);
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -102,11 +99,11 @@ console.log("all tweet data",)
         ))}
 
         {loading &&
-          Array.from({ length: 2 }).map((_, i) => <TweetSkeleton key={i} />)}
+          Array.from({ length: 4 }).map((_, i) => <TweetSkeleton key={i} />)}
         {hasNoMore.current && (
-          <div className="text-white my-auto bg-gray-300/20 p-5 rounded-lg flex-1 ">
-            No More Tweets are available
-          </div>
+          <p className="sm:text-xl text-sm text-center text-blue-600 w-full bg-blue-100 ">
+            No  tweets are available
+          </p>
         )}
       </div>
     </div>

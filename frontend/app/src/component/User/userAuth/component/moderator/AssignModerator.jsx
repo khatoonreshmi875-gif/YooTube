@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Assign_Moderator } from "../../../../../Api/UserApi";
 import { handleAxiosError } from "../../../../utils/erroeHandler";
-import FormInput from "../../../../Video/UserVideo/form/FormInput";
-import FormButton from "../../../../Video/UserVideo/form/FormButton";
+import FormField from "../../../../utils/form/FormField";
+import FormButton from "../../../../utils/form/FormButton";
+import Heading from "../../../../utils/form/Heading";
+
 
 const AssignModerator = () => {
   const navigate = useNavigate();
@@ -43,12 +45,11 @@ const AssignModerator = () => {
         className="w-full max-w-md bg-white shadow-lg rounded-xl p-8 space-y-6"
       >
         {/* Title */}
-        <h2 className="text-2xl font-semibold text-blue-700 text-center">
-          Assign Moderator
-        </h2>
+        <Heading label="Assign Moderator" />
+       
 
         {/* Email Field */}
-        <FormInput
+        <FormField
           label="Email"
           name="email"
           placeholder="Enter user email..."

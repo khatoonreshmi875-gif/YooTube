@@ -45,30 +45,25 @@ const Maincomment = ({ tweetId }) => {
 
   // effects
 
-  useEffect(() => {
-    if (tweetId) {
-      hasNomore.current = false;
-      setCommentsWithLikes([]);
-
-      hasFetchedFirst.current = false;
-    }
-  }, []);
-
   // handlers
   const addcomment = useCallback(
-    async (userdata) => {
+    async (tweetId, userdata) => {
+      const tempId = Date.now() + Math.floor(Math.random() * 999999);
+      setCommentsWithLikes((prev) => [allData(userdata, tempId), ...prev]);
       try {
-        const res = await AddTweetComment(tweetId, userdata);
-
-        setCommentsWithLikes((prev) => [
-          allData(contentData, res.data.data._id),
-          ...prev,
-        ]);
+        const res = await AddTweetComment(tweetId, { content: userdata });
+        const created = res.data.data;
+        if (created) {
+          setCommentsWithLikes((prev) =>
+            prev.map((p) => (p._id === tempId ? created : p)),
+          );
+        }
       } catch (err) {
+        setCommentsWithLikes((prev) => prev.filter((m) => m._id !== tempId));
         handleAxiosError(err, navigate);
       }
     },
-    [contentData],
+    [contentData, allData, tweetId, navigate],
   );
 
   // handlers
@@ -118,7 +113,6 @@ const Maincomment = ({ tweetId }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
-
   return (
     <div className="w-full ">
       <AddComments
@@ -127,7 +121,7 @@ const Maincomment = ({ tweetId }) => {
           setcontentData(e.target.value);
         }}
         onClick={() => {
-          addcomment(tweetId, { content: contents });
+          addcomment(tweetId, contents);
           setcontents("");
         }}
         setcontents={setcontents}
@@ -136,7 +130,7 @@ const Maincomment = ({ tweetId }) => {
 
       {commentsWithLikes?.map((c, index) => (
         <Comment
-          key={index}
+          key={c._id}
           index={index}
           c={c}
           isNested={false}
@@ -147,8 +141,8 @@ const Maincomment = ({ tweetId }) => {
       ))}
 
       {hasNomore.current && (
-        <p className="text-2xl text-center  font-serif w-full bg-slate-700">
-          No more are available
+        <p className="sm:text-xl text-sm text-center text-blue-600   w-full bg-blue-100 ">
+          No comment are available
         </p>
       )}
       {!tweetId && loading && (

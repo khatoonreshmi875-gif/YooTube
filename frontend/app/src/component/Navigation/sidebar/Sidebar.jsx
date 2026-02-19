@@ -16,8 +16,8 @@ const Sidebar = () => {
   console.log(user);
   return (
     <>
-      <div className="w-full h-full ">
-        <ul className="   w-full ss:gap-6 text-md  sm:mt-4   z-50 flex ss:flex-col flex-row justify-between">
+      <div className=" h-full fixed ">
+        <ul className="  w-full ss:gap-6 text-md  sm:mt-4   z-50 flex ss:flex-col flex-row justify-between">
           <li>
             <SidebarItem itemName="Home" path="/" Icon={HomeIcon} />
           </li>

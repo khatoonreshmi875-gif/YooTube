@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import userImage from "../../../../../assets/images.jpg";
-import bgImage from "../../../../../assets/dark_blue_background_hd_navy_blue-1366x768 (1).jpg";
 
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../../utils/contextApi.js";
 import { loginUser } from "../../../../../Api/UserApi.js";
-import FormField from "../form/FormField.jsx";
-import { FaGoogle } from "react-icons/fa";
+import { AppContext } from "../../../../utils/contextApi.js";
+import FormField from "../../../../utils/form/FormField.jsx";
+import Heading from "../../../../utils/form/Heading.jsx";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -65,16 +64,14 @@ const Login = () => {
   }, [isSubmittingLogin]);
   return (
     <>
-      <div className="flex flex-col items-center h-screen  justify-center pt-24 pb-24 ">
-        <div className=" bg-gradient-to-bl from-cyan-950 via-black to-slate-700 xl:w-5/12 lg:w-3/5 md:w-3/4 sm:w-3/4 w-full lg:p-6 md:p-3  rounded-2xl  flex justify-center flex-col  h-fit pb-5 px-4    ">
-          <h1 className="font-bold md:text-3xl text-2xl text-center p-4 font-serif text-gray-400 bg-gradient-to-br from-blue-50 to-slate-600 bg-clip-text text-transparent">
-            User Login
-          </h1>
+      <div className="mx-auto md:p-6 rounded-2xl sm:mt-2   w-[98%]  pb-24 flex justify-center items-center min-h-0 ">
+        <div className=" sm:bg-white sm:shadow-lg sm:rounded-lg sm:p-8 w-full sm:max-w-2xl space-y-6   ">
+          <Heading label="User Login" />
 
           <div>
             <img
               src={userImage}
-              alt=""
+              alt="user image"
               className="w-24 h-24 rounded-full mx-auto object-fill "
             />
           </div>
@@ -115,23 +112,26 @@ const Login = () => {
             />
 
             <p
-              className="text-blue-300"
+              className="text-blue-500 sm:text-base text-xs p-2"
               onClick={() => navigate(`/forget-password`)}
             >
               Forgot your password
             </p>
+
             <button
               type="submit"
-              className="w-[50%]  bg-gradient-to-tr from-violet-300 via-blue-200 to-violet-300  text-black py-2 px-4 rounded-lg  mx-auto block font-serif shadow-slate-500 shadow-md sm:text-base text-sm  "
+              className="w-[50%]  bg-gradient-to-tr from-violet-300 via-blue-200 to-violet-300  text-black py-2 px-4 rounded-lg  mx-auto block  shadow-slate-500 shadow-md sm:text-base text-sm  "
             >
               {isSubmittingLogin ? `onSubmitting${dots}` : "Log in"}
             </button>
           </form>
-          <p className="text-center text-white text-lg font-serif mt-3">Or</p>
+          <p className="text-center text-slate-700 text-lg font-serif mt-3">
+            Or
+          </p>
           <div className=" text-center mt-3  ">
             <a
               href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}
-              className="text-black bg-gradient-to-tr from-violet-300 via-blue-200 to-violet-300 sm:px-24 px-8 py-2 rounded-lg shadow-slate-500  active:shadow-transparent shadow-md font-serif sm:font-bold  sm:text-base text-sm font-semibold flex justify-center 
+              className="text-black bg-gradient-to-tr from-violet-300 via-blue-200 to-violet-300 sm:px-24 px-8 py-2 rounded-lg shadow-slate-500  active:shadow-transparent shadow-md  sm:text-base text-sm  flex justify-center  
                 "
             >
               <svg

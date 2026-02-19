@@ -4,9 +4,12 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { editPlaylist } from "../../../Api/Playlistapi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
-import FormButton from "../../Video/UserVideo/form/FormButton";
-import FormInput from "../../Video/UserVideo/form/FormInput";
+
 import { handleAxiosError } from "../../utils/erroeHandler";
+import FormField from "../../utils/form/FormField";
+import FormButton from "../../utils/form/FormButton";
+import Heading from "../../utils/form/Heading";
+
 
 const EditPlaylist = () => {
   const { playlistId } = useParams();
@@ -24,7 +27,6 @@ const EditPlaylist = () => {
       category: playlist?.category || "",
     },
   });
-  console.log("playlist", playlist.thumbnail);
   const [preview, setPreview] = useState(playlist?.thumbnail || "");
   const onSubmit = async (form) => {
     const formData = new FormData();
@@ -52,10 +54,9 @@ const EditPlaylist = () => {
         onSubmit={handleUpdatePlaylistSubmit(onSubmit)}
         className="bg-white shadow-lg rounded-xl xs:p-8 p-4 w-full xs:max-w-2xl space-y-5"
       >
-        <h2 className="sm:text-2xl text-xl font-serif font-medium sm:font-bold text-gray-800 mb-6 text-center">
-          Edit Playlist
-        </h2>
-        <FormInput
+        <Heading label="Edit Playlist" />
+       
+        <FormField
           label="Name"
           name="name"
           placeholder="Enter name here..."
@@ -70,7 +71,7 @@ const EditPlaylist = () => {
           }}
         />
         {/* Description */}
-        <FormInput
+        <FormField
           label="Description"
           name="description"
           placeholder="Enter your description here..."
@@ -86,7 +87,7 @@ const EditPlaylist = () => {
         />
 
         {/* Category */}
-        <FormInput
+        <FormField
           label="Category"
           name="category"
           placeholder="Enter category here..."

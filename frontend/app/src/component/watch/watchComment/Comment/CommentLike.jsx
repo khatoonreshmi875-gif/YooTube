@@ -7,6 +7,7 @@ import {
 
 import { BiLike, BiSolidLike, BiSolidDislike, BiDislike } from "react-icons/bi";
 import { stateOfCommentLike, toggleLikeComment } from "../../../../Api/LikeApi";
+import LikeDislike from "../../../Tweet/UserTweet/LikeDislike";
 const CommentLike = ({ c, isNested }) => {
   const [hasToggledLikeComment, sethasToggledLikeComment] = useState(false);
   const [commentBtnstate, setcommentBtnstate] = useState([]);
@@ -20,7 +21,6 @@ const CommentLike = ({ c, isNested }) => {
       disliked: c.isDislikedByCurrentUser,
     };
   });
-  console.log("false ...........", c.isDislikedByCurrentUser);
 
   const toggleLike = async (commentId) => {
     setReaction((prev) => {
@@ -68,34 +68,17 @@ const CommentLike = ({ c, isNested }) => {
   };
 
   return (
-    <div className="flex space-x-6">
-      <div className="flex items-center space-x-2 text-white ">
-        <button
-          onClick={() => {
-            toggleLike(c._id);
-            sethasToggledLikeComment(true);
-          }}
-        >
-          {reaction.liked ? <BiSolidLike /> : <BiLike />}
-        </button>
-        <span>
-          {hasToggledLikeComment ? reaction.likeCount : c.CommentlikeCount}
-        </span>
-      </div>
-
-      {/* Dislike */}
-      <div className="flex items-center space-x-2 text-white ">
-        <button
-          onClick={() => {
-            toggleDislike(c._id);
-            sethasToggledLikeComment(true);
-          }}
-        >
-          {reaction.disliked ? <BiSolidDislike /> : <BiDislike />}
-        </button>
-        <span>{reaction.dislikeCount}</span>
-      </div>
-    </div>
+    <>
+      <LikeDislike
+        onClick={() => {
+          toggleDislike(c._id);
+        }}
+        onClick1={() => {
+          toggleLike(c._id);
+        }}
+        reaction={reaction}
+      />
+    </>
   );
 };
 

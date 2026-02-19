@@ -5,7 +5,8 @@ import { changePassword } from "../../../../../Api/UserApi.js";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { handleAxiosError } from "../../../../utils/erroeHandler.jsx";
-import FormField from "../form/FormField.jsx";
+import FormField from "../../../../utils/form/FormField";
+import FormButton from "../../../../utils/form/FormButton";
 
 const ChangePassword = () => {
   const [dots, setdots] = useState(".");
@@ -31,14 +32,14 @@ const ChangePassword = () => {
   }, [issubmittingPassword]);
   return (
     <>
-      <div className="h-full w-full bg-gradient-to-bl from-slate-950 to-slate-900 ">
+      <div className="h-full w-full  ">
         <form
           onSubmit={handlePasswordSubmit(onPasswordSubmit)}
-          className="w-full sx:w-3/5 lg:w-2/5 sx:mx-auto space-y-5 p-5 rounded-xl bg-gradient-to-r from-cyan-950 via-black to-slate-700 mr-2 sx:mt-4  "
+          className="w-full sx:w-3/5 lg:w-2/5 sx:mx-auto space-y-5 p-5 rounded-xl bg-white mr-2 sx:mt-4 shadow-md border-slate-400   "
         >
           <FaLock className="h-5 w-5 text-gray-400 mr-2" />
 
-          <h1 className=" font-bold text-2xl text-center p-4 font-serif text-gray-400 bg-gradient-to-br from-blue-50 to-slate-600 bg-clip-text text-transparent">
+          <h1 className=" font-bold text-2xl text-center p-4 font-serif text-slate-800 ">
             Change-password
           </h1>
 
@@ -90,12 +91,10 @@ const ChangePassword = () => {
           />
 
           <div>
-            <button
-              type="onsubmit"
-              className="bg-gradient-to-r from-cyan-400 via-slate-300 to-cyan-950 sm:text-lg text-sm px-2 py-1  mx-auto rounded-xl block text-white  my-10 font-serif shadow-md shadow-cyan-900 active:shadow-black  "
-            >
-              {issubmittingPassword ? `isSubmitting${dots} ` : "Submit"}
-            </button>
+            <FormButton
+              navigate={navigate}
+              issubmitting={issubmittingPassword}
+            />
           </div>
         </form>
       </div>

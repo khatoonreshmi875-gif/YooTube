@@ -1,18 +1,20 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { MdSubscriptions } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 import { totalSubcribeChannel } from "../../../Api/Subscription.js";
 import { AppContext } from "../../utils/contextApi.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
-import { priotizeSelectChannel } from "./sortFunction.js";
+import EmptySkeleton from "../../utils/EmptySkeleton.jsx";
 import SubscriptionBtn from "../subscription/componentSubscription/SubscriptionBtn.jsx";
-import EmptySubscription from "./componentSubscription/EmptyCard/EmptySubscription.jsx";
-import SubscriptionSearch from "./componentSubscription/SubscriptionSearch.jsx";
-import SubscripptionVideo from "./componentSubscription/SubscripptionVideo.jsx";
 import ChannelCard from "./componentSubscription/ChannelCard.jsx";
 import EmptyvideoCard from "./componentSubscription/EmptyCard/EmptyvideoCard.jsx";
+import SubscripptionVideo from "./componentSubscription/SubscripptionVideo.jsx";
+import SubscriptionSearch from "./componentSubscription/SubscriptionSearch.jsx";
+import { priotizeSelectChannel } from "./sortFunction.js";
 const Subscription = () => {
   const { followers, user, FormatTime, setfollowers } = useContext(AppContext);
   const { userId } = useParams();
+  const navigate = useNavigate();
   const [selectedChannelId, setSelectedChannelId] = useState("");
   const [userFolower, setUserFolower] = useState();
   const handleSubscribePage = async (userId) => {
@@ -24,63 +26,85 @@ const Subscription = () => {
       handleAxiosError(err, navigate);
     }
   };
-  
+
   useEffect(() => {
     handleSubscribePage(userId);
-   
   }, [userId]);
-
+  if (followers.length === 0) {
+    // data fetched but no videos
+    return (
+      <div className="bg-white w-fit h-fit mx-auto border-slate-300 shadow-md rounded-lg p-3">
+        <EmptySkeleton
+          Icon={MdSubscriptions}
+          button_msg=" Explore Channels"
+          msg="You haven’t subscribed to any channels. Discover creators and
+          subscribe to stay updated!"
+          heading_text="   No subscriptions yet"
+          onClick={() => navigate("/")}
+          userId={userId}
+        />
+      </div>
+    );
+  }
   return (
-    <div className="w-full flex flex-col  ">
+    <div className="w-full flex flex-col space-y-6 bg-slate-50 min-h-screen p-4">
+      {/* Search Bar */}
       <SubscriptionSearch setSelectedChannelId={setSelectedChannelId} />
 
-      {Array.from(followers) && followers?.length === 0 ? (
-        <EmptySubscription userId={userId} user={user._id} />
-      ) : (
-        <div className="space-y-3 px-1 py-1 sm:space-y-6 sm:px-6 sm:py-4 bg-gradient-to-bl  from-slate-900 to-cyan-900 rounded-xl w-full   ">
-          {priotizeSelectChannel(followers, selectedChannelId).map((f) => (
-            <div
-              className="flex flex-col xl:flex-row xl:justify-between items-center space-y-3 xl:space-x-12 xl:h-52 bg-gradient-to-bl from-slate-800 via-black to-slate-800 rounded-lg shadow-md shadow-blue-200   hover:from-cyan-950 hover:via-slate-950 hover:to-cyan-950 hover:shadow-blue-300 hover:shadow-lg  hover:scale-[1.02] transition-transform duration-200 md:p-2 "
-              key={f._id}
-            >
-              <ChannelCard f={f} />
-              <div className="space-y-3 flex flex-col ">
-                <p className="text-center text-gray-200 font-semibold text-lg tracking-wide font-serif">
-                  Recent Videos
-                </p>
-                <div className=" flex flex-wrap justify-center ">
-                  {f?.video.length !== 0 ? (
-                    <>
-                      {/* Small screens → show only first 2 */}
-                      <div className="flex flex-wrap  sm:hidden ">
-                        {f?.video?.slice(0, 2).map((p, index) => (
-                          <SubscripptionVideo f={f} p={p} key={index} />
-                        ))}
-                      </div>
+      {/* Empty state */}
 
-                      {/* Medium and up → show all */}
-                      <div className="hidden sm:flex sm:flex-wrap sm:justify-center xl:grid xl:grid-cols-3">
-                        {f?.video?.map((p) => (
-                          <SubscripptionVideo f={f} p={p} />
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <EmptyvideoCard />
-                  )}
-                </div>
-              </div>
-              <div className="mt-4 lg:mt-0 flex justify-center lg:justify-end p-4 sm:py-4">
-                <SubscriptionBtn
-                  f={f}
-                  userId={userId}
-                  userFolower={userFolower}
-                />
+      <div className="space-y-6 w-full">
+        {priotizeSelectChannel(followers, selectedChannelId).map((f) => (
+          <div
+            key={f._id}
+            className="flex flex-col xl:flex-row xl:justify-between items-center 
+                     space-y-4 xl:space-x-8 bg-white border border-slate-200 
+                     rounded-xl shadow-sm hover:shadow-md hover:scale-[1.02] 
+                     transition-transform duration-200 p-4"
+          >
+            {/* Channel Card */}
+            <ChannelCard f={f} />
+
+            {/* Recent Videos */}
+            <div className="flex flex-col space-y-3 flex-1">
+              <p className="text-center text-slate-900 font-semibold text-lg tracking-wide">
+                Recent Videos
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-3">
+                {f?.video.length !== 0 ? (
+                  <>
+                    {/* Small screens → show first 2 */}
+                    <div className="flex flex-wrap sm:hidden gap-3">
+                      {f?.video?.slice(0, 2).map((p, index) => (
+                        <SubscripptionVideo f={f} p={p} key={index} />
+                      ))}
+                    </div>
+
+                    {/* Medium and up → show all */}
+                    <div className="hidden sm:flex      xl:grid xl:grid-cols-3 gap-3">
+                      {f?.video?.map((p) => (
+                        <SubscripptionVideo f={f} p={p} key={p._id} />
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <EmptyvideoCard />
+                )}
               </div>
             </div>
-          ))}
-        </div>
-      )}
+
+            {/* Subscription Button */}
+            <div className="flex justify-center lg:justify-end mt-4 lg:mt-0">
+              <SubscriptionBtn
+                f={f}
+                userId={userId}
+                userFolower={userFolower}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

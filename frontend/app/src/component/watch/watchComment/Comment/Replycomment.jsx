@@ -1,5 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { handleAxiosError } from "../../../utils/erroeHandler";
+import { useNavigate } from "react-router-dom";
 
 const Replycomment = ({
   isNested,
@@ -15,12 +17,20 @@ const Replycomment = ({
 }) => {
   const [activeReplyId, setActiveReplyId] = useState(null);
   const [content, setcontent] = useState("");
+  const navigate = useNavigate();
   const handleReplyCommment = async (commentId, userdata) => {
-    const res = await replyApi(commentId, userdata);
-    setgetreplied((prev) => [
-      allData(content, res?.data?.data?._id, commentId),
-      ...prev,
-    ]);
+    try {
+      const tempId = Date.now() + Math.floor(Math.random() * 999999);
+      setgetreplied((prev) => [allData(content, tempId, commentId), ...prev]);
+      const res = await replyApi(commentId, userdata);
+      const created = res.data.data;
+      setgetreplied((prev) =>
+        prev.map((c) => (c._id === tempId ? created : c)),
+      );
+    } catch (err) {
+      setgetreplied((prev) => prev.filter((p) => p._id !== tempId));
+      handleAxiosError(err, navigate);
+    }
   };
   const increaseReplyCount = (commentId) => {
     setCommentsWithLikes((prev) =>
@@ -57,7 +67,7 @@ const Replycomment = ({
               placeholder="Reply here..."
               value={content}
               onChange={(e) => setcontent(e.target.value)}
-              className="w-full border-b-2 border-gray-400 focus:border-blue-500 focus:outline-none px-2 py-1 rounded-lg sm:text-sm  text-xs"
+              className="w-full border-b-2 border-gray-400 focus:border-slate-300 focus:outline-none px-2 py-1 rounded-lg sm:text-sm  text-xs"
             />
             <div className="flex space-x-3 justify-end">
               <button
@@ -75,13 +85,13 @@ const Replycomment = ({
                   setActiveReplyId(null);
                   setcontent("");
                 }}
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 sm:text-sm  text-xs"
+                className="hover:text-white px-3 py-1 rounded bg-blue-100 text-blue-600  hover:bg-blue-600 sm:text-sm  text-xs shadow-sm shadow-blue-600 active:shadow-transparent hover:shadow-black"
               >
                 Reply
               </button>
               <button
                 onClick={() => setActiveReplyId(null)}
-                className="bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500  sm:text-sm  text-xs"
+                className="bg-slate-100 text-slate-600  hover:text-white px-3 py-1 rounded hover:bg-slate-500  sm:text-sm  text-xs shadow-sm shadow-slate-600  hover:shadow-black active:shadow-transparent "
               >
                 Cancel
               </button>
