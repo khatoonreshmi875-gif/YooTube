@@ -5,12 +5,13 @@ const AuthPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-tr from-slate-600 via-black to- text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white text-slate-700">
       <h1 className="text-2xl mb-6 font-bold">Welcome to VideoHub</h1>
       <div className="space-x-4">
+        
         <button
           onClick={() => navigate("/login")}
-          className="px-6 py-2 bg-blue-600  shadow-md shadow-blue-200 rounded hover:bg-blue-700 active:shadow-black"
+          className="px-6 py-2 bg-blue-100  shadow-md shadow-blue-200 rounded hover:bg-blue-700 active:shadow-black text-bl"
         >
           Login
         </button>

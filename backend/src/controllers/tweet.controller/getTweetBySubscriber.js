@@ -20,16 +20,11 @@ export const getTweetBySubscriber = asynchandler(async (req, res) => {
     .skip(parseInt(page) * 7)
     .limit(7);
 
-  console.log("tweets from subscribed owners count:", tweets.length); // 4️⃣ how many tweets found
+  console.log("tweets from subscribed owners count///////////////////:", tweets.length); // 4️⃣ how many tweets found
   if (tweets.length > 0) {
     console.log("sample subscribed tweet:", tweets[0]); // 5️⃣ inspect one document
   }
-  if (tweets.length === 0) {
-    return res
-      .status(200)
-      .json(new ApiResponse(200, [], "No more tweets available"));
-  }
-
+  
   if (tweetOwner.length === 0 || tweets.length === 0) {
     console.log("tweet is nothing");
     const tweet = await Tweet.aggregate([

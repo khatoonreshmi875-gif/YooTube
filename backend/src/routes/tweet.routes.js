@@ -12,7 +12,7 @@ import cacheMiddleware from "../middlewares/cache.middleware.js";
 import { Tweet } from "../models/tweet.model.js";
 import { authorizationMiddleware } from "../middlewares/authorization.middleware.js";
 import { getTweetBySubscriber } from "../controllers/tweet.controller/getTweetBySubscriber.js";
-getTweetBySubscriber
+getTweetBySubscriber;
 
 const tweetRouter = Router();
 tweetRouter.use(verifyJWT);
@@ -27,7 +27,7 @@ tweetRouter
   .get(cacheMiddleware, getTweetByTweetId);
 tweetRouter
   .route("/subscriber-tweet")
-  .get(verifyJWT, cacheMiddleware, getTweetBySubscriber)
+  .get(verifyJWT, getTweetBySubscriber)
 
   .patch(upload.single("image"), updateTweet);
 tweetRouter.route("/create-tweet").post(
