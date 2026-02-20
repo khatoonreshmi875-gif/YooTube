@@ -3,7 +3,6 @@ import ApiError from "../../../utils/ApiError.js";
 import { ApiResponse } from "../../../utils/ApiResponse.js";
 import asynchandler from "../../../utils/asynchandler.js";
 import { invalidateVideoComments } from "../../../utils/invalidateAll.js";
-import client from "../../../utils/redis.js";
 export const addCommentForTweet = asynchandler(async (req, res) => {
   const { tweetId } = req.params;
   const { content } = req.body;
@@ -17,7 +16,11 @@ export const addCommentForTweet = asynchandler(async (req, res) => {
     // faster writes
   );
 
-  const comment = newComment.toObject();
+  const comment = await Comment.findById(newComment._id).populate(
+    "owner",
+    "channelName avatar",
+  );
+
   await invalidateVideoComments(
     `/api/v1/comments/tweet-comment/${tweetId}?page=*:${req.user._id}`,
   );

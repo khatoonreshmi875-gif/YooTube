@@ -157,7 +157,7 @@ const VideoLike = ({
           toggleSubscribeBtn(userId);
           setvideoState((prev) => ({ ...prev, initialState: true }));
         }}
-        label={isCurrentlySubscribed ? "Subscribed" : "Unsubscribe"}
+        label={isCurrentlySubscribed ? "UnSubscribe" : "Subscribe"}
       />
 
       {/* Like Button */}

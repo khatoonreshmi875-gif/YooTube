@@ -9,7 +9,7 @@ const DownloadButton = ({ video }) => {
     // Save blob in IndexedDB
     const db = await getDB();
     await db.put("files", blob, video._id);
-
+    console.log("video.videoFile", video.videoFile);
     // Save metadata in localStorage for listing
     let downloads = JSON.parse(localStorage.getItem("downloads")) || [];
     downloads.push({

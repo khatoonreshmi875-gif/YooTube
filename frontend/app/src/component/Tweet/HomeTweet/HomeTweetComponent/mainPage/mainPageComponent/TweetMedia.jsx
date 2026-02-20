@@ -76,7 +76,7 @@ const TweetMedia = ({ tweet, isTweet = false }) => {
                 [tweet._id]: (prev[tweet._id] + 1) % merge(tweet).length || 0,
               }))
             }
-            className="absolute bottom-2 right-2 bg-white/40 sm:p-0.5 rounded shadow hover:bg-gray-200 z-40 text-xs"
+            className="absolute bottom-2 right-2 bg-white/40 sm:p-1 rounded shadow hover:bg-gray-200 z-40 text-xs"
           >
            <BiRightArrowAlt/>
           </button>

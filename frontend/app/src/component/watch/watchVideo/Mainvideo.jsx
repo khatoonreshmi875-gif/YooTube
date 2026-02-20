@@ -32,7 +32,6 @@ const Mainvideo = () => {
     fetchVideo();
   }, [videoId]);
 
-  console.log("cloud uef", cloudName);
   return (
     <div className="w-full flex flex-col space-y-6">
       {/* Video Player */}

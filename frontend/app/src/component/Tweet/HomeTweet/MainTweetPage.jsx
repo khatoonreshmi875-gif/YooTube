@@ -33,7 +33,7 @@ const MainTweetPage = () => {
   return (
     <div>
       <>
-        <div className="lg:w-1/3 md:w-2/3 sm:w-3/4 w-full mx-auto sm:mb-0 mb-24 ">
+        <div className="lg:w-1/3 md:w-2/3 sm:w-3/4 w-full mx-auto sm:mb-0 mb-24 h-auto ">
           {" "}
           <MainPage tweet={tweetData} />
           {tweetData?._id && (

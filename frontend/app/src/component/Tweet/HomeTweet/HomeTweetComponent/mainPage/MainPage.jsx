@@ -16,7 +16,7 @@ const MainPage = ({ tweet, isNested, tweetByTweetId }) => {
   );
   return (
     <>
-      <div className={`${isNested ? "" : "h-screen"}`}>
+      <div className={`${isNested ? "" : ""}`}>
         {/* Tweet Card */}
         <div
           className={`${isNested ? " w-full aspect-auto " : "h-[95%] "} bg-white shadow-sm rounded-xl overflow-hidden shadow-slate-500 mt-2`}
@@ -32,8 +32,8 @@ const MainPage = ({ tweet, isNested, tweetByTweetId }) => {
           <TweetMedia tweet={tweet} />
 
          
-          <div className="flex items-center justify-between xl:w-full pr-6  my-2 h-[15%] ">
-            <div className="sm:p-4  w-24 ">
+          <div className="flex items-center justify-between xl:w-full pr-6  my-2 h-fit">
+            <div className="sm:p-4   ">
               <TweetLike
                 tweetId={tweet?._id}
                 initialLikeCount={tweet?.tweetLikeCount}
