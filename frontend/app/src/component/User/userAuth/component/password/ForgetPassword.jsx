@@ -50,12 +50,12 @@ const ForgetPassword = () => {
     <div>
       <form
         onSubmit={handleLoginSubmit(onLogin)}
-        className="w-full h-[80vh] flex justify-center items-center mt-24"
+        className="w-full h-[80vh] flex justify-center items-center p-4 "
       >
-        <div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-xl shadow-lg p-8">
+        <div className="w-full max-w-md bg-white  rounded-xl shadow-lg p-8">
           {/* Title */}
-          <Heading label=" Welcome Back"/>
- 
+          <Heading label=" Welcome Back" />
+
           {/* Email Field */}
           <FormField
             label="Email"
@@ -76,8 +76,8 @@ const ForgetPassword = () => {
 
           <button
             type="submit"
-            className={`w-full mt-6 bg-gradient-to-r from-indigo-400 via-violet-400 to-indigo-500 
-                 text-white py-2 px-4 rounded-lg font-semibold shadow-md 
+            className={`w-full mt-6 bg-blue-100 text-blue-600  hover:bg-blue-600 hover:text-white lg:text-base xs:text-sm text-xs
+                py-2 px-4 rounded-md shadow-md 
                  hover:scale-105 hover:shadow-xl transition-transform duration-300 ${isDisabled ? "opacity-30" : "opacity-80"}
 `}
             disabled={isDisabled}
@@ -92,7 +92,7 @@ const ForgetPassword = () => {
             </div>
           )}
           {/* Footer */}
-          <p className="mt-4 text-center text-sm text-slate-700">
+          <p className="mt-4 text-center sm:text-sm text-xs text-slate-700">
             Don’t have an account?{" "}
             <span
               className="text-indigo-400 hover:underline cursor-pointer "

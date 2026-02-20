@@ -42,6 +42,7 @@ export const SearchOfchannel = asynchandler(async (req, res) => {
             publicId: 1,
             thumbnail: 1,
             description: 1,
+            duration:1,
             createdAt: 1,
             views: 1,
             owner: 1,

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { handleAxiosError } from "../../../../utils/erroeHandler.jsx";
 import FormField from "../../../../utils/form/FormField";
 import FormButton from "../../../../utils/form/FormButton";
+import Heading from "../../../../utils/form/Heading.jsx";
 
 const ChangePassword = () => {
   const [dots, setdots] = useState(".");
@@ -14,6 +15,7 @@ const ChangePassword = () => {
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,
+    setError,
     watch,
     formState: { errors, isSubmitting: issubmittingPassword },
   } = useForm();
@@ -21,8 +23,28 @@ const ChangePassword = () => {
   async function onPasswordSubmit(userdata) {
     try {
       const result = await changePassword(userdata);
+      if (result.data.success === true) {
+        navigate("/");
+      }
     } catch (err) {
+      console.log(err);
+      if (
+        err?.response?.data?.message ===
+        "Confirm Password is not matched with new password"
+      ) {
+        setError("confirmPassword", {
+          type: "manual",
+          message: "Confirm Password is not matched with new password",
+        });
+      }
+      if (err?.response?.data?.message === "Invalid Old Password") {
+        setError("oldPassword", {
+          type: "manual",
+          message: "Invalid Old Password",
+        });
+      }
       handleAxiosError(err, navigate);
+      console.log("eror", err);
     }
   }
   useEffect(() => {
@@ -39,13 +61,11 @@ const ChangePassword = () => {
         >
           <FaLock className="h-5 w-5 text-gray-400 mr-2" />
 
-          <h1 className=" font-bold text-2xl text-center p-4 font-serif text-slate-800 ">
-            Change-password
-          </h1>
+          <Heading label="   Change-password" />
 
           <FormField
             label=" Old Password "
-            name="pldPassword"
+            name="oldPassword"
             placeholder="Enter your old password here..."
             register={registerPassword}
             error={errors.oldPassword}

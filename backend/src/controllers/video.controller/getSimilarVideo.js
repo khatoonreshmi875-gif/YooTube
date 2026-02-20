@@ -77,6 +77,7 @@ export const getSimilarVideo = asynchandler(async (req, res) => {
         videoFile: { $first: "$videoFile" },
         thumbnail: { $first: "$thumbnail" },
         createdAt: { $first: "$createdAt" },
+        duration: { $first: "$duration" },
         views: { $first: "$views" },
         videoLikeCount: { $first: "$videoLikeCount" },
         videoDislikeCount: { $first: "$videoDislikeCount" },
@@ -99,6 +100,7 @@ export const getSimilarVideo = asynchandler(async (req, res) => {
         videoDislikeCount: 1,
         matchScore: 1,
         description: 1,
+        duration: 1,
         owner: {
           channelName: "$ownerDetails.channelName",
           _id: "$ownerDetails._id",

@@ -5,6 +5,12 @@ import asynchandler from "../../../../utils/asynchandler.js";
 export const changeCurrentPassword = asynchandler(async (req, res) => {
   const { oldPassword, newPassword, confirmPassword } = req.body;
   //console.log(req.body);
+  console.log(
+    "Comparing:....................................",
+    oldPassword,
+    "with stored:",
+    newPassword,
+  );
   if (!(newPassword === confirmPassword)) {
     throw new ApiError(
       400,
@@ -24,7 +30,6 @@ export const changeCurrentPassword = asynchandler(async (req, res) => {
   }
   user.password = newPassword;
   await user.save({ validateBeforeSave: false });
-  invalidateCache(`email:${user.email}`);
   return res
     .status(200)
     .json(new ApiResponse(200, {}, "Password Changed Successfully"));

@@ -52,7 +52,6 @@ const token = localStorage.getItem("token");
   };
 
   useEffect(() => {
-    console.log("add the use effect////////////////////////", hasNomore);
     const handleScroll = () => {
       if (
         window.scrollY + window.innerHeight >=

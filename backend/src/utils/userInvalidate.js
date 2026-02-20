@@ -48,13 +48,16 @@ export const userInvalidate = async (ownerId) => {
     ...tweetTasks,
     ...commentTasks,
     client.del(`/api/v1/users/curr-user-by-id/${ownerId}`),
-    invalidateVideoComments(`/api/v1/users/history/?page=*:${ownerId}`),
+    client.del(`/api/v1/users/history:${ownerId}`),
+
     client.del(`/api/v1/users/curr-user:${ownerId}`),
     client.del(`/api/v1/users/all-user:${ownerId}`),
     client.del(`/api/v1/users/role-moderator:${ownerId}`),
     client.del(`/api/v1/users/role-user:${ownerId}`),
 
-    invalidateVideoComments(`/api/v1/videos/user-id/${ownerId}?page=*:${ownerId}`),
+    invalidateVideoComments(
+      `/api/v1/videos/user-id/${ownerId}?page=*:${ownerId}`,
+    ),
     client.del(`/api/v1/users/role-user:${ownerId}`),
 
     invalidateVideoComments(

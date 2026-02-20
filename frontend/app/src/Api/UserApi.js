@@ -48,6 +48,7 @@ export const changePassword = async (userdata) => {
     return response;
   } catch (err) {
     console.log("Password change failed", err);
+    throw err;
   }
 };
 export const getCurrentUser = async () => {

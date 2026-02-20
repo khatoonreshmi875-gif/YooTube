@@ -176,7 +176,7 @@ const AddPlaylist = () => {
               }
             }}
           >
-            {video.map((v) => (
+            {video?.map((v) => (
               <option
                 key={v._id}
                 value={v._id}

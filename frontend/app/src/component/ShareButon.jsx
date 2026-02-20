@@ -16,7 +16,6 @@ const ShareButon = ({ video, tweet, isNested, isMain }) => {
     <div>
       <button
         onClick={() => {
-          console.log("Clicked");
           setShowShareOptions(!showShareOptions);
         }}
       >

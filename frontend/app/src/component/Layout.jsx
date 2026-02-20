@@ -21,7 +21,7 @@ const Layout = ({
 
   return (
     <div
-      className={`flex  rounded-xl shadow-sm border border-gray-200 
+      className={`flex bg-white  rounded-xl shadow-sm border border-gray-200 
                         hover:shadow-md transition w-full h-full `}
     >
       <div onClick={() => handleVideoPage(v._id, v?.owner?._id)} className="basis-2/6">

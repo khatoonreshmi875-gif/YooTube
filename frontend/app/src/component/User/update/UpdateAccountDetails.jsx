@@ -8,7 +8,7 @@ import FormButton from "../../utils/form/FormButton";
 import FormField from "../../utils/form/FormField";
 
 const UpdateAccountDetails = () => {
-  const { user, getallvideo } = useContext(AppContext);
+  const { user, getallvideo, onHandle } = useContext(AppContext);
   const navigate = useNavigate();
   const {
     register: registerVideo,
@@ -24,13 +24,11 @@ const UpdateAccountDetails = () => {
     },
   });
   async function onLogin(userdata) {
-    
     try {
       const result = await getUpdateAccountDetails(userdata);
-      const result3 = await RecommendedVideo(0);
-      setgetvideo(result3.data.data);
-      onHandle();
-      navigate(`/curr-user/${user._id}/video`);
+         navigate(`/curr-user/${user._id}/video`);
+      navigate(0);
+   
     } catch (err) {
       handleAxiosError(err, navigate);
     }

@@ -20,11 +20,11 @@ const Navbar1 = () => {
           <li>
             <NavLink
               to="playlist-home"
-              className={({ isActive }) =>
-                `px-3 py-1 rounded-md transition ${
-                  isActive ? "bg-blue-50 text-blue-600" : "hover:bg-slate-100"
-                }`
-              }
+            className={({ isActive }) =>
+              `px-3 py-1 rounded-md transition ${
+                isActive ? "bg-blue-50 text-blue-600" : "hover:bg-slate-100"
+              }`
+            }
             >
               Playlist
             </NavLink>

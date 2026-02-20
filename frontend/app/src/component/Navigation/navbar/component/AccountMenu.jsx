@@ -50,7 +50,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
         >
           {/* Logout / Login */}
           <li
-            className="w-full text-left px-1 py-2 text-sm 
+            className="w-full text-left px-1 py-2 sm:text-sm text-xs 
                    text-slate-700 hover:bg-slate-100 font-normal 
                    hover:text-blue-600 transition cursor-pointer"
           >

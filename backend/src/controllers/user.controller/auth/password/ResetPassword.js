@@ -10,7 +10,13 @@ export const resetPassword = asynchandler(async (req, res) => {
   if (password !== confirmPassword) {
     return res
       .status(400)
-      .json(new ApiResponse(400, [], "Passwords do not match"));
+      .json(
+        new ApiResponse(
+          400,
+          [],
+          "Confirm Password is not matched with new password",
+        ),
+      );
   }
   const decodedToken = jwt.verify(token, process.env.FORGOT_PASSWORD_SECRET);
 

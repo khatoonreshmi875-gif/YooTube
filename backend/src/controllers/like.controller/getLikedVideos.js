@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 export const getLikedVideos = asynchandler(async (req, res) => {
   const { sort = "recent" } = req.query;
   const likes = await Like.find({ video: { $exists: true, $ne: null } });
- 
+
   const result = [
     {
       $match: {
@@ -49,6 +49,7 @@ export const getLikedVideos = asynchandler(async (req, res) => {
                 _id: "$Video._id",
                 title: "$Video.title",
                 description: "$Video.description",
+                duration: "$Video.duration",
                 views: "$Video.views",
                 thumbnail: "$Video.thumbnail",
                 videoFile: "$Video.videoFile",

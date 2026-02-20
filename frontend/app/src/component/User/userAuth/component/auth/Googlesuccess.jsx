@@ -1,4 +1,4 @@
-import { useEffect,useState} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Googlesuccess = () => {
@@ -16,14 +16,17 @@ const Googlesuccess = () => {
     if (token) {
       console.log("tokrn", token);
       localStorage.setItem("token", token);
-        navigate("/");
+      navigate("/");
     }
   }, [navigate]);
 
   return (
     <>
-      <div className="flex h-screen w-full bg-gray-900 justify-center items-center ">
-        <div className=" flex w-24 h-24 bg-gradient-to-br from-red-400 via-pink-400 to-purple-700 animate-spin  jusify-center items-center text-white pl-4 "> MINUTE </div>
+      <div className="flex h-screen w-full bg-white justify-center items-center ">
+        <div className=" flex w-24 h-24 bg-gradient-to-br from-red-400 via-pink-400 to-purple-700 animate-spin  jusify-center items-center text-white pl-4 ">
+          {" "}
+          VIDORA{" "}
+        </div>
         <div
           className="lg:text-6xl md:text-4xl sm:text-3xl text-xl  text-gray-400 bg-gradient-to-br from-red-400 via-pink-400 to-purple-700 
                    bg-clip-text text-transparent font-serif p-3"
