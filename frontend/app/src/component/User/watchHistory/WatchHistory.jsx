@@ -66,7 +66,7 @@ const WatchHistory = () => {
             ? Array.from({ length: 9 }).map((_, i) => <Videoskeleton key={i} />)
             : history.map((v, index) => (
                 <Home
-                  key={index}
+                  key={v._id}
                   v={v.videoId}
                   index={index}
                   watchedAt={v.watchedAt}

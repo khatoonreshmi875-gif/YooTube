@@ -77,7 +77,7 @@ const Subscription = () => {
                     {/* Small screens → show first 2 */}
                     <div className="flex flex-wrap sm:hidden gap-3">
                       {f?.video?.slice(0, 2).map((p, index) => (
-                        <SubscripptionVideo f={f} p={p} key={index} />
+                        <SubscripptionVideo f={f} p={p} key={p._id} />
                       ))}
                     </div>
 

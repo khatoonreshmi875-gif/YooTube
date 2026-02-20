@@ -90,7 +90,7 @@ const SimilarVideo = () => {
     <div>
       {similarVideos?.map((s, index) => (
         <div
-          key={index}
+          key={s._id}
           className="flex sm:flex-row flex-col lg:flex-row justify-between 
              space-x-3 p-3 rounded-xl 
              bg-white border border-slate-200 

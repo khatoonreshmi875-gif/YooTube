@@ -6,7 +6,6 @@ import asynchandler from "../../../utils/asynchandler.js";
 import { generateRefreshAndAccessToken } from "../../../utils/generateRefreshAndAccessToken.js";
 export const loginUser = asynchandler(async (req, res) => {
   const { email, password } = req.body;
-  //console.log("🔍 Incoming login body:", req.body);
 
   if (!email) {
     throw new ApiError(400, " email is required");

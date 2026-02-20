@@ -134,13 +134,8 @@ const SearchPage = () => {
         {sortVideo(allvideo, type)?.map((s, index) => {
           const tweetPost = index === 4;
           return (
-            <div key={index} className="w-full">
-              {/* {tweetPost && tweet.length !== 0 && (
-                <>
-                  {" "}
-                  <TweetSection tweet={tweet} />
-                </>
-              )} */}
+            <div key={s._id} className="w-full">
+              
               <VideoItem s={s} index={index} />
             </div>
           );
@@ -151,13 +146,7 @@ const SearchPage = () => {
             No more videos are available
           </p>
         )}
-        {/* {loading && (
-          <div>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <SearchSkeleton key={i} />
-            ))}
-          </div>
-        )} */}
+        
       </div>
     </div>
   );

@@ -2,7 +2,6 @@ import { getDB } from "../../indexdb";
 const DownloadButton = ({ video }) => {
   const handleDownload = async () => {
     // Fetch video file from server
-    console.log(video, "data of videofile.................");
     const response = await fetch(video.videoFile);
     const blob = await response.blob();
 

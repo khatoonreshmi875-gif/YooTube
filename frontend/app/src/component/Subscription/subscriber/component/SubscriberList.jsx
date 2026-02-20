@@ -11,7 +11,7 @@ const SubscriberList = () => {
       {priotizeSelectedChannel(stats?.subscriber, selectedChannelId).map(
         (m, index) => (
           <div
-            key={index}
+            key={m._id}
             className="flex flex-col sm:flex-row items-center sm:justify-between 
                      sm:space-x-6 p-5 bg-white border border-slate-200 
                      rounded-2xl shadow-sm hover:shadow-md transition-transform 

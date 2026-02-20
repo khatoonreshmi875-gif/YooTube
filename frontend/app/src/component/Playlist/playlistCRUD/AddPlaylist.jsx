@@ -67,7 +67,7 @@ const AddPlaylist = () => {
             >
               {preview.map((item, index) => (
                 <div
-                  key={index}
+                  key={item._id}
                   className="flex flex-col items-center w-36 p-3 bg-white rounded-lg shadow-sm hover:shadow-md hover:bg-blue-100 transition-all duration-300 cursor-pointer"
                   onClick={() => setIsOpen(index)}
                 >
@@ -111,7 +111,7 @@ const AddPlaylist = () => {
               >
                 {prevData?.map((item, index) => (
                   <div
-                    key={index}
+                    key={item._id}
                     className="flex flex-col items-center bg-white rounded-lg shadow-sm  m-2 w-36 hover:shadow-md hover:bg-blue-50 transition-all duration-300"
                     onClick={() => setOpen(index)}
                   >

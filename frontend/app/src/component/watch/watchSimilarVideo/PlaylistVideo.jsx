@@ -31,7 +31,7 @@ const PlaylistVideo = ({ similarVideos }) => {
       <div className="bg-slate-800 space-y-5 p-4 ">
         {similarVideos?.map((s, index) => (
           <div
-            key={index}
+            key={s._id}
             className="flex items-start space-x-3 p-2 rounded-lg hover:from-slate-600 transition bg-gradient-to-br from-slate-950 via-slate-900   "
           >
             {/* Video Thumbnail */}

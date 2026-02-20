@@ -6,13 +6,7 @@ import { playlistInvalidate } from "../../utils/playlistInvalidate.js";
 import client from "../../utils/redis.js";
 export const removeVideoToPlayList = asynchandler(async (req, res) => {
   const { playlistId, videoId } = req.params;
-  //console.log("playlist Id", playlistId, "video", videoId);
-  // console.log(videoId);
-  // const video = await Video.findById(videoId);
-  // console.log(video);
-  // if (!video) {
-  //   throw new ApiError(404, "video  is not found");
-  // }
+  
   const updatedPlaylist = await Playlist.findByIdAndUpdate(
     playlistId,
     {

@@ -34,7 +34,7 @@ const FormSelect = ({
         onChange={onChange}
       >
         {data?.map((d, index) => (
-          <option value={d?._id} key={index}>
+          <option value={d?._id} key={d._id}>
             {isData ? d.title : d}
           </option>
         ))}

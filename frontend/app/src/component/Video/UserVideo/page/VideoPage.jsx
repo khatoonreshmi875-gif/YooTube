@@ -59,7 +59,7 @@ const VideoPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2  lg:gap-5  ">
         {sortVideos(video, sort).map((v, index) => (
           <div
-            key={index}
+            key={v._id}
             className="bg-white rounded-xl shadow-sm border border-gray-200 
                         hover:shadow-md transition w-full h-full"
           >

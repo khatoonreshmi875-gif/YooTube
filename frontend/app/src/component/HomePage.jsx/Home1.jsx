@@ -20,7 +20,7 @@ const Home1 = () => {
         <>
           <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 sm:gap-3  ">
             {getvideo.map((v, index) => (
-              <Home2 key={index} v={v} index={index} playlist={allPlaylist} />
+              <Home2 key={v._id} v={v} index={index} playlist={allPlaylist} />
             ))}
           </div>{" "}
           {hasNomore && (

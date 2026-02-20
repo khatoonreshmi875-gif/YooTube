@@ -17,7 +17,7 @@ const TopSubscriber = () => {
           .slice(0, 3)
           .map((m, index) => (
             <div
-              key={index}
+              key={m._id}
               className="flex justify-between items-center p-4 bg-white border border-slate-200 rounded-xl shadow-sm 
                        hover:shadow-md hover:bg-slate-50 transition-transform duration-200"
             >

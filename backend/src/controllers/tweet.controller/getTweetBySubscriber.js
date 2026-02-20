@@ -20,7 +20,7 @@ export const getTweetBySubscriber = asynchandler(async (req, res) => {
     .skip(parseInt(page) * 7)
     .limit(7);
 
-  console.log("tweets from subscribed owners count///////////////////:", tweets.length); // 4️⃣ how many tweets found
+ 
   if (tweets.length > 0) {
     console.log("sample subscribed tweet:", tweets[0]); // 5️⃣ inspect one document
   }
@@ -107,7 +107,6 @@ export const getTweetBySubscriber = asynchandler(async (req, res) => {
       },
     ]);
     console.log("aggregation result count:", tweet.length);
-    //console.log("sample aggregation result:", tweet[0]);
 
     return res.status(200).json(new ApiResponse(200, tweet, "tweets found"));
   }
