@@ -158,14 +158,14 @@ const Layout = ({
 
   return (
     <div
-      className={`flex  bg-white rounded-xl shadow-sm border border-gray-200 
+      className={`flex  rounded-xl shadow-sm border border-gray-200 
                         hover:shadow-md transition w-full h-full `}
     >
-      <div onClick={() => handleVideoPage(v._id, v?.owner?._id)}>
+      <div onClick={() => handleVideoPage(v._id, v?.owner?._id)} className="basis-2/6">
         <video
           muted
           poster={v?.thumbnail}
-          className={`${isDownload ? "sm:w-96 " : "w-full"}
+          className={`w-full
           rounded-xl object-cover cursor-pointer
           hover:brightness-90 transition duration-200`}
         >
@@ -173,7 +173,7 @@ const Layout = ({
         </video>
       </div>
 
-      <div className="flex relative">
+      <div className="flex relative basis-4/6">
         <VideoInfoColumn v={v} index={index} isDownload={isDownload} />
         <VideoMenu
           v={v}

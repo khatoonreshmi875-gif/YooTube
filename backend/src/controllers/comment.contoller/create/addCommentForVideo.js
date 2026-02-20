@@ -17,7 +17,10 @@ export const addComment = asynchandler(async (req, res) => {
     // faster writes
   );
 
-  const comment = newComment.toObject();
+  const comment = await Comment.findById(newComment._id).populate(
+    "owner",
+    "channelName avatar",
+  );
 
   await Promise.allSettled([
     await invalidateVideoComments(
