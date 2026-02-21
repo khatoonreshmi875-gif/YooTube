@@ -2,14 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "./utils/contextApi.js";
 
-const VideoInfoColumn = ({
-  v,
-  isData = false,
-  watchedAt,
-  showImage = true,
-  dislikedVideo,
-  likedAt,
-}) => {
+const VideoInfoColumn = ({ v }) => {
   const { FormatTime } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -56,4 +49,4 @@ const VideoInfoColumn = ({
   );
 };
 
-export default React.memo(VideoInfoColumn);
+export default VideoInfoColumn;

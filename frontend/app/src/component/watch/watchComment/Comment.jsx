@@ -14,12 +14,16 @@ import { useNavigate } from "react-router-dom";
 
 const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
   const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  //usestate
   const [count, setcount] = useState(0);
   const [getreplied, setgetreplied] = useState([]);
   const [Allreply, setAllreply] = useState(null);
   const [hasFetched, setHasFetched] = useState(false);
   const [IsOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  // Helper: build reply object
+
   const allData = (data, id, commentId) => {
     return {
       owner: { channelName: user?.channelName, avatar: user?.avatar },
@@ -34,11 +38,16 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
       createdAt: new Date().toISOString(),
     };
   };
+
+  // Initialize replies if present
+
   useEffect(() => {
     if (Array.isArray(c.replies) && c.replies.length > 0) {
       setgetreplied(c.replies);
     }
   }, [c.replies]);
+  // Fetch replies from API
+
   const handleRepliedComment = async (commentId, page = 0) => {
     try {
       const res = await GetAllRepliedComment(commentId, page);
@@ -66,12 +75,16 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
       }`}
     >
       <div className={`flex flex-col ${isNested ? "p-5" : "py-5 px-3"}`}>
+        {/* Header */}
+
         <CommentHeader
           c={c}
           isNested={isNested}
           setIsOpen={setIsOpen}
           IsOpen={IsOpen}
         />
+        {/* Edit/Delete */}
+
         <EditDeleteComment
           setgetreplied={setgetreplied}
           setCommentsWithLikes={setCommentsWithLikes}
@@ -80,6 +93,7 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
           IsOpen={IsOpen}
           setIsOpen={setIsOpen}
         />
+        {/* Like + Reply Toggle */}
 
         <div className="flex items-center  mt-8 mb-[-1rem]  text-slate-700 w-full justify-between  ">
           <CommentLike c={c} isNested={isNested} />
@@ -110,6 +124,7 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
             </button>
           </div>
         </div>
+        {/* Reply Input */}
 
         <Replycomment
           isNested={isNested}
@@ -123,7 +138,8 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
           setCommentsWithLikes={setCommentsWithLikes}
         />
 
-        {/* Replies */}
+        {/* Replies List */}
+
         <div className="mt-4">
           {Allreply === index &&
             getreplied?.map((reply, idx) => (
@@ -157,4 +173,4 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
   );
 };
 
-export default Comment;
+export default React.memo(Comment);

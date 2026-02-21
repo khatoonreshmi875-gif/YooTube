@@ -6,21 +6,25 @@ import { getSimilarVideo } from "../../../Api/VideoApi";
 import { handleAxiosError } from "../../utils/erroeHandler";
 import SimilarVideoSkeleton from "./SimilarVideoSkeleton";
 import VideoMenu from "../../HomePage.jsx/HomePageComponent/VideoMenu";
+import useInfiniteScroll from "../../../Hooks/useInfiniteScroll";
 
 const SimilarVideo = () => {
   const { FormatTime } = useContext(AppContext);
-  const videoref = useRef([]);
-  const [isPlaying, setisPlaying] = useState(null);
   const navigate = useNavigate();
-
-  const hasNomore = useRef(false);
-  //const { videoId } = useSelector((state) => state.video);
-  const [count, setcount] = useState(0);
-  const [loading, setloading] = useState(false);
-  const hasFetchedFirst = useRef(false);
   const { videoId } = useParams();
 
-  const [similarVideos, setSimilarVideos] = useState([]); // r
+  //usestate
+  const [similarVideos, setSimilarVideos] = useState([]);
+  const [count, setcount] = useState(0);
+  const [loading, setloading] = useState(false);
+  const [isPlaying, setisPlaying] = useState(null);
+
+  //useref
+  const hasFetchedFirst = useRef(false);
+  const hasNomore = useRef(false);
+  const videoref = useRef([]);
+  // Reset when videoId changes
+
   useEffect(() => {
     if (videoId) {
       setcount(0);
@@ -29,6 +33,8 @@ const SimilarVideo = () => {
       setSimilarVideos([]);
     }
   }, [videoId]);
+
+  // API call
 
   const api = useCallback(async (videoId, newValue = 0) => {
     setloading(true);
@@ -52,7 +58,8 @@ const SimilarVideo = () => {
       setloading(false);
     }
   }, []);
-  //hasNomore.current === false
+
+  // First fetch
 
   useEffect(() => {
     if (videoId && hasFetchedFirst.current === false) {
@@ -62,26 +69,16 @@ const SimilarVideo = () => {
     }
   }, [videoId, api]);
 
-  const handleScroll = useCallback(() => {
-    if (
-      window.scrollY + window.innerHeight >= document.body.scrollHeight &&
-      hasNomore.current === false &&
-      hasFetchedFirst.current === true
-    ) {
-      setcount((prev) => {
-        const newValue = prev + 1;
-        api(videoId, newValue);
-        return newValue;
-      });
-    }
-  }, [api, videoId]);
+  // Infinite scroll hook
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll]);
+  const {} = useInfiniteScroll({
+    fn: (page) => api(videoId, page),
+    hasFetchedFirst,
+    hasNomore,
+  });
+
+  // Scroll to top when videoId changes
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [videoId]);
@@ -99,6 +96,8 @@ const SimilarVideo = () => {
              hover:scale-[1.02] cursor-pointer 
              mx-6 sm:mx-0 relative my-4"
         >
+          {" "}
+          {/* Video Preview */}
           <div className="flex sm:flex-row flex-col space-x-6">
             <video
               poster={s.thumbnail}
@@ -143,7 +142,6 @@ const SimilarVideo = () => {
               </div>
             </div>
           </div>
-
           {/* Video Menu (Desktop) */}
           <div className="hidden sm:block">
             <VideoMenu index={index} v={s} />

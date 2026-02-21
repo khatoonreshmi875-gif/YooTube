@@ -186,11 +186,7 @@ const AddPlaylist = () => {
               </option>
             ))}
           </select>
-          {/* {errors.videoId && (
-            <p className="text-red-500 text-sm mt-1">
-              Video selection is required
-            </p>
-          )} */}
+          
         </div>
 
         {/* Submit Button */}

@@ -5,14 +5,17 @@ import { MdVideoLibrary } from "react-icons/md";
 import NoMoreVideoMessage from "./HomePageComponent/NoMoreVideoMessage.jsx";
 import Videoskeleton from "../utils/Videoskeleton.jsx";
 import EmptySkeleton from "../utils/EmptySkeleton.jsx";
+import { useLocation } from "react-router-dom";
 const Home1 = () => {
   const { getvideo, hasNomore, allPlaylist, load, loading } =
     useContext(AppContext);
+  const location = useLocation();
   useEffect(() => {
     // Prefetch likely next routes
     import("../watch/WatchPage.jsx");
     import("../Video/Search/SearchPage.jsx");
   }, []);
+ 
 
   return (
     <div>
@@ -23,7 +26,7 @@ const Home1 = () => {
               <Home2 key={v._id} v={v} index={index} playlist={allPlaylist} />
             ))}
           </div>{" "}
-          {hasNomore && (
+          {hasNomore.current === true && (
             <div className="w-full">
               <EmptySkeleton
                 Icon={MdVideoLibrary}

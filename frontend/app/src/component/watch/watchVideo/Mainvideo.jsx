@@ -10,18 +10,19 @@ import VideoMenu from "../../HomePage.jsx/HomePageComponent/VideoMenu.jsx";
 
 const Mainvideo = () => {
   const { FormatTime, user } = useContext(AppContext);
-  const [video, setVideo] = useState();
+  const navigate = useNavigate();
   const { videoId, userId } = useParams();
+
+  //usestate
+  const [video, setVideo] = useState();
   const [cloudName, setCloudName] = useState("");
   const [IsOpen, setIsOpen] = useState(null);
 
-  const navigate = useNavigate();
-  let cloud;
+  //useeffect api call fetch video
   useEffect(() => {
     const fetchVideo = async () => {
       try {
         const result = await onlyVideo(videoId);
-        console.log("response of only video", result);
         setVideo(result.data.data);
         cloud = result.data.data.videoFile.split("/").at(-5);
         setCloudName(cloud);
@@ -97,7 +98,7 @@ const Mainvideo = () => {
                   {video?.owner?.channelName}
                 </p>
               </div>
-
+              {/* videoLike */}
               {video && (
                 <VideoLike
                   videoId={video?._id}
@@ -108,6 +109,7 @@ const Mainvideo = () => {
                   userId={userId}
                 />
               )}
+              {/* videoMenu */}
               <div className="relative">
                 <VideoMenu v={video} isOpen={IsOpen} index={video._id} />
               </div>

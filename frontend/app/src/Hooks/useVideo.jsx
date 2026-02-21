@@ -1,74 +1,42 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import {
   getVideoByUserId,
   getVideoUserId,
   RecommendedVideo,
 } from "../Api/VideoApi";
+import useInfiniteScroll from "./useInfiniteScroll";
 
 export const useVideo = () => {
   const [getvideo, setgetvideo] = useState([]);
   const [video, setvideo] = useState(null);
-  const [hasNomore, sethasNomore] = useState(false);
+
   const [load, setLoad] = useState(false);
-  const [count, setcount] = useState(0);
-const token = localStorage.getItem("token");  
+  const token = localStorage.getItem("token");
+  const hasFetchedFirst = useRef(false);
+  const hasNomore = useRef(false);
   const getallvideo = async (page) => {
     setLoad(true);
-    console.log(">>> Calling API for page:", page);
     try {
       const result3 = await RecommendedVideo(page);
-      console.log("API returned:", result3.data.data.length, "items");
+
       if (result3.data.data.length === 0) {
-        sethasNomore(true);
-        console.log(">>> No more data, stopping");
+        console.log("object it run");
+        hasNomore.current = true;
       } else {
         setgetvideo((prev) => [...prev, ...result3.data.data]);
-        console.log(
-          ">>> Updated video list length:",
-          prev.length + result3.data.data.length,
-        );
       }
     } catch (error) {
-      console.log("Error fetching videos:", error.response?.data?.message);
     } finally {
       setLoad(false);
-      console.log(">>> Load finished");
     }
   };
-
   useEffect(() => {
-    console.log("Initial load triggered");
-    getallvideo(0); // fetch first page when component mounts
+    getallvideo(0);
+    hasFetchedFirst.current = true;
   }, [token]);
-  const fetchNext = () => {
-    if (hasNomore) return;
-    setcount((prev) => {
-      const newCount = prev + 1;
-      getallvideo(newCount);
-      return newCount;
-    });
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.scrollY + window.innerHeight >=
-          document.body.scrollHeight - 50 &&
-        !hasNomore
-      ) {
-        console.log(">>> Scroll trigger fired, count:", count);
-
-        fetchNext();
-        console.log("hasNomore", hasNomore);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [hasNomore, count, load]);
+  const {} = useInfiniteScroll({ fn: getallvideo, hasNomore, hasFetchedFirst });
 
   const onHandleVideo = async () => {
     const result3 = await getVideoByUserId();
@@ -88,7 +56,6 @@ const token = localStorage.getItem("token");
     video,
     setvideo,
     hasNomore,
-    sethasNomore,
     load,
     setLoad,
     onHandleVideo,

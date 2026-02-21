@@ -11,13 +11,13 @@ const AuthPage = () => {
         
         <button
           onClick={() => navigate("/login")}
-          className="px-6 py-2 bg-blue-100  shadow-md shadow-blue-200 rounded hover:bg-blue-700 active:shadow-black text-bl"
+          className="px-6 py-2 bg-blue-100  shadow-md shadow-blue-200 rounded hover:bg-blue-600 hover:text-white active:shadow-black text-bl"
         >
           Login
         </button>
         <button
           onClick={() => navigate("/register")}
-          className="px-6 py-2 bg-green-600 rounded hover:bg-green-700 shadow-blue-200 shadow-md active:shadow-black"
+          className="px-6 py-2 bg-green-100 rounded hover:bg-green-400 shadow-blue-200 shadow-md active:shadow-black"
         >
           Register
         </button>

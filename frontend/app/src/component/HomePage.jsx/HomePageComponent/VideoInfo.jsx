@@ -15,7 +15,9 @@ const VideoInfo = ({
   const navigate = useNavigate();
 
   return (
-    <div className={`relative flex items-start w-full pb-4 h-[30%] px-2 bg-white  `}>
+    <div
+      className={`relative flex items-start w-full pb-4 h-[30%] px-2 bg-white  `}
+    >
       {showImage && (
         <img
           src={v?.owner?.avatar}
@@ -78,4 +80,4 @@ const VideoInfo = ({
   );
 };
 
-export default React.memo(VideoInfo);
+export default VideoInfo;

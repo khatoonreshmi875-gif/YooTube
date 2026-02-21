@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { EllipsisVerticalIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
 import { SubscribeBtn, toggleSubcribeWithId } from "../../Api/Subscription.js";
-import { DeleteAccount, getCurrentUserById } from "../../Api/UserApi.js";
+import { getCurrentUserById } from "../../Api/UserApi.js";
 import Navbar1 from "../Navigation/Navbar1.jsx";
 import { AppContext } from "../utils/contextApi.js";
 import { handleAxiosError } from "../utils/erroeHandler.jsx";
@@ -14,6 +13,22 @@ import Button from "../Tweet/UserTweet/Button.jsx";
 const CurrUser = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
+  const { onHandleVideoUserId, subscribe, setSubscribe, user } =
+    useContext(AppContext);
+
+  //usestate
+  const [initial, setInitial] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  //initial page loaad
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setInitial({});
+  }, [userId]);
+
+  //function-> initial state of subscrbe button
+
   const stateOfSubscribeButton = async () => {
     try {
       const res = await SubscribeBtn(userId);
@@ -25,16 +40,9 @@ const CurrUser = () => {
       handleAxiosError(error, navigate);
     }
   };
-  const { onHandleVideoUserId, subscribe, setSubscribe, user } =
-    useContext(AppContext);
-  const [initial, setInitial] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    setInitial({});
-  }, [userId]);
+  // fetch curr user info and user video and state of subscribe button
+
   useEffect(() => {
     const fetchChannelData = async () => {
       try {
@@ -53,6 +61,8 @@ const CurrUser = () => {
     };
     fetchChannelData();
   }, [userId]);
+
+  //toggle subscribe button
 
   const handleSubscribe = async (channelId) => {
     if (loading) return; // ignore extra clicks
@@ -80,6 +90,7 @@ const CurrUser = () => {
       setLoading(false);
     }
   };
+  //empty page loading
   if (!initial) {
     return (
       <div className="mt-96">
@@ -87,7 +98,6 @@ const CurrUser = () => {
       </div>
     );
   }
-
   return (
     <>
       <div className="flex flex-col min-h-screen min-w-0 w-full">
@@ -169,13 +179,10 @@ const CurrUser = () => {
               />
             </div>
           </div>
-
           {/* Divider */}
           <hr className="border-slate-200 my-6" />
-
           {/* Navbar */}
           <Navbar1 />
-
           {/* Outlet Content */}
           <div className="flex-2 md:px-6 px-2 py-4 w-full sm:px-5 min-h-0">
             <Outlet />

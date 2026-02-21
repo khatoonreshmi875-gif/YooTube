@@ -217,6 +217,18 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
       },
     },
   ]);
+  if (recommendedVideos.length < 7) {
+    const allVideos = await Video.find()
+      .populate("owner", "channelName avatar _id")
+      .sort({ views: -1 }) // sort by views descending
+      .skip(Pages * 9) // apply pagination
+      .limit(9) // limit per page
+      .exec();
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, allVideos, "All videos fetched"));
+  }
 
   return res
     .status(200)

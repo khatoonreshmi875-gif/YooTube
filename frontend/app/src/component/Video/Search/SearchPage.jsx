@@ -14,36 +14,33 @@ import { fetchAndUpdateVideos } from "./SearchPageComponent/VideoHelper.js";
 import VideoItem from "./SearchPageComponent/VideoItem.jsx";
 import SearchSkeleton from "./SearchSkeleton.jsx";
 const SearchPage = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const {
 
     setsimilarVideos,
   } = useContext(AppContext);
   const { id, query, type } = useParams();
-  console.log(type, "title", type === "channel");
-  const [allvideo, setallvideo] = useState([]);
 
-  // const { tweet } = location.state;
-
+  //usestate
+const [allvideo, setallvideo] = useState([]);
   const [countValue, setCountValue] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasNoVideo, setHasNoVideo] = useState(false);
-  const [chanel, setchanel] = useState([]);
   const decodedQuery = query.replace("+", " ");
 
+
+//useeffect for similar video api fetch and similar channel
   useEffect(() => {
     setallvideo([]);
-    console.log("decodedQuery", decodedQuery, query);
     if (type === "title") {
       similarvideo(id, 0);
       handleSearchChannel({ value: decodedQuery });
     } else if (type === "channel") {
       similarChannnelvideo(id, 0);
       handleSearchChannel({ value: decodedQuery });
-      console.log("call api ");
     }
   }, [id, type, query]);
+
   const handleSearchChannel = async (userdata) => {
     try {
       const res = await searchChannel(userdata);
@@ -65,12 +62,8 @@ const SearchPage = () => {
       handleAxiosError(err, navigate);
     }
   };
-  console.log(
-    "all videocsm,c,s/'////////''''''''''''''''''''''''''''",
-    allvideo,
-  );
+ 
   const getallvideo = async (page) => {
-    console.log("this api run ....................");
     fetchAndUpdateVideos({
       page: page,
       handleAxiosError: handleAxiosError,
@@ -93,6 +86,8 @@ const SearchPage = () => {
     });
   };
 
+
+  //api fetch for get similar video
   const similarvideo = async (videoId, page) => {
     fetchAndUpdateVideos({
       Id: videoId,
@@ -106,6 +101,7 @@ const SearchPage = () => {
     });
   };
 
+  //api fetch for get similar channel
   const similarChannnelvideo = async (userId, page) => {
     fetchAndUpdateVideos({
       Id: userId,
@@ -118,11 +114,12 @@ const SearchPage = () => {
       navigate: navigate,
     });
   };
+
+  //infinite scroll
   const { count } = useInfiniteScroll({
     setLoading,
     similarChannnelvideo,
     similarvideo,
-
     hasNoVideo,
     setHasNoVideo,
     id,

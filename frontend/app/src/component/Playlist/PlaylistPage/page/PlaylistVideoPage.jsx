@@ -13,7 +13,6 @@ const PlaylistVideoPage = () => {
   const [allPlaylist, setAllPlaylist] = useState({});
   const [loading, setLoading] = useState(false);
 
-  
   const navigate = useNavigate();
   const { playlistId } = useParams();
 
@@ -37,11 +36,7 @@ const PlaylistVideoPage = () => {
   // Load playlist on mount
 
   if (loading) {
-    return (
-      <div className="mt-96">
-        <LoadingSpinner label="Fetching playlist videos" />
-      </div>
-    );
+    return <LoadingSpinner label="Fetching playlist videos" />;
   }
   return (
     <div className=" min-h-screen bg-slate-50 sm:m-4 rounded-lg  hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pb-24  ">

@@ -36,4 +36,4 @@ const AddComments = ({ contents, onChange, onClick, setcontents }) => {
   );
 };
 
-export default AddComments;
+export default React.memo(AddComments);

@@ -36,16 +36,16 @@ const PlaylistHeader = ({ allPlaylist }) => {
     src={allPlaylist?.playlist?.owner?.avatar}
     alt="Owner Avatar"
   />
-  <p className="sm:text-lg text-sm font-semibold font-serif text-slate-700">
+  <p className="sm:text-lg text-sm font-semibold  text-slate-700">
     {allPlaylist?.playlist?.owner?.channelName}
   </p>
 </div>
 
 {/* Playlist Stats */}
-<div className="flex space-x-8 mt-4 font-serif text-sm sm:text-base text-slate-700 px-4">
+<div className="flex space-x-8 mt-4  text-sm sm:text-base text-slate-700 px-4">
   <p>Playlist</p>
   <p>{allPlaylist?.playlist?.videos?.length} videos</p>
-  <p>{allPlaylist?.totalView || allPlaylist?.playlist?.totalViews} Views</p>
+  <p>{allPlaylist?.totalView || allPlaylist?.playlist?.totalViews || 0} Views</p>
 </div>
 
 <hr className="my-6 border-slate-300" />

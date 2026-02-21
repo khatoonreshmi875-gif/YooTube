@@ -10,17 +10,22 @@ import Comment from "./Comment";
 import AddComments from "./Comment/AddComment";
 import CommentSkeleton from "./CommentSkeleton";
 import { handleAxiosError } from "../../utils/erroeHandler";
+import useInfiniteScroll from "../../../Hooks/useInfiniteScroll";
 const CommentThread = () => {
-  const [count, setCount] = useState(0);
-  const [loading, setloading] = useState(false);
-  const hasNomore = useRef(false);
-  //views increasing
-  const hasFetchedFirst = useRef(false);
-  const { user, FormatTime } = useContext(AppContext);
-  const [commentsWithLikes, setCommentsWithLikes] = useState([]);
   const navigate = useNavigate();
+  const { user, FormatTime } = useContext(AppContext);
+
+  //usestate
+  const [count, setCount] = useState(0);
+  const [commentsWithLikes, setCommentsWithLikes] = useState([]);
   const [contentData, setcontentData] = useState("");
   const [contents, setcontents] = useState("");
+  const [loading, setloading] = useState(false);
+
+  //useRef
+  const hasNomore = useRef(false);
+  const hasFetchedFirst = useRef(false);
+
   const allData = (data, id) => {
     return {
       owner: { channelName: user?.channelName, avatar: user?.avatar },
@@ -39,11 +44,14 @@ const CommentThread = () => {
 
   useEffect(() => {
     console.log("curr video id", videoId);
-    api(videoId, 0);
+    FetchComment(videoId);
     hasFetchedFirst.current = true;
   }, [videoId]);
 
-
+  const FetchComment = async (videoId) => {
+    const res = await getAllCommentOfSpecificVideo(videoId, 0);
+    setCommentsWithLikes(res.data.data);
+  };
   const addcomment = useCallback(
     async (videoId, userdata) => {
       const text = (userdata?.content || "").trim();
@@ -79,12 +87,10 @@ const CommentThread = () => {
     async (videoId, newValue = 0) => {
       try {
         if (!videoId) {
-          console.warn("videoId not ready yet");
           return;
         }
         setloading(true);
         if (videoId) {
-          console.log("video/id", videoId);
           const res = await getAllCommentOfSpecificVideo(
             videoId,
             newValue,
@@ -102,28 +108,11 @@ const CommentThread = () => {
     },
     [videoId],
   );
-
-  const handleScroll = useCallback(() => {
-    if (
-      window.scrollY + window.innerHeight >= document.body.scrollHeight-50 &&
-      hasNomore.current === false &&
-      hasFetchedFirst.current === true
-    ) {
-      console.log("it run")
-      setCount((prev) => {
-        const newValue = prev + 1;
-        //console.log("add value count increae", videoId);
-        api(videoId, newValue);
-        return newValue;
-      });
-    }
-  }, [api, videoId]);
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll]);
+  const {} = useInfiniteScroll({
+    fn: (page) => api(videoId, page),
+    hasFetchedFirst,
+    hasNomore,
+  });
 
   return (
     <div>

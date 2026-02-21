@@ -108,4 +108,4 @@ const VideoMenu = ({
   );
 };
 
-export default React.memo(VideoMenu);
+export default  VideoMenu;

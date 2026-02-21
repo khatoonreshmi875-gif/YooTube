@@ -1,4 +1,4 @@
-import { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRemoveAVideoInWatchhistory } from "../../Api/UserApi.js";
 import { AppContext } from "../utils/contextApi.js";
@@ -94,4 +94,4 @@ const Home2 = ({ index, v, s, playlist }) => {
     </>
   );
 };
-export default Home2;
+export default React.memo(Home2);

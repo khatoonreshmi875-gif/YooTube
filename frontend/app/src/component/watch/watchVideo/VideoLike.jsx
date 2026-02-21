@@ -1,8 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { toggleVideoDislike } from "../../../Api/DislikeApi.js";
 import { toggleLike } from "../../../Api/LikeApi.js";
-
-import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { AppContext } from "../../utils/contextApi.js";
 import {
   SubscribeBtn,
@@ -10,7 +8,6 @@ import {
 } from "../../../Api/Subscription.js";
 import { handleAxiosError } from "../../utils/erroeHandler.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
 import LikeDislike from "../../Tweet/UserTweet/LikeDislike.jsx";
 import Button from "../../Tweet/UserTweet/Button.jsx";
 
@@ -22,17 +19,25 @@ const VideoLike = ({
   initialDislike,
   userId,
 }) => {
-  const [reaction, setreaction] = useState({
+  const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+  //usestate
+  const [reaction, setReaction] = useState({
     likeCount: initialLikeCount,
     dislikeCount: initialDislikeCount,
     liked: initialLike,
     disliked: initialDislike,
   });
-  const navigate = useNavigate();
+  const [videoState, setvideoState] = useState({
+    initialState: false,
+    SubscribeValue: {},
+    SubValue: {},
+  });
   const [loading, setLoading] = useState(false);
+  // Sync reaction state when props change
 
   useEffect(() => {
-    setreaction({
+    setReaction({
       likeCount: initialLikeCount,
       dislikeCount: initialDislikeCount,
       liked: initialLike,
@@ -40,13 +45,8 @@ const VideoLike = ({
     });
   }, [initialLikeCount, initialDislikeCount, initialLike, initialDislike]);
 
-  const { user } = useContext(AppContext);
-  const [videoState, setvideoState] = useState({
-    initialState: false,
-    SubscribeValue: {},
-    SubValue: {},
-  });
-  console.log("page of videolike render");
+  // Fetch subscription state
+
   const stateOfSubscribeButton = useCallback(async (userId) => {
     const res = await SubscribeBtn(userId);
     setvideoState(() => ({
@@ -54,6 +54,7 @@ const VideoLike = ({
       SubscribeValue: res.data.data.isSubscribed,
     }));
   }, []);
+
   useEffect(() => {
     const id = user?._id || JSON.parse(localStorage.getItem("userId"));
     if (id) {
@@ -61,7 +62,9 @@ const VideoLike = ({
       stateOfSubscribeButton(id);
     }
   }, [user._id, stateOfSubscribeButton]); // ✅
-  const toggleSubscribeBtn = useCallback(async (channelId) => {
+  // Toggle subscribe
+
+  const toggleSubscribeBtn = async (channelId) => {
     console.log("subscribe buttob ", channelId);
     setvideoState((prev) => ({
       ...prev,
@@ -72,15 +75,15 @@ const VideoLike = ({
       ...prev,
       SubscribeValue: res.data.data.subscriber,
     }));
-  }, []);
+  };
 
   // dislike button
   const toggleDislike = useCallback(
     async (videoId) => {
       if (loading) return; // ignore extra clicks
       setLoading(true);
-
-      setreaction((prev) => ({
+      //optimistic update
+      setReaction((prev) => ({
         dislikeCount: prev.disliked
           ? Math.max(prev.dislikeCount - 1, 0)
           : prev.dislikeCount + 1,
@@ -90,12 +93,13 @@ const VideoLike = ({
           : prev.likeCount,
         liked: prev.liked ? false : prev.liked,
       }));
+      //api call
       try {
         const result = await toggleVideoDislike(videoId).finally(() =>
           setLoading(false),
         );
         console.log("data of dislike", result);
-        setreaction((prev) => ({
+        setReaction((prev) => ({
           dislikeCount: result.data.data.updatedVideo.videoDislikeCount,
           likeCount: result.data.data.updatedVideo.videoLikeCount,
           liked: result.data.data.likeRemoved,
@@ -112,9 +116,8 @@ const VideoLike = ({
     async (videoId) => {
       if (loading) return; // ignore extra clicks
       setLoading(true);
-
-      setreaction((prev) => {
-        //console.log("liked", prev.liked);
+      //optimistic update
+      setReaction((prev) => {
         return {
           likeCount: prev.liked
             ? Math.max(prev.likeCount - 1, 0)
@@ -126,9 +129,10 @@ const VideoLike = ({
           disliked: prev.disliked ? false : prev.disliked,
         };
       });
+      //api call
       try {
         const result = await toggleLike(videoId);
-        setreaction((prev) => ({
+        setReaction((prev) => ({
           ...prev,
           dislikeCount: result?.data?.data?.updatedVideo?.videoDislikeCount,
           likeCount: result?.data?.data?.updatedVideo?.videoLikeCount,
