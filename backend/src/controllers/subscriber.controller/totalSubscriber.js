@@ -38,7 +38,13 @@ export const totalSubscriber = asynchandler(async (req, res) => {
   const VideoAllLike = await Like.countDocuments({
     $or: [{ video: { $in: video } }, { tweet: { $in: tweet } }],
   });
-  const AllComment = await Comment.countDocuments({ owner: userId });
+  const AllComment = await Comment.countDocuments({
+    $or: [{ video: { $in: video } }, { tweet: { $in: tweet } }],
+  });
+  console.log(
+    "all comment//////////////////////////////////////////////",
+    AllComment,
+  );
   const subscriber = await Promise.all(
     subscribe.map(async (m) => {
       const VideoLike = await Like.countDocuments({
@@ -53,6 +59,7 @@ export const totalSubscriber = asynchandler(async (req, res) => {
         video: { $in: video },
         owner: m.subscriber?._id,
       });
+
       const user = await User.findById(m?.subscriber?._id)
         .select("avatar channelName")
         .lean();
