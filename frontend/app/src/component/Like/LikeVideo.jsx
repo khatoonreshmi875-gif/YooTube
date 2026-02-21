@@ -41,6 +41,7 @@ const LikeVideo = () => {
   const allLikedVideo = async () => {
     const res = await GetLikedVideos();
     setlikeVideos(res.data.data);
+    console.log("like data", res.data.data);
   };
   useEffect(() => {
     allLikedVideo();
@@ -64,6 +65,11 @@ const LikeVideo = () => {
       </div>
     );
   }
+  console.log(
+    "get all like videos",
+    likeVideos?.[0].videos.length,
+    likeVideos[0].videos,
+  );
   return (
     <>
       <div className="min-h-screen   text-gray-900 ">
@@ -76,7 +82,7 @@ const LikeVideo = () => {
             <Bars3Icon className="mx-h-6 w-6 text-slate-800 mx-2" />
           </span>
           <p className="bg-blue-100 px-4 py-2 rounded-lg  sm:text-lg text-sm  text-blue-600">
-            Total liked videos : {likeVideos?.[0]?.count?.[0].totalLike}
+            Total liked videos : {likeVideos?.[0].videos.length}
           </p>
         </div>
         <SortMenu setSort={setSort} setIsopen={setIsopen} Isopen={Isopen} />
