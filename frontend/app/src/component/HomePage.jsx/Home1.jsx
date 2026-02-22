@@ -6,6 +6,7 @@ import NoMoreVideoMessage from "./HomePageComponent/NoMoreVideoMessage.jsx";
 import Videoskeleton from "../utils/Videoskeleton.jsx";
 import EmptySkeleton from "../utils/EmptySkeleton.jsx";
 import { useLocation } from "react-router-dom";
+import { useAxiosErrorHandler } from "../utils/erroeHandler.jsx";
 const Home1 = () => {
   const {
     getvideo,
@@ -18,6 +19,8 @@ const Home1 = () => {
     token,
   } = useContext(AppContext);
   const location = useLocation();
+  const handleAxiosError = useAxiosErrorHandler();
+
   useEffect(() => {
     // Prefetch likely next routes
     import("../watch/WatchPage.jsx");
