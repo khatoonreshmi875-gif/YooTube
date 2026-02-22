@@ -27,12 +27,13 @@ export const useVideo = () => {
         setgetvideo((prev) => [...prev, ...result3.data.data]);
       }
     } catch (error) {
-      console.log("err",error)
+      console.log("err", error);
+      throw error;
     } finally {
       setLoad(false);
     }
   };
-  
+
   const {} = useInfiniteScroll({ fn: getallvideo, hasNomore, hasFetchedFirst });
 
   const onHandleVideo = async () => {
@@ -59,6 +60,6 @@ export const useVideo = () => {
     onHandleVideoUserId,
     getallvideo,
     hasFetchedFirst,
-    token
+    token,
   };
 };

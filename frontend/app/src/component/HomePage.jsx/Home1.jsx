@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "../utils/contextApi.js";
 import Home2 from "./Home2.jsx";
 import { MdVideoLibrary } from "react-icons/md";
-import NoMoreVideoMessage from "./HomePageComponent/NoMoreVideoMessage.jsx";
 import Videoskeleton from "../utils/Videoskeleton.jsx";
 import EmptySkeleton from "../utils/EmptySkeleton.jsx";
 import { useLocation } from "react-router-dom";
