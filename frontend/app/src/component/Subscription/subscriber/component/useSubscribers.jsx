@@ -24,7 +24,7 @@ const useSubscribers = () => {
           });
         }
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     };
     totalSubcribeChannel();
@@ -34,7 +34,7 @@ const useSubscribers = () => {
       const res = await searchChannel(userdata);
       setChannel(res.data.data.channel);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

@@ -24,7 +24,7 @@ const PlaylistVideoPage = () => {
       const result = await getPlaylistByPlaylistId(playlistId);
       setAllPlaylist(result.data.data);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     } finally {
       setLoading(false);
     }

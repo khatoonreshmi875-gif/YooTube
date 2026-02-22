@@ -7,6 +7,8 @@ import {
   RecommendedVideo,
 } from "../Api/VideoApi";
 import useInfiniteScroll from "./useInfiniteScroll";
+import { handleAxiosError } from "../component/utils/erroeHandler";
+import { useNavigate } from "react-router-dom";
 
 export const useVideo = () => {
   const [getvideo, setgetvideo] = useState([]);
@@ -28,6 +30,7 @@ export const useVideo = () => {
         setgetvideo((prev) => [...prev, ...result3.data.data]);
       }
     } catch (error) {
+      handleAxiosError(error);
     } finally {
       setLoad(false);
     }

@@ -34,6 +34,6 @@ console.log("videoData",videoData)
       return [...uniqueMap.values()];
     });
   } catch (error) {
-    handleAxiosError(error, navigate);
+    handleAxiosError(error);
   }
 };

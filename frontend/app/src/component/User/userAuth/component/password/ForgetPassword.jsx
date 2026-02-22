@@ -25,7 +25,7 @@ const ForgetPassword = () => {
       setIsSubmitting(true);
       setIsDisabled(true);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
 
     setInterval(() => {

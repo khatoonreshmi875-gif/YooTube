@@ -37,7 +37,7 @@ const CurrUser = () => {
         subscriber: res.data.data.isSubscribed,
       }));
     } catch (error) {
-      handleAxiosError(error, navigate);
+      handleAxiosError(error);
     }
   };
 
@@ -54,7 +54,7 @@ const CurrUser = () => {
           subscribedTo: result?.data?.data?.subscribedToCount,
         }));
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
       await onHandleVideoUserId(userId);
       await stateOfSubscribeButton();
@@ -85,7 +85,7 @@ const CurrUser = () => {
       }));
       P;
     } catch (error) {
-      handleAxiosError(error, navigate);
+      handleAxiosError(error);
     } finally {
       setLoading(false);
     }

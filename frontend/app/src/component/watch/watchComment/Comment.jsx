@@ -62,7 +62,7 @@ const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
         return [...prev, ...res.data.data];
       });
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

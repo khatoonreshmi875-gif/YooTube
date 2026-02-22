@@ -75,10 +75,10 @@ const CommentThread = () => {
       } catch (err) {
         setCommentsWithLikes((prev) => prev.filter((c) => c._id !== tempId));
         console.error("Comment add failed", err);
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     },
-    [allData, handleAxiosError, navigate],
+    [allData, handleAxiosError],
   );
 
   //call api when it hit the bottom of similar video
@@ -103,7 +103,7 @@ const CommentThread = () => {
           setCommentsWithLikes((prev) => [...prev, ...(res.data.data || [])]);
         }
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     },
     [videoId],

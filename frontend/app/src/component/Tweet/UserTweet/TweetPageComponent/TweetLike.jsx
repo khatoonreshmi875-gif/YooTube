@@ -79,7 +79,7 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
           disliked: result?.data?.data?.dislike,
         }));
       } catch (err) {
-        handleAxiosError(err, naviagte);
+        handleAxiosError(err);
       }
     },
     [tweetId],
@@ -110,7 +110,7 @@ const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
           disliked: result.data.data.RemoveDislike,
         }));
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     },
     [tweetId],

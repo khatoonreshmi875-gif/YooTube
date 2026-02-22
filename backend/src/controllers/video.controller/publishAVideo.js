@@ -8,56 +8,45 @@ import { publishVideoInvalidate } from "../../utils/videoInvalidate.js";
 
 const publishAVideo = asynchandler(async (req, res) => {
   //get title and description and validate fields
-  const { title, description, tags, category } = req.body;
+  const { title, description, tags, category, videoUrl, publicId, duration } =
+    req.body;
+  console.log("videourl", videoUrl, duration, publicId);
   if (!(title && description)) {
     throw new ApiError(400, "Title and description are required");
   }
 
   //get uploaded video file and thumbnail file
 
-  const videofile = req.files?.videofile?.[0];
   const thumbnailFile = req.files?.thumbnail?.[0];
-  console.log("videofile", videofile);
 
   console.log("thumbnail", thumbnailFile);
 
   //get file path of video and thumbnail
-  const videofilePath = videofile?.path;
   const thumbnailFilePath = thumbnailFile?.path;
 
   //check video file and thumbnail path
-  if (!videofilePath) {
-    throw new ApiError(400, "VideoFilePath is required");
-  }
   if (!thumbnailFilePath) {
     throw new ApiError(400, "thumbnailFilePath is required");
   }
 
   //video and thumbnail upload on cloudinary
-  const [video, thumbnail] = await Promise.all([
-    uploadOnCloudinary(videofilePath, "thumbnail"),
-    uploadOnCloudinary(thumbnailFilePath, "video"),
-  ]);
+  const thumbnail = await uploadOnCloudinary(thumbnailFilePath, "thumbnail");
 
   //check check video and thumbnail upload result
-
-  if (!video) {
-    console.log("video url is not found");
-  }
+  console.log("thumbnail all details....................", thumbnail);
 
   if (!thumbnail) {
     console.log("thumbnail.url is not found");
   }
-  console.log("upload result data.;;;;;;;;;;;;;;;;", video);
   //
   // create new video document in DB
   const newVideo = await Video.create({
     title,
     description,
-    videoFile: video.secure_url,
+    videoFile: videoUrl,
     thumbnail: thumbnail.url,
-    duration: video.duration,
-    publicId: video.public_id,
+    duration: duration,
+    publicId: publicId,
     owner: req.user?._id,
     tags: tags ?? null,
     category,

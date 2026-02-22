@@ -45,11 +45,10 @@ export const videoInvalidate = async (videoId, userId, id) => {
 
 export const publishVideoInvalidate = async (videoId, userId) => {
   await Promise.allSettled([
-    client.del(`/api/v1/videos/user/get-all-videos:${id}`),
-    client.del(`/api/v1/videos/user/get-all-videos/${userId}:${id}`),
+    client.del(`/api/v1/videos/user/get-all-videos:${userId}`),
+    client.del(`/api/v1/videos/user/get-all-videos/${userId}`),
     client.del(`/api/v1/videos/rec-video/${videoId}?*`),
     client.del(`/api/v1/videos/user-id/${userId}?*`),
     client.del(`/api/v1/videos/get-reccomended-video?*`),
-    client.del(`/api/v1/videos/id/${videoId}/user/${userId}:${id}`),
   ]);
 };

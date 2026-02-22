@@ -9,6 +9,7 @@ import FormImageField from "../utils/form/FormImageField";
 import FormButton from "../utils/form/FormButton";
 import FormSelect from "../utils/form/FormSelect";
 import Heading from "../utils/form/Heading.jsx";
+import axios from "axios";
 const UploadVideo = () => {
   const [stateValue, setstateValue] = useState("");
   const categories = [
@@ -60,10 +61,35 @@ const UploadVideo = () => {
     watch,
     formState: { errors, isSubmitting: issubmittingVideo },
   } = useForm();
+
+  const uploadToCloudinary = async (file) => {
+    if (!file) return null;
+    const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/upload`;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append(
+      "upload_preset",
+      import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
+    );
+
+   const res = await axios.post(url, formData, {
+     headers: { "Content-Type": "multipart/form-data" },
+     onUploadProgress: (progressEvent) => {
+       const percent = Math.round(
+         (progressEvent.loaded * 100) / progressEvent.total,
+       );
+       console.log(`Upload progress: ${percent}%`);
+     },
+   });
+
+
+    return res.data; // Cloudinary URL
+  };
+
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append("title", data.title);
-
+    const videoUrl = await uploadToCloudinary(data.videofile?.[0]);
+        formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("category", data.category);
     let tagsArray = [];
@@ -79,7 +105,9 @@ const UploadVideo = () => {
     tagsArray.forEach((tag) => {
       formData.append("tags", tag);
     });
-    formData.append("videofile", data.videofile?.[0] || null); // FileList → first file
+    formData.append("videoUrl", videoUrl.secure_url);
+    formData.append("publicId", videoUrl.public_id);
+    formData.append("duration", videoUrl.duration);
     formData.append("thumbnail", data.thumbnail?.[0] || null);
     const token = localStorage.getItem("token");
     const result = await upload_Video(formData);

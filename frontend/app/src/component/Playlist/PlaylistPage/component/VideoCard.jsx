@@ -30,7 +30,7 @@ const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
         autoClose: 2000,
       });
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
       toast.update(toastId, {
         render: "Failed to delete ❌",
         type: "error",

@@ -1,5 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 // useAxiosErrorHandler.js
-export function handleAxiosError(error, navigate) {
+export function handleAxiosError(error) {
+  const navigate = useNavigate();
   if (error.response) {
     console.error(
       "Server responded with",

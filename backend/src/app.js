@@ -7,6 +7,7 @@ import session from "express-session";
 import { User } from "./models/user.model.js";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { v4 as uuidv4 } from "uuid";
 const app = express();
 app.use(
   cors({
@@ -86,7 +87,7 @@ app.get(
         ("userId/.//././././/./././//.///", user);
         const { AccessToken, RefreshToken } =
           await generateRefreshAndAccessToken(user._id);
-       
+
         res.redirect(
           `${process.env.CORS_ORIGIN}/google-success?token=${AccessToken}`,
         );
@@ -99,9 +100,7 @@ app.get(
     } // later replace with real JWT
   },
 );
-app.listen(8000, () => {
- 
-});
+app.listen(8000, () => {});
 
 //routes
 

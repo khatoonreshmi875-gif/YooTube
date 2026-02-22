@@ -35,7 +35,7 @@ const UserPage = () => {
       const res = await AllUser();
       setUserData(res.data.data);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     } finally {
       setLoading(false);
     }

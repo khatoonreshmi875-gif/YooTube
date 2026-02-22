@@ -30,7 +30,7 @@ const UserRoleList = () => {
       const res = await getUserByUserRole();
       setUserData(res.data.data);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

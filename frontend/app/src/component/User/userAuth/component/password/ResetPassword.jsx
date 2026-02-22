@@ -32,7 +32,7 @@ const ResetPassword = () => {
           message: "Confirm Password is not matched with new password",
         });
       }
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

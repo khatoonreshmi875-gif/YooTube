@@ -29,7 +29,7 @@ const Replycomment = ({
       );
     } catch (err) {
       setgetreplied((prev) => prev.filter((p) => p._id !== tempId));
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
   const increaseReplyCount = (commentId) => {

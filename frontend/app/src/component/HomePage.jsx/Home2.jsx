@@ -20,10 +20,10 @@ const Home2 = ({ index, v, s, playlist }) => {
         const res = await getRemoveAVideoInWatchhistory(videoId);
       } catch (err) {
         console.log("delete a video from watch history failed", err);
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     },
-    [sethistory, navigate],
+    [sethistory],
   );
 
   const goToPlaylist = (id) => navigate(`/playlist/${id}`);

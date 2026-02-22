@@ -83,7 +83,7 @@
  });
  userSchema.methods.isPasswordCorrect = async function (password) {
    return await bcrypt.compare(password, this.password);
- };
+};
  userSchema.methods.generateAccessToken = function () {
    return jwt.sign(
      {
@@ -110,16 +110,5 @@
      },
    );
  };
- // userSchema.methods.generateForgetPasswordToken = function () {
- //   return jwt.sign(
- //     {
- //       _id: this._id,
- //       email: this.email,
- //     },
- //     process.env.FORGOT_PASSWORD_SECRET,
- //     {
- //       expiresIn: process.env.FORGOT_PASSWORD_EXPIRY,
- //     }
- //   );
- // };
+ 
  export const User = mongoose.model("User", userSchema);

@@ -23,7 +23,7 @@ const Subscription = () => {
       setfollowers(res.data.data.subscriberOfEachChannel);
       console.log("subscription", res.data.data);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

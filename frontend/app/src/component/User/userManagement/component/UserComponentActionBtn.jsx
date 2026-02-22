@@ -14,7 +14,7 @@ const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
       const res = await DeleteAccountById(userId);
       console.log("res of delete account by admin", res);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
   const handleRemoveModerator = async (userdata, userId) => {
@@ -31,7 +31,7 @@ const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
       const res = await RemoveModerator(userdata);
       alert("✅ Moderator remove successfully");
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
   const handleAssignModerator = async (userdata, userId) => {
@@ -48,7 +48,7 @@ const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
       const res = await Assign_Moderator(userdata);
       alert("✅ Moderator assigned successfully");
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
       if ((err.response.data.success = false)) {
         alert("❌ Failed to assign moderator.");
       }

@@ -35,7 +35,7 @@ const VideoMenu = ({ v, index }) => {
 
       console.log(result.data); // Now this will log correctly
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
 
       // Rollback UI
       setvideo((prev) => [...prev.videos, v]);

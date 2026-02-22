@@ -60,10 +60,10 @@ const Maincomment = ({ tweetId }) => {
         }
       } catch (err) {
         setCommentsWithLikes((prev) => prev.filter((m) => m._id !== tempId));
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     },
-    [contentData, allData, tweetId, navigate],
+    [contentData, allData, tweetId],
   );
 
   // handlers

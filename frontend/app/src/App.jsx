@@ -37,12 +37,6 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  // useEffect(() => {
-  //   auth.onHandle();
-  //   videos.getallvideo(0);
-  //   playlist.getAllPlaylist();
-  // }, []);
-
   const FormatTime = (date) => {
     const dateObj = new Date(date).getTime();
     const CurrTime = Date.now();

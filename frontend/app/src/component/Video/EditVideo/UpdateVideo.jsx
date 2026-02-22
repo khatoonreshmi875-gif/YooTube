@@ -47,7 +47,7 @@ const UpdateVideo = () => {
         navigate(`/curr-user/${video?.owner?._id}/video`);
       }
     } catch (err) {
-      (handleAxiosError(err), navigate);
+      (handleAxiosError(err));
     }
   };
   const [preview, setPreview] = useState(video?.thumbnail || "");

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { getWatchHistory } from "../Api/UserApi";
+import { handleAxiosError } from "../component/utils/erroeHandler";
+import { useNavigate } from "react-router-dom";
 
 export default function useHistory() {
   const [history, sethistory] = useState([]);
@@ -21,6 +23,7 @@ export default function useHistory() {
       );
     } catch (err) {
       console.error("History fetch failed", err);
+      handleAxiosError(err);
     } finally {
       setLoading(false);
     }

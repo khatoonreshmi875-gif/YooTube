@@ -53,7 +53,7 @@ const SimilarVideo = () => {
         return unique;
       });
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     } finally {
       setloading(false);
     }

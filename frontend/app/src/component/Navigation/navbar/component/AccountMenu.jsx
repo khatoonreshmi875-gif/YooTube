@@ -19,7 +19,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
       setgetvideo([]);
       navigate(0);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   }
 

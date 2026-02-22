@@ -38,7 +38,7 @@ const CreateTweet = () => {
       .then(() => {
         console.log("Video handled successfully");
       })
-      .catch((err) => handleAxiosError(err, navigate));
+      .catch((err) => handleAxiosError(err));
   };
   const data = video;
   return (

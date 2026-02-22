@@ -5,7 +5,7 @@ import axios from "axios";
 import { checkDuration } from "./checkDuration.js";
 import path from "path";
 
-cloudinary.config({
+cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
 
@@ -14,13 +14,6 @@ cloudinary.config({
 const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
   console.log(localFilePath);
   try {
-    // const ext = path.extname(localFilePath).toLowerCase(); // ".mp4"
-
-    // const duration = await checkDuration(localFilePath);
-    // if (ext === "mp4" && duration > 120) {
-    //   throw new ApiError(400, "video is more than 2 not be able to uploaded");
-    // }
-
     if (!localFilePath || !fs.existsSync(localFilePath)) {
       console.error("❌ File not found:", localFilePath);
       return null;

@@ -32,7 +32,7 @@ const TweetSection = () => {
         hasNoMore.current = true;
       }
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,7 @@ console.log("all tweet data",)
       });
     } catch (error) {
       console.log("get Tweet by tweet id fetch failed ");
-      handleAxiosError(error, navigate);
+      handleAxiosError(error);
     }
   };
 

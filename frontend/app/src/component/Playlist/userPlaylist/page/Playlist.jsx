@@ -24,7 +24,7 @@ const Playlist = () => {
         localStorage.removeItem("playlistid");
         setInfoPlaylist(url.data.data);
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       } finally {
         setLoading(false);
         console.log("setloading", loading);

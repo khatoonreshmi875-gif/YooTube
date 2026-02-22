@@ -30,7 +30,7 @@ const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
       });
     } catch (err) {
       setTweetData(prevData);
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
       toast.update(toastId, {
         render: "Failed to delete ❌",
         type: "error",

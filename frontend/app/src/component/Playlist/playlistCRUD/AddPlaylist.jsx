@@ -44,7 +44,7 @@ const AddPlaylist = () => {
         navigate(`/playlist/${result.data.data._id}`);
       }
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

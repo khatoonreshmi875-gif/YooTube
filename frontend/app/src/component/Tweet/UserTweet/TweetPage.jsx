@@ -33,7 +33,7 @@ const tweetDataPage = () => {
         const result = await TweetPageApi(userId);
         setTweetData(result?.data?.data);
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       } finally {
         setLoading(false);
       }

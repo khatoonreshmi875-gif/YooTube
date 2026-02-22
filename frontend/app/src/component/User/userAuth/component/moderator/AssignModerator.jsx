@@ -27,7 +27,7 @@ const AssignModerator = () => {
 
       // redirect if needed
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
       if ((err.response.data.message = "User  not found")) {
         setError("email", {
           type: "manual",

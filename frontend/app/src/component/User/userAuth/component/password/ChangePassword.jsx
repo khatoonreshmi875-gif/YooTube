@@ -43,7 +43,7 @@ const ChangePassword = () => {
           message: "Invalid Old Password",
         });
       }
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
       console.log("eror", err);
     }
   }

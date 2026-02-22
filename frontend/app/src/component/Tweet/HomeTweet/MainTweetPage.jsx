@@ -19,7 +19,7 @@ const MainTweetPage = () => {
         const res = await TweetByTweetId(tweetId);
         setTweetData(res.data.data);
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     };
 

@@ -20,7 +20,7 @@ const ReportAdminPage = () => {
       const res = await getReport();
       setReports(res.data.data);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     } finally {
       setLoading(false);
     }
@@ -33,7 +33,7 @@ const ReportAdminPage = () => {
       const res = await getReportByDate(userdata);
       setReports(res.data.data);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     } finally {
       setLoading(false);
     }

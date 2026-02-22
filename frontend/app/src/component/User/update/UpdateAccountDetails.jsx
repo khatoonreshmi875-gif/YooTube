@@ -30,7 +30,7 @@ const UpdateAccountDetails = () => {
       navigate(0);
    
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   }
   return (

@@ -44,7 +44,7 @@ const EditPlaylist = () => {
       
       navigate(`/curr-user/${playlist.owner}/playlist-home`); // redirect after success
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 

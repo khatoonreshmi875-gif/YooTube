@@ -41,7 +41,7 @@ const EditDeleteComment = ({
     try {
       await getEditcomment(commentId, userdata);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 
@@ -55,7 +55,7 @@ const EditDeleteComment = ({
       //api call
       const res = await deleteComment(commentId);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
   return (

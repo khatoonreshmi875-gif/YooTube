@@ -36,7 +36,7 @@ const UpdateAvatar = () => {
       onHandle();
       navigate(`/curr-user/${user._id}/video`);
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   }
   return (

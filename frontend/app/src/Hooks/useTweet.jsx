@@ -1,30 +1,11 @@
 import { useEffect, useState } from "react";
-import { SortedTweet, TweetPageApi } from "../Api/TweetApi";
-import { handleAxiosError } from "../component/utils/erroeHandler";
+import { TweetPageApi } from "../Api/TweetApi";
 export const useTweet = () => {
   const [allTweet, setAllTweet] = useState([]);
   const [tweet, setTweet] = useState([]);
 
   const [loading, setloading] = useState(false);
-  // const hasNoMore = useRef(false);
-  // const getTweetOfSubscriber = async (page = 0) => {
-  //   try {
-  //     const url = await SortedTweet(page);
-      // if (url.data.data.length !== 0) {
-      //   setAllTweet((prev) => {
-      //     const prevData = prev.map((p) => p._id);
-      //     const newTweets = url.data.data.filter(
-      //       (t) => !prevData.includes(t._id),
-      //     ); // ✅ prevent duplicates
-      //     return [...prev, ...newTweets];
-      //   });
-      // }else if{url.data.data.length===0}()else {
-  //       setloading(false);
-  //     }
-  //   } catch (err) {
-  //     handleAxiosError(err, navigate);
-  //   }
-  // };
+
   const handleTweetPage = async (userId) => {
     try {
       const result = await TweetPageApi(userId);
@@ -39,11 +20,7 @@ export const useTweet = () => {
     window.scrollTo(0, 0);
   }, []);
   return {
-    // allTweet,
-    // setAllTweet,
-    // tweet,
     setTweet,
     loading,
-    // getTweetOfSubscriber,
   };
 };

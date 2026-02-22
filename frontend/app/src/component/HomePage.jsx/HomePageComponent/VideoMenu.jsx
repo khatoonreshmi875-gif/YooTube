@@ -38,7 +38,7 @@ const VideoMenu = ({
       // if you need to navigate or refetch, do it here
     } catch (err) {
       // handleAxiosError is your existing error helper
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
 
       toast.update(toastId, {
         render: "Failed to delete ❌",

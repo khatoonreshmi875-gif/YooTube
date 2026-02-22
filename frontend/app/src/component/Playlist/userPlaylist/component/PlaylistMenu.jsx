@@ -32,7 +32,7 @@ const PlaylistMenu = ({
         autoClose: 2000,
       });
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
       // setInfoPlaylist((prev) => [...prev, playlist]);
       // Error toast
       toast.update(toastId, {

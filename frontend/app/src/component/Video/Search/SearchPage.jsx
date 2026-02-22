@@ -59,7 +59,7 @@ const [allvideo, setallvideo] = useState([]);
         return [...uniqueMap.values()];
       });
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
  

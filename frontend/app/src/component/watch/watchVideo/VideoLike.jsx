@@ -106,7 +106,7 @@ const VideoLike = ({
           disliked: result.data.data.dislike,
         }));
       } catch (err) {
-        handleAxiosError(err, navigate);
+        handleAxiosError(err);
       }
     },
     [videoId, loading],

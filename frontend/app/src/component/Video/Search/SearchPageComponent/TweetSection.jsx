@@ -13,7 +13,7 @@ const TweetSection = ({ tweet, tweetPost }) => {
         state: { tweet: res.data.data },
       });
     } catch (err) {
-      handleAxiosError(err, navigate);
+      handleAxiosError(err);
     }
   };
 
