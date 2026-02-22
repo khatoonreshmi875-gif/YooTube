@@ -17,6 +17,7 @@ const useView = (player, publicId, videoFile, userId) => {
       console.log("❌ player not ready or disposed", player);
       return;
     }
+    console.log("✅ attaching listeners to player", player.id_);
 
     console.log("✅ useView got player", player);
 
@@ -44,7 +45,10 @@ const useView = (player, publicId, videoFile, userId) => {
     });
 
     // save paused time
-
+    player.on("play", () => {
+      console.log("▶️ video resumed");
+      lastUpdate = Date.now(); // reset baseline when playback starts
+    });
     const handlePause = () => {
       console.log("pause event fired");
       try {
@@ -94,8 +98,12 @@ const useView = (player, publicId, videoFile, userId) => {
       if (lastUpdate) {
         watch += now - lastUpdate;
       }
+
       lastUpdate = now;
       let countValue = JSON.parse(localStorage.getItem(countKey));
+      console.log("Timeline position:", player.currentTime()); // e.g., 10000 ms
+      console.log("Actual watch time:", watch); // e.g., 2000 ms
+
       const today = new Date().toDateString();
       let fresh = parseFloat(savedTime.time) === 0 || savedTime === null;
       if (!countValue || countValue.date !== today) {
@@ -103,10 +111,10 @@ const useView = (player, publicId, videoFile, userId) => {
       }
       console.log("time 🏁", countValue.data, videoFile);
       console.log("watch", watch, "fresh", fresh);
-      if (watch >= 9000 && countValue.data < 4 && fresh) {
+      if (watch >= 9000 && countValue.data < 4) {
         hasCounted = true;
         console.log("videoid inside this ", videoFile);
-       views(videoFile)
+        views(videoFile);
         countValue.data += 1;
         localStorage.setItem(countKey, JSON.stringify(countValue));
         console.log("✅ saved countKey", countValue);

@@ -27,15 +27,13 @@ const Playlist = () => {
         handleAxiosError(err);
       } finally {
         setLoading(false);
-        console.log("setloading", loading);
       }
     };
     getPlaylistThroughUserId(userId);
   }, [userId]);
-  if (infoPlaylist===null) {
+  if (infoPlaylist === null) {
     return <LoadingSpinner label="Fetching Playlist" isData={true} />;
   }
-  console.log("playlist all ", infoPlaylist);
   return (
     <>
       {infoPlaylist?.length == 0 ? (

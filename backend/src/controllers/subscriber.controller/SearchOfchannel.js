@@ -35,6 +35,19 @@ export const SearchOfchannel = asynchandler(async (req, res) => {
             },
           },
         },
+        {
+          $lookup: {
+            from: "users",
+            localField: "owner",
+            foreignField: "_id",
+            as: "ownerDetails",
+          },
+        },
+        {
+          $unwind: {
+            path: "$ownerDetails",
+          },
+        },
         { $limit: 20 },
         {
           $project: {
@@ -42,10 +55,15 @@ export const SearchOfchannel = asynchandler(async (req, res) => {
             publicId: 1,
             thumbnail: 1,
             description: 1,
-            duration:1,
+            duration: 1,
             createdAt: 1,
             views: 1,
-            owner: 1,
+            ownerDetails: 1,
+            owner: {
+              channelName: "$ownerDetails.channelName",
+              _id: "$ownerDetails._id",
+              avatar: "$ownerDetails.avatar",
+            },
           },
         },
       ]);

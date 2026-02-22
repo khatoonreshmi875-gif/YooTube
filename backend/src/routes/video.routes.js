@@ -8,7 +8,6 @@ import { getSimilarChannel } from "../controllers/video.controller/getSimilarCha
 import { getVideoByUserid } from "../controllers/video.controller/getVideoByUserId.js";
 import { getVideoUserid } from "../controllers/video.controller/getVideoUserId.js";
 import { Views } from "../controllers/video.controller/Views.js";
-import { downloadVideo } from "../controllers/video.controller/downloadVideo.js";
 import { getVideoByVideoId } from "../controllers/video.controller/getVideoByVideoId.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import cacheMiddleware from "../middlewares/cache.middleware.js";
@@ -57,7 +56,6 @@ videoRouter
   .get(verifyJWT, getVideoUserid);
 
 videoRouter.route("/views/:videoId").patch(Views);
-videoRouter.route("/download/:videoId").get(cacheMiddleware, downloadVideo);
 
 videoRouter
   .route("/vid/:videoId")

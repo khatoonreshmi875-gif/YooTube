@@ -33,7 +33,6 @@ const PlaylistMenu = ({
       });
     } catch (err) {
       handleAxiosError(err);
-      // setInfoPlaylist((prev) => [...prev, playlist]);
       // Error toast
       toast.update(toastId, {
         render: "Failed to delete ❌",
@@ -46,9 +45,9 @@ const PlaylistMenu = ({
 
   return (
     <>
-    <button
+      <button
         onClick={() => setIsOpen(isOpen === index ? null : index)}
-        className="p-2 rounded-full hover:bg-slate-100 transition duration-200 flex items-start"
+        className="p-2 rounded-full hover:bg-slate-100  transition duration-200 flex items-start w-fit h-fit"
       >
         {isOpen === index ? (
           <XMarkIcon className="aspect-square sm:w-5 w-4 text-slate-700" />

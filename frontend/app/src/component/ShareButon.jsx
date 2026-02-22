@@ -14,7 +14,7 @@ const ShareButon = ({ video, tweet, isNested, isMain }) => {
 
   return (
     <div>
-      <button
+      <div
         onClick={() => {
           setShowShareOptions(!showShareOptions);
         }}
@@ -26,7 +26,7 @@ const ShareButon = ({ video, tweet, isNested, isMain }) => {
             <IoShareSocial className=" text-xl mb-2 " />
           </span>
         )}
-      </button>
+      </div>
       {showShareOptions && (
         <div className="flex gap-2 mt-2 sm:flex-row flex-col">
           <FacebookShareButton

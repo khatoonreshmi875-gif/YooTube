@@ -34,7 +34,7 @@ export const updateVideo = asynchandler(async (req, res) => {
     }
 
     //upload on cloudinary
-    const thumbnail = await uploadOnCloudinary(thumbnailFilePath, "video");
+    const thumbnail = await uploadOnCloudinary(thumbnailFilePath, "thumbnail");
 
     //check video upload and thumbnail upload
     if (!thumbnail.url) {

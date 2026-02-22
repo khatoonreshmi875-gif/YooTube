@@ -5,7 +5,7 @@ import axios from "axios";
 import { checkDuration } from "./checkDuration.js";
 import path from "path";
 
-cloudinary.config({ 
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
 
@@ -57,8 +57,6 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
             { effect: "sharpen" },
           ],
         });
-      } else if (tag === "thumbnail") {
-        url = cloudinary.url(uploadResult.public_id);
       } else if (tag === "tweet") {
         url = cloudinary.url(uploadResult.public_id, {
           transformation: [
@@ -74,7 +72,7 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
             { effect: "sharpen" },
           ],
         });
-      } else if (tag === "video") {
+      } else if (tag === "thumbnail") {
         if (uploadResult.width > 600) {
           console.log("it run");
           url = cloudinary.url(uploadResult.public_id, {
@@ -97,10 +95,8 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
               { effect: "upscale" },
 
               {
-                // upscale low-res images
-                // target width
                 width: 600,
-                height: 338,
+                height: "16:9",
                 crop: "limit", // keep aspect ratio, don’t distort
                 // sharpen edges
                 quality: "auto:best", // best visual quality

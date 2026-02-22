@@ -24,7 +24,6 @@ const CurrUser = () => {
   //initial page loaad
   useEffect(() => {
     window.scrollTo(0, 0);
-    setInitial({});
   }, [userId]);
 
   //function-> initial state of subscrbe button
@@ -91,12 +90,8 @@ const CurrUser = () => {
     }
   };
   //empty page loading
-  if (!initial) {
-    return (
-      <div className="mt-96">
-        <LoadingSpinner label="Fetching like videos" />
-      </div>
-    );
+  if (initial === null) {
+    return <LoadingSpinner label="Loading Channel" />;
   }
   return (
     <>

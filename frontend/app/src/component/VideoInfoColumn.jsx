@@ -5,7 +5,7 @@ import { AppContext } from "./utils/contextApi.js";
 const VideoInfoColumn = ({ v }) => {
   const { FormatTime } = useContext(AppContext);
   const navigate = useNavigate();
-
+console.log("all data of similar video",v)
   return (
     <div
       className={`relative flex items-start w-full pb-4  px-2 bg-white mt-2  `}

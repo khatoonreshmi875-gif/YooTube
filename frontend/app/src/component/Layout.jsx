@@ -23,7 +23,7 @@ const Layout = ({ v, index, isDownload, setDownloads }) => {
         <video
           muted
           poster={v?.thumbnail}
-          className={`w-full
+          className={`w-full aspect-video
           rounded-xl object-cover cursor-pointer
           hover:brightness-90 transition duration-200`}
         >
