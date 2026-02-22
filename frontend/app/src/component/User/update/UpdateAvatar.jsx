@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { getUpdateAvatar } from "../../../Api/UserApi";
+import { RecommendedVideo } from "../../../Api/VideoApi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
 import { AppContext } from "../../utils/contextApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
-import { RecommendedVideo } from "../../../Api/VideoApi";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
 import FormButton from "../../utils/form/FormButton";
 import Heading from "../../utils/form/Heading";
 

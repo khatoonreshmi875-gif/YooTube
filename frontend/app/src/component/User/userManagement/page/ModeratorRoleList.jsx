@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { searchChannel } from "../../../../Api/Subscription";
 import { getUserByModerator } from "../../../../Api/UserApi";
 import UserListNavbar from "../../../Navigation/userListNavbar";
 import SubscriptionSearch from "../../../Subscription/subscription/componentSubscription/SubscriptionSearch";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import UserComponent from "../component/UserComponent";
 
 const ModeratorRoleList = () => {

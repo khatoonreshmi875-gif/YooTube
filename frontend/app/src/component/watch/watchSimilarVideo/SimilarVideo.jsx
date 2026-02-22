@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppContext } from "../../utils/contextApi";
-import { useCallback } from "react";
 import { getSimilarVideo } from "../../../Api/VideoApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
-import SimilarVideoSkeleton from "./SimilarVideoSkeleton";
-import VideoMenu from "../../HomePage.jsx/HomePageComponent/VideoMenu";
 import useInfiniteScroll from "../../../Hooks/useInfiniteScroll";
+import VideoMenu from "../../HomePage.jsx/HomePageComponent/VideoMenu";
+import { AppContext } from "../../utils/contextApi";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
+import SimilarVideoSkeleton from "./SimilarVideoSkeleton";
 
 const SimilarVideo = () => {
   const { FormatTime } = useContext(AppContext);

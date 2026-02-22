@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { getUpdateAccountDetails } from "../../../Api/UserApi";
 import { AppContext } from "../../utils/contextApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
 import FormButton from "../../utils/form/FormButton";
 import FormField from "../../utils/form/FormField";
 

@@ -1,7 +1,6 @@
-import React from "react";
 import { useState } from "react";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
 
 const Replycomment = ({
   isNested,

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // adjust import paths
-import Heading from "../../../utils/form/Heading";
 import { getReport, getReportByDate } from "../../../../Api/UserApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
+import Heading from "../../../utils/form/Heading";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import ReportCard from "../ReportAdminPageComponent/ReportCard";
 import ReportEmptyPage from "../ReportAdminPageComponent/ReportEmptyPage";

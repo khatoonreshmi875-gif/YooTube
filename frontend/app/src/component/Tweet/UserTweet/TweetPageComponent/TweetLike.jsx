@@ -4,10 +4,8 @@ import {
   stateOfTweetDisike,
   toggleTweetDislike,
 } from "../../../../Api/DislikeApi.js";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { stateOfTweetLike, toggleTweetLike } from "../../../../Api/LikeApi.js";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
-import { useNavigate } from "react-router-dom";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
 import LikeDislike from "../LikeDislike.jsx";
 
 const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {

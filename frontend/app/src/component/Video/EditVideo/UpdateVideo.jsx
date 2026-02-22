@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { EditVideo } from "../../../Api/VideoApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
-import UpdateFormThumbnail from "./UpdateFormThumbnail";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
 import FormButton from "../../utils/form/FormButton";
 import FormField from "../../utils/form/FormField";
 import Heading from "../../utils/form/Heading";
+import UpdateFormThumbnail from "./UpdateFormThumbnail";
 const UpdateVideo = () => {
   const { state } = useLocation();
   const videoId = state?.videoId;

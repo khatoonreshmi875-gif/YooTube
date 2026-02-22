@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   deleteComment,
   getCommentById,
   getEditcomment,
 } from "../../../../Api/CommentApi.js";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
-import { useNavigate } from "react-router-dom";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
 const EditDeleteComment = ({
   setCommentsWithLikes,
   setgetreplied,

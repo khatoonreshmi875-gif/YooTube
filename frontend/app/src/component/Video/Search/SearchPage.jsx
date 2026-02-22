@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { searchChannel } from "../../../Api/Subscription.js";
 import {
   getSimilarChannelVideo,
@@ -7,12 +7,11 @@ import {
   RecommendedVideo,
 } from "../../../Api/VideoApi.js";
 import { AppContext } from "../../utils/contextApi.js";
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import { sortVideo } from "./SearchPageComponent/SortVideo.jsx";
 import useInfiniteScroll from "./SearchPageComponent/useInfiniteScroll.jsx";
 import { fetchAndUpdateVideos } from "./SearchPageComponent/VideoHelper.js";
 import VideoItem from "./SearchPageComponent/VideoItem.jsx";
-import SearchSkeleton from "./SearchSkeleton.jsx";
 const SearchPage = () => {
   const navigate = useNavigate();
     const handleAxiosError = useAxiosErrorHandler();

@@ -4,8 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../../Api/UserApi";
 import { AppContext } from "../../../utils/contextApi";
 import {
-  handleAxiosError,
-  useAxiosErrorHandler,
+  useAxiosErrorHandler
 } from "../../../utils/erroeHandler";
 import MenuLink from "./MenuLink";
 

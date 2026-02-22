@@ -5,9 +5,9 @@ import { getUpdateCoverImage } from "../../../Api/UserApi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
 import FormButton from "../../utils/form/FormButton";
 
-import { AppContext } from "../../utils/contextApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import { RecommendedVideo } from "../../../Api/VideoApi";
+import { AppContext } from "../../utils/contextApi";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
 import Heading from "../../utils/form/Heading";
 const UpdateCoverImage = () => {
   const { user, getallvideo, setgetvideo, onHandle } = useContext(AppContext);

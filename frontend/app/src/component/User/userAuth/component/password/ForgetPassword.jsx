@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { forgetPassword } from "../../../../../Api/UserApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
+import { forgetPassword } from "../../../../../Api/UserApi";
+import { useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import FormField from "../../../../utils/form/FormField";
 import Heading from "../../../../utils/form/Heading";
 

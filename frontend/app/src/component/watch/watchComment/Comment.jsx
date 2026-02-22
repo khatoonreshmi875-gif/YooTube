@@ -1,16 +1,15 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { GetAllRepliedComment } from "../../../Api/CommentApi.js";
+import { AppContext } from "../../utils/contextApi.js";
+import CommentHeader from "./Comment/CommentHeader.jsx";
 import CommentLike from "./Comment/CommentLike.jsx";
 import EditDeleteComment from "./Comment/EditDeleteComment.jsx";
-import CommentHeader from "./Comment/CommentHeader.jsx";
 import Replycomment from "./Comment/Replycomment.jsx";
-import { AppContext } from "../../utils/contextApi.js";
 
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 
-import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
-import { useNavigate } from "react-router-dom";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 
 const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
   const { user } = useContext(AppContext);

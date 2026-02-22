@@ -1,19 +1,15 @@
-import React from "react";
-import { useEffect, useRef } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   getVideoByUserId,
   getVideoUserId,
   RecommendedVideo,
 } from "../Api/VideoApi";
+import { useAxiosErrorHandler } from "../component/utils/erroeHandler";
 import useInfiniteScroll from "./useInfiniteScroll";
-import { handleAxiosError, useAxiosErrorHandler } from "../component/utils/erroeHandler";
-import { useNavigate } from "react-router-dom";
 
 export const useVideo = () => {
   const [getvideo, setgetvideo] = useState([]);
   const [video, setvideo] = useState(null);
-  const handleAxiosError = useAxiosErrorHandler();
 
   const [load, setLoad] = useState(false);
   const token = localStorage.getItem("token");
@@ -31,15 +27,12 @@ export const useVideo = () => {
         setgetvideo((prev) => [...prev, ...result3.data.data]);
       }
     } catch (error) {
-      handleAxiosError(error);
+      console.log("err",error)
     } finally {
       setLoad(false);
     }
   };
-  useEffect(() => {
-    getallvideo(0);
-    hasFetchedFirst.current = true;
-  }, [token]);
+  
   const {} = useInfiniteScroll({ fn: getallvideo, hasNomore, hasFetchedFirst });
 
   const onHandleVideo = async () => {
@@ -65,5 +58,7 @@ export const useVideo = () => {
     onHandleVideo,
     onHandleVideoUserId,
     getallvideo,
+    hasFetchedFirst,
+    token
   };
 };

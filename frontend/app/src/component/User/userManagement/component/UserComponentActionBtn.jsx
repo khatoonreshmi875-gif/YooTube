@@ -1,11 +1,10 @@
-import React from "react";
 import {
   Assign_Moderator,
   DeleteAccountById,
   RemoveModerator,
 } from "../../../../Api/UserApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import Button from "../../../Tweet/UserTweet/Button";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
 
 const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
     const handleAxiosError = useAxiosErrorHandler()

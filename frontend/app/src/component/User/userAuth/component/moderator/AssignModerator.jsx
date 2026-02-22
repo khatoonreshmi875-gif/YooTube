@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Assign_Moderator } from "../../../../../Api/UserApi";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../../utils/erroeHandler";
-import FormField from "../../../../utils/form/FormField";
+import { useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import FormButton from "../../../../utils/form/FormButton";
+import FormField from "../../../../utils/form/FormField";
 import Heading from "../../../../utils/form/Heading";
 
 

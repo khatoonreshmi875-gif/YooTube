@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { EllipsisVerticalIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useContext, useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
 import { SubscribeBtn, toggleSubcribeWithId } from "../../Api/Subscription.js";
 import { getCurrentUserById } from "../../Api/UserApi.js";
 import Navbar1 from "../Navigation/Navbar1.jsx";
+import Button from "../Tweet/UserTweet/Button.jsx";
 import { AppContext } from "../utils/contextApi.js";
-import { handleAxiosError, useAxiosErrorHandler } from "../utils/erroeHandler.jsx";
+import { useAxiosErrorHandler } from "../utils/erroeHandler.jsx";
 import LoadingSpinner from "../utils/LoadingSpinner.jsx";
 import ChannelMenu from "./ChannelMenu.jsx";
-import Button from "../Tweet/UserTweet/Button.jsx";
 
 const CurrUser = () => {
   const { userId } = useParams();

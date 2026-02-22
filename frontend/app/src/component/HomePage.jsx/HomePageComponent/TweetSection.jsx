@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SortedTweet, TweetByTweetId } from "../../../Api/TweetApi";
 import MainPage from "../../Tweet/HomeTweet/HomeTweetComponent/mainPage/MainPage";
 import TweetSkeleton from "../../Tweet/TweetSkeleton";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
 
 const TweetSection = () => {
   const navigate = useNavigate();

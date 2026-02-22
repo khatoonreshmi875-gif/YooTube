@@ -7,7 +7,7 @@ import {
 import { AppContext } from "../../../utils/contextApi";
 
 import { useNavigate } from "react-router-dom";
-import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import Comment from "../../../watch/watchComment/Comment";
 import AddComments from "../../../watch/watchComment/Comment/AddComment";
 import CommentSkeleton from "../../../watch/watchComment/CommentSkeleton";

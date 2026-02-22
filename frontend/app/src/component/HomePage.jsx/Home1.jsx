@@ -7,16 +7,33 @@ import Videoskeleton from "../utils/Videoskeleton.jsx";
 import EmptySkeleton from "../utils/EmptySkeleton.jsx";
 import { useLocation } from "react-router-dom";
 const Home1 = () => {
-  const { getvideo, hasNomore, allPlaylist, load, loading } =
-    useContext(AppContext);
+  const {
+    getvideo,
+    hasNomore,
+    allPlaylist,
+    load,
+    loading,
+    getallvideo,
+    hasFetchedFirst,
+    token,
+  } = useContext(AppContext);
   const location = useLocation();
   useEffect(() => {
     // Prefetch likely next routes
     import("../watch/WatchPage.jsx");
     import("../Video/Search/SearchPage.jsx");
   }, []);
- 
 
+  useEffect(() => {
+    getallvideo(0).catch((err) => {
+      console.error("Video fetch failed:", err);
+      // use your custom error handler for JWT/session issues
+      handleAxiosError(err);
+      // optionally show a local message
+    });
+
+    hasFetchedFirst.current = true;
+  }, [token]);
   return (
     <div>
       {getvideo && getvideo.length > 0 ? (
