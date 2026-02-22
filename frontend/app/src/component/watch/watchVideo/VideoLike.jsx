@@ -6,7 +6,7 @@ import {
   SubscribeBtn,
   toggleSubcribeWithId,
 } from "../../../Api/Subscription.js";
-import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import LikeDislike from "../../Tweet/UserTweet/LikeDislike.jsx";
 import Button from "../../Tweet/UserTweet/Button.jsx";
@@ -21,6 +21,8 @@ const VideoLike = ({
 }) => {
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   //usestate
   const [reaction, setReaction] = useState({
     likeCount: initialLikeCount,

@@ -7,12 +7,13 @@ import {
   RecommendedVideo,
 } from "../Api/VideoApi";
 import useInfiniteScroll from "./useInfiniteScroll";
-import { handleAxiosError } from "../component/utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../component/utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
 
 export const useVideo = () => {
   const [getvideo, setgetvideo] = useState([]);
   const [video, setvideo] = useState(null);
+  const handleAxiosError = useAxiosErrorHandler();
 
   const [load, setLoad] = useState(false);
   const token = localStorage.getItem("token");

@@ -3,7 +3,7 @@ import { MdSubscriptions } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { totalSubcribeChannel } from "../../../Api/Subscription.js";
 import { AppContext } from "../../utils/contextApi.js";
-import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import EmptySkeleton from "../../utils/EmptySkeleton.jsx";
 import SubscriptionBtn from "../subscription/componentSubscription/SubscriptionBtn.jsx";
 import ChannelCard from "./componentSubscription/ChannelCard.jsx";
@@ -15,6 +15,8 @@ const Subscription = () => {
   const { followers, user, FormatTime, setfollowers } = useContext(AppContext);
   const { userId } = useParams();
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const [selectedChannelId, setSelectedChannelId] = useState("");
   const [userFolower, setUserFolower] = useState();
   const handleSubscribePage = async (userId) => {

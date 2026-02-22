@@ -4,7 +4,7 @@ import { searchChannel } from "../../../../Api/Subscription";
 import { AllUser } from "../../../../Api/UserApi";
 import UserListNavbar from "../../../Navigation/userListNavbar";
 import SubscriptionSearch from "../../../Subscription/subscription/componentSubscription/SubscriptionSearch";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import UserComponent from "../component/UserComponent";
@@ -15,6 +15,7 @@ const UserPage = () => {
   const [channel, setChannel] = useState([]);
   const [loading, setLoading] = useState();
   const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
 
   // Search channel and merge results into userData
   const handleSearchChannel = async (userdata) => {

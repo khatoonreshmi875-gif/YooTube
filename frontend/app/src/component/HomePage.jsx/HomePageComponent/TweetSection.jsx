@@ -7,16 +7,21 @@ import { handleAxiosError } from "../../utils/erroeHandler";
 
 const TweetSection = () => {
   const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
+  //usestate
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [allTweet, setAllTweet] = useState([]);
+  //useref
   const hasNoMore = useRef(false);
   const containerRef = useRef(null);
+
+  //api call for get tweet of whom i subscribe 
   const getTweetOfSubscribers = async (page = 0) => {
     setLoading(true);
     try {
       const url = await SortedTweet(page);
-      console.log("url of tweet ✅ ", url);
+
       if (url.data.data.length !== 0) {
         setAllTweet((prev) => {
           const prevData = prev.map((p) => p._id);
@@ -25,10 +30,8 @@ const TweetSection = () => {
           ); // ✅ prevent duplicates
           return [...prev, ...newTweets];
         });
-        console.log("data of oloading", loading);
       }
       if (url.data.message === "No more tweets available") {
-        console.log("show data 👉", url);
         hasNoMore.current = true;
       }
     } catch (err) {
@@ -37,15 +40,12 @@ const TweetSection = () => {
       setLoading(false);
     }
   };
-console.log("all tweet data",)
+
   useEffect(() => {
     setCount(0);
     getTweetOfSubscribers(0);
     hasNoMore.current = false;
   }, []);
-  useEffect(() => {
-    console.log("Loading state changed: a 👉", loading);
-  }, [loading]);
 
   //Infinite Scroll Handler
   useEffect(() => {
@@ -102,7 +102,7 @@ console.log("all tweet data",)
           Array.from({ length: 4 }).map((_, i) => <TweetSkeleton key={i} />)}
         {hasNoMore.current && (
           <p className="sm:text-xl text-sm text-center text-blue-600 w-full bg-blue-100 ">
-            No  tweets are available
+            No tweets are available
           </p>
         )}
       </div>

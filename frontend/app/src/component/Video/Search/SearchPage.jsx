@@ -7,7 +7,7 @@ import {
   RecommendedVideo,
 } from "../../../Api/VideoApi.js";
 import { AppContext } from "../../utils/contextApi.js";
-import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import { sortVideo } from "./SearchPageComponent/SortVideo.jsx";
 import useInfiniteScroll from "./SearchPageComponent/useInfiniteScroll.jsx";
 import { fetchAndUpdateVideos } from "./SearchPageComponent/VideoHelper.js";
@@ -15,6 +15,8 @@ import VideoItem from "./SearchPageComponent/VideoItem.jsx";
 import SearchSkeleton from "./SearchSkeleton.jsx";
 const SearchPage = () => {
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const {
 
     setsimilarVideos,

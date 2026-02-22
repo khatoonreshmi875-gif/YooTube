@@ -2,13 +2,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { resetPassword } from "../../../../../Api/UserApi";
-import { handleAxiosError } from "../../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import FormField from "../../../../utils/form/FormField";
 import Heading from "../../../../utils/form/Heading";
 import Button from "../../../../Tweet/UserTweet/Button";
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const {
     register: registerSignin,
     handleSubmit: handleLoginSubmit,

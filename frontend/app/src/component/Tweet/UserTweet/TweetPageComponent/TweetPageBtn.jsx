@@ -1,6 +1,6 @@
 import React from "react";
 import { TweetByTweetId, TweetDelete } from "../../../../Api/TweetApi";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -9,6 +9,8 @@ import Button from "../Button";
 
 const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
   const { user } = useContext(AppContext);
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const navigate = useNavigate();
   const tweetByTweetId = async (tweetId) => {
     const res = await TweetByTweetId(tweetId);

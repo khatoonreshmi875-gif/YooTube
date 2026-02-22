@@ -4,13 +4,15 @@ import { toast } from "react-toastify";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { AppContext } from "../../utils/contextApi";
 import { deleteVideo } from "../../../Api/VideoApi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import DropDownItem from "../../HomePage.jsx/HomePageComponent/DropDownItem";
 import { EllipsisVerticalIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 const VideoMenu = ({ v, index }) => {
   const { setvideo, user } = useContext(AppContext);
+  const handleAxiosError = useAxiosErrorHandler();
+
   const { userId } = useParams();
   const [isOpen, setIsOpen] = useState(null);
   const navigate = useNavigate();

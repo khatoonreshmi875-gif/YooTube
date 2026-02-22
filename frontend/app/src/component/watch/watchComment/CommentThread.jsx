@@ -9,11 +9,12 @@ import { AppContext } from "../../utils/contextApi";
 import Comment from "./Comment";
 import AddComments from "./Comment/AddComment";
 import CommentSkeleton from "./CommentSkeleton";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import useInfiniteScroll from "../../../Hooks/useInfiniteScroll";
 const CommentThread = () => {
   const navigate = useNavigate();
   const { user, FormatTime } = useContext(AppContext);
+  const handleAxiosError = useAxiosErrorHandler();
 
   //usestate
   const [count, setCount] = useState(0);

@@ -5,25 +5,31 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../utils/contextApi";
 
-import { handleAxiosError } from "../../utils/erroeHandler";
+import {
+  handleAxiosError,
+  useAxiosErrorHandler,
+} from "../../utils/erroeHandler";
 import FormButton from "../../utils/form/FormButton.jsx";
 import FormField from "../../utils/form/FormField.jsx";
 import FormImageField from "../../utils/form/FormImageField.jsx";
 import Heading from "../../utils/form/Heading.jsx";
 
 const CreatePlaylist = () => {
-  const [dots, setdots] = useState(".");
   const { onHandleVideo } = useContext(AppContext);
   const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
+
+  //useform
   const {
     register: registerPlaylist,
     handleSubmit: handlePlaylistSubmit,
     watch,
     formState: { errors, isSubmitting: issubmittingPlaylist },
   } = useForm();
+
+  //form submit function
   const onSubmit = async (form) => {
     const result = await onHandleVideo();
-    console.log("playlist currUser", result);
 
     const formData = new FormData();
     formData.append("name", form.name);
@@ -41,11 +47,7 @@ const CreatePlaylist = () => {
       handleAxiosError(err);
     }
   };
-  useEffect(() => {
-    setInterval(() => {
-      setdots((prev) => (prev.length < 3 ? prev + "." : ""));
-    }, 1000);
-  }, [issubmittingPlaylist]);
+
   return (
     <div className="mx-auto      md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24 flex justify-center items-center min-h-screen bg-gray-100 ">
       <form

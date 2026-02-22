@@ -3,12 +3,19 @@ import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../../Api/UserApi";
 import { AppContext } from "../../../utils/contextApi";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import {
+  handleAxiosError,
+  useAxiosErrorHandler,
+} from "../../../utils/erroeHandler";
 import MenuLink from "./MenuLink";
 
 const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
   const { setisLoggedin, setgetvideo, user } = useContext(AppContext);
   const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
+
+  //logout function
+
   async function handleLogout() {
     try {
       const result = await logoutUser();
@@ -22,7 +29,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
       handleAxiosError(err);
     }
   }
-
+  //get token from storage
   const token = localStorage.getItem("token");
 
   return (
@@ -62,19 +69,19 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
               <NavLink to="/login">Log In</NavLink>
             )}
           </li>
-
+          {/* change password */}
           <MenuLink
             to="/change-password"
             label="Change Password"
             onClick={() => setlikeVideos(false)}
           />
-
+          {/* register */}
           <MenuLink
             to="/register"
             label="Register"
             onClick={() => setlikeVideos(false)}
           />
-
+          {/* user list */}
           {user.role === "admin" && (
             <MenuLink
               to="/assign-moderator"
@@ -90,6 +97,7 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
                 label="User List"
                 onClick={() => setlikeVideos(false)}
               />
+              {/* report */}
               <MenuLink
                 to="/report-admin"
                 label="Reports"
@@ -101,7 +109,6 @@ const AccountMenu = ({ setContent, setlikeVideos, likeVideos }) => {
       )}
     </div>
   );
-
 };
 
 export default AccountMenu;

@@ -3,13 +3,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { getUpdateAccountDetails } from "../../../Api/UserApi";
 import { AppContext } from "../../utils/contextApi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import FormButton from "../../utils/form/FormButton";
 import FormField from "../../utils/form/FormField";
 
 const UpdateAccountDetails = () => {
   const { user, getallvideo, onHandle } = useContext(AppContext);
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const {
     register: registerVideo,
     handleSubmit: handleVideoSubmit,

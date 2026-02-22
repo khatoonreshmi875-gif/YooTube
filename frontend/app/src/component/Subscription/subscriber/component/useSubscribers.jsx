@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { searchChannel, totalSubcribe } from "../../../../Api/Subscription";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../../utils/contextApi";
 
 const useSubscribers = () => {
   const { stats, setStats } = useContext(AppContext);
+  const handleAxiosError = useAxiosErrorHandler();
+
+  //usestate
   const [channel, setChannel] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const totalSubcribeChannel = async () => {

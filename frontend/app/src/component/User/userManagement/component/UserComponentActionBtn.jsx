@@ -4,10 +4,12 @@ import {
   DeleteAccountById,
   RemoveModerator,
 } from "../../../../Api/UserApi";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import Button from "../../../Tweet/UserTweet/Button";
 
 const UserComponentActionBtn = ({ user, setUserData, loggedInUser }) => {
+    const handleAxiosError = useAxiosErrorHandler()
+  
   const handleDeleteAccount = async (userId) => {
     try {
       setUserData((prev) => prev.filter((p) => p._id !== userId));

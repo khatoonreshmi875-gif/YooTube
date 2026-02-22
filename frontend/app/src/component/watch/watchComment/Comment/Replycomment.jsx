@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
 
 const Replycomment = ({
@@ -18,6 +18,8 @@ const Replycomment = ({
   const [activeReplyId, setActiveReplyId] = useState(null);
   const [content, setcontent] = useState("");
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const handleReplyCommment = async (commentId, userdata) => {
     try {
       const tempId = Date.now() + Math.floor(Math.random() * 999999);

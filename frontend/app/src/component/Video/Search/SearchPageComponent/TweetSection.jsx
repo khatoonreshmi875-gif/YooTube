@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { TweetByTweetId } from "../../../../Api/TweetApi";
 import MainPage from "../../../Tweet/HomeTweet/HomeTweetComponent/mainPage/MainPage";
 import { useLocation } from "react-router-dom";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 const TweetSection = ({ tweet, tweetPost }) => {
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const tweetByTweetId = async (tweetId) => {
     try {
       const res = await TweetByTweetId(tweetId);

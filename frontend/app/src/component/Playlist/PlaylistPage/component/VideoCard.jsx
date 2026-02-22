@@ -1,6 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import { deleteVideoFromPlaylist } from "../../../../Api/Playlistapi";
 import { formatDate } from "../../utils/date";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ import Button from "../../../Tweet/UserTweet/Button";
 import VideoInfo from "../../../HomePage.jsx/HomePageComponent/VideoInfo";
 const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const Deletevideo = async (playlistId, videoId) => {
     const toastId = toast.loading("Deleting video...");
     try {

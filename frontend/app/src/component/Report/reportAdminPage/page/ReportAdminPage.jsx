@@ -2,17 +2,21 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // adjust import paths
 import Heading from "../../../utils/form/Heading";
 import { getReport, getReportByDate } from "../../../../Api/UserApi";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import LoadingSpinner from "../../../utils/LoadingSpinner";
 import ReportCard from "../ReportAdminPageComponent/ReportCard";
 import ReportEmptyPage from "../ReportAdminPageComponent/ReportEmptyPage";
 import ReportTable from "../ReportAdminPageComponent/ReportTable";
 
 const ReportAdminPage = () => {
-  const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
+
+  //usestate
   const [reports, setReports] = useState([]);
   const [selectedDate, setSelectedDate] = useState();
   const [loading, setLoading] = useState(false);
+
+
   // Fetch all reports
   const fetchReports = async () => {
     setLoading(true);

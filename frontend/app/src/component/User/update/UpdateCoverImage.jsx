@@ -6,12 +6,14 @@ import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
 import FormButton from "../../utils/form/FormButton";
 
 import { AppContext } from "../../utils/contextApi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import { RecommendedVideo } from "../../../Api/VideoApi";
 import Heading from "../../utils/form/Heading";
 const UpdateCoverImage = () => {
   const { user, getallvideo, setgetvideo, onHandle } = useContext(AppContext);
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const [preview, setPreview] = useState(user.coverImage || "");
   const {
     register: registerVideo,

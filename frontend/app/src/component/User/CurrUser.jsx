@@ -5,14 +5,15 @@ import { SubscribeBtn, toggleSubcribeWithId } from "../../Api/Subscription.js";
 import { getCurrentUserById } from "../../Api/UserApi.js";
 import Navbar1 from "../Navigation/Navbar1.jsx";
 import { AppContext } from "../utils/contextApi.js";
-import { handleAxiosError } from "../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../utils/erroeHandler.jsx";
 import LoadingSpinner from "../utils/LoadingSpinner.jsx";
 import ChannelMenu from "./ChannelMenu.jsx";
 import Button from "../Tweet/UserTweet/Button.jsx";
 
 const CurrUser = () => {
   const { userId } = useParams();
-  const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler()
+  
   const { onHandleVideoUserId, subscribe, setSubscribe, user } =
     useContext(AppContext);
 

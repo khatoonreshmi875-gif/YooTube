@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { getWatchHistory } from "../Api/UserApi";
-import { handleAxiosError } from "../component/utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../component/utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
 
 export default function useHistory() {
   const [history, sethistory] = useState([]);
   const [channelOwnerId, setChannelOwnerId] = useState(null);
   const [loading, setLoading] = useState(false);
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const fetchWatchHistory = async () => {
     setLoading(true);
     try {

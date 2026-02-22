@@ -4,14 +4,15 @@ import { searchChannel } from "../../../../Api/Subscription";
 import { getUserByModerator } from "../../../../Api/UserApi";
 import UserListNavbar from "../../../Navigation/userListNavbar";
 import SubscriptionSearch from "../../../Subscription/subscription/componentSubscription/SubscriptionSearch";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import UserComponent from "../component/UserComponent";
 
 const ModeratorRoleList = () => {
   const [userData, setUserData] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState("");
   const [channel, setchannel] = useState([]);
-  const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const handleSearchChannel = async (userdata) => {
     const res = await searchChannel(userdata);
 

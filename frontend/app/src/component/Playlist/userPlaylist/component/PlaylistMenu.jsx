@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { deletePlaylist, editPlaylist } from "../../../../Api/Playlistapi";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import { AppContext } from "../../../utils/contextApi";
 import DropDownItem from "../../../HomePage.jsx/HomePageComponent/DropDownItem";
 import { toast } from "react-toastify";
@@ -19,6 +19,7 @@ const PlaylistMenu = ({
   const navigate = useNavigate();
   const { user } = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(null);
+  const handleAxiosError = useAxiosErrorHandler();
 
   const Deletevideo = async (playlistId) => {
     const toastId = toast.loading("Deleting playlist...");

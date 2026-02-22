@@ -7,7 +7,7 @@ import {
 import { AppContext } from "../../../utils/contextApi";
 
 import { useNavigate } from "react-router-dom";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import Comment from "../../../watch/watchComment/Comment";
 import AddComments from "../../../watch/watchComment/Comment/AddComment";
 import CommentSkeleton from "../../../watch/watchComment/CommentSkeleton";
@@ -15,6 +15,8 @@ import CommentSkeleton from "../../../watch/watchComment/CommentSkeleton";
 const Maincomment = ({ tweetId }) => {
   const navigate = useNavigate();
   const { user } = useContext(AppContext);
+    const handleAxiosError = useAxiosErrorHandler();
+  
 
   // useState
 

@@ -5,27 +5,36 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../utils/contextApi.js";
 import { Navigate } from "react-router-dom";
-import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import {
+  handleAxiosError,
+  useAxiosErrorHandler,
+} from "../../utils/erroeHandler.jsx";
 import Heading from "../../utils/form/Heading.jsx";
 const AddPlaylist = () => {
-  const { playlistId } = useParams();
   const { video, onHandleVideo, user } = useContext(AppContext);
+  const handleAxiosError = useAxiosErrorHandler();
+  const navigate = useNavigate();
   const location = useLocation();
+  const { playlistId } = useParams();
+
+  ///usestate
+  const [isOpen, setIsOpen] = useState(null);
+  const [Open, setOpen] = useState(null);
+  const [preview, setPreview] = useState([]);
+  const [prevData, setPrevData] = useState([]);
+  const [length, setlength] = useState(false);
+
   const { playlist } = location.state || {};
   const {
     register: registerPlaylistVideo,
     handleSubmit: handlePlaylistVideoSubmit,
     formState: { errors, isSubmitting: issubmittingPlaylistVideo },
   } = useForm();
-  const navigate = useNavigate();
+
   const handleclick = async () => {
     await onHandleVideo();
   };
-  const [isOpen, setIsOpen] = useState(null);
-  const [Open, setOpen] = useState(null);
-  const [preview, setPreview] = useState([]);
-  const [prevData, setPrevData] = useState([]);
-  const [length, setlength] = useState(false);
+
   useEffect(() => {
     setPreview([]);
     setPrevData(
@@ -186,7 +195,6 @@ const AddPlaylist = () => {
               </option>
             ))}
           </select>
-          
         </div>
 
         {/* Submit Button */}
@@ -201,6 +209,6 @@ const AddPlaylist = () => {
       </form>
     </div>
   );
-};
+};;
 
 export default AddPlaylist;

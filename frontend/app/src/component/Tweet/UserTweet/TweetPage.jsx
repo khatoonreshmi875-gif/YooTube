@@ -3,7 +3,7 @@ import { MdMessage } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { TweetPageApi } from "../../../Api/TweetApi.js";
 import { AppContext } from "../../utils/contextApi.js";
-import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import LoadingSpinner from "../../utils/LoadingSpinner.jsx";
 import EmptySkeleton from "../../utils/EmptySkeleton.jsx";
 import TweetMedia from "../HomeTweet/HomeTweetComponent/mainPage/mainPageComponent/TweetMedia.jsx";
@@ -14,6 +14,8 @@ const tweetDataPage = () => {
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
   const { userId } = useParams();
+    const handleAxiosError = useAxiosErrorHandler();
+  
 
   // useState
   const [loading, setLoading] = useState(false);

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Assign_Moderator } from "../../../../../Api/UserApi";
-import { handleAxiosError } from "../../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import FormField from "../../../../utils/form/FormField";
 import FormButton from "../../../../utils/form/FormButton";
 import Heading from "../../../../utils/form/Heading";
@@ -15,6 +15,7 @@ const AssignModerator = () => {
     setError,
     formState: { errors, isSubmitting: isSubmittingRole },
   } = useForm();
+  const handleAxiosError = useAxiosErrorHandler();
 
   const onLogin = async (userdata) => {
     try {

@@ -4,7 +4,7 @@ import { changePassword } from "../../../../../Api/UserApi.js";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleAxiosError } from "../../../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../../utils/erroeHandler.jsx";
 import FormField from "../../../../utils/form/FormField";
 import FormButton from "../../../../utils/form/FormButton";
 import Heading from "../../../../utils/form/Heading.jsx";
@@ -12,6 +12,8 @@ import Heading from "../../../../utils/form/Heading.jsx";
 const ChangePassword = () => {
   const [dots, setdots] = useState(".");
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const {
     register: registerPassword,
     handleSubmit: handlePasswordSubmit,

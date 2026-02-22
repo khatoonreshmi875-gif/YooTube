@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getTweetCommentById } from "../../../Api/CommentApi";
 import { TweetByTweetId } from "../../../Api/TweetApi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import Maincomment from "./HomeTweetComponent/MainComment";
 import MainPage from "./HomeTweetComponent/mainPage/MainPage";
 
 const MainTweetPage = () => {
   const [tweetData, setTweetData] = useState();
   const location = useLocation();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const { tweet } = location.state || {};
   const navigate = useNavigate();
   const { tweetId } = useParams();

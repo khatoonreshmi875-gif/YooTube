@@ -4,7 +4,7 @@ import {
   getCommentById,
   getEditcomment,
 } from "../../../../Api/CommentApi.js";
-import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
 import { useNavigate } from "react-router-dom";
 const EditDeleteComment = ({
   setCommentsWithLikes,
@@ -17,6 +17,8 @@ const EditDeleteComment = ({
   const [comment, setComment] = useState("");
   const [Edit, setEdit] = useState(null);
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const getComment = async (commentId) => {
     const res = await getCommentById(commentId);
     setComment(res.data.data.content);

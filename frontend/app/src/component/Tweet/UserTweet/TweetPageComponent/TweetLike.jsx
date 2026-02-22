@@ -6,12 +6,13 @@ import {
 } from "../../../../Api/DislikeApi.js";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { stateOfTweetLike, toggleTweetLike } from "../../../../Api/LikeApi.js";
-import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
 import { useNavigate } from "react-router-dom";
 import LikeDislike from "../LikeDislike.jsx";
 
 const TweetLike = ({ tweetId, initialLikeCount, initialDislikeCount }) => {
-  const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   // usestate
   console.log("tweet data of like", initialDislikeCount, initialLikeCount);
   const [reaction, setReaction] = useState({

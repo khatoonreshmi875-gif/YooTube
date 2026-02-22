@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../utils/contextApi";
 import { useCallback } from "react";
 import { getSimilarVideo } from "../../../Api/VideoApi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import SimilarVideoSkeleton from "./SimilarVideoSkeleton";
 import VideoMenu from "../../HomePage.jsx/HomePageComponent/VideoMenu";
 import useInfiniteScroll from "../../../Hooks/useInfiniteScroll";
@@ -12,6 +12,8 @@ const SimilarVideo = () => {
   const { FormatTime } = useContext(AppContext);
   const navigate = useNavigate();
   const { videoId } = useParams();
+    const handleAxiosError = useAxiosErrorHandler();
+  
 
   //usestate
   const [similarVideos, setSimilarVideos] = useState([]);

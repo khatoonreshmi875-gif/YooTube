@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Form, useNavigate } from "react-router-dom";
 import { AppContext } from "../utils/contextApi";
-import { handleAxiosError } from "../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../utils/erroeHandler";
 import FormButton from "../utils/form/FormButton";
 import FormField from "../utils/form/FormField";
 import FormSelect from "../utils/form/FormSelect";
@@ -20,6 +20,8 @@ const CreateTweet = () => {
   } = useForm();
   const { video, onHandleVideoUserId, user } = useContext(AppContext);
   const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const onSubmit = async (form) => {
     const formData = new FormData();
     formData.append("content", form.content);

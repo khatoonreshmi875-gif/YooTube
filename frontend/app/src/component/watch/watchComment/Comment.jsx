@@ -9,12 +9,12 @@ import { AppContext } from "../../utils/contextApi.js";
 
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 
-import { handleAxiosError } from "../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Comment = ({ c, index, isNested, replyApi, setCommentsWithLikes }) => {
   const { user } = useContext(AppContext);
-  const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
 
   //usestate
   const [count, setcount] = useState(0);

@@ -3,7 +3,7 @@ import { EllipsisVerticalIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import DownloadButton from "../../Download/components/DownloadButton";
 import ShareButon from "../../ShareButon";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import Delete from "../../utils/Delete.jsx";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../utils/contextApi";
@@ -19,6 +19,8 @@ const VideoMenu = ({
   const { user } = useContext(AppContext);
   const [isOpen, setIsOpen] = useState(null);
   const navigate = useNavigate();
+  const handleAxiosError = useAxiosErrorHandler();
+
 
   const handleDeleteClick = async () => {
     const toastId = toast.loading("Deleting video...");

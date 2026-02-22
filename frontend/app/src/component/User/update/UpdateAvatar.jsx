@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { getUpdateAvatar } from "../../../Api/UserApi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
 import { AppContext } from "../../utils/contextApi";
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import { RecommendedVideo } from "../../../Api/VideoApi";
 import FormButton from "../../utils/form/FormButton";
 import Heading from "../../utils/form/Heading";
 
 const UpdateAvatar = () => {
   const { user, setgetvideo, onHandle } = useContext(AppContext);
-  console.log("user data.................", user.avatar);
+  const handleAxiosError = useAxiosErrorHandler();
+
   const navigate = useNavigate();
   const [preview, setPreview] = useState(user.avatar || "");
   const {

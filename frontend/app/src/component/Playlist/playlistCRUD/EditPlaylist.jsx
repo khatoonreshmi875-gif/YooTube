@@ -5,17 +5,20 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { editPlaylist } from "../../../Api/Playlistapi";
 import UpdateFormThumbnail from "../../Video/EditVideo/UpdateFormThumbnail";
 
-import { handleAxiosError } from "../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../utils/erroeHandler";
 import FormField from "../../utils/form/FormField";
 import FormButton from "../../utils/form/FormButton";
 import Heading from "../../utils/form/Heading";
-
 
 const EditPlaylist = () => {
   const { playlistId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { playlist } = location.state || {};
+  const handleAxiosError = useAxiosErrorHandler();
+
+
+  //useform
   const {
     register: registerUpdatePlaylist,
     handleSubmit: handleUpdatePlaylistSubmit,
@@ -40,8 +43,8 @@ const EditPlaylist = () => {
     }
 
     try {
-      const res=await editPlaylist(formData, playlistId);
-      
+      const res = await editPlaylist(formData, playlistId);
+
       navigate(`/curr-user/${playlist.owner}/playlist-home`); // redirect after success
     } catch (err) {
       handleAxiosError(err);
@@ -55,7 +58,7 @@ const EditPlaylist = () => {
         className="bg-white shadow-lg rounded-xl xs:p-8 p-4 w-full xs:max-w-2xl space-y-5"
       >
         <Heading label="Edit Playlist" />
-       
+
         <FormField
           label="Name"
           name="name"

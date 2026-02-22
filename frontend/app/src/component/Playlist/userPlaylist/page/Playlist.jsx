@@ -3,7 +3,7 @@ import { MdPlaylistPlay } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPlaylistByUsingUserId } from "../../../../Api/Playlistapi.js";
 import { AppContext } from "../../../utils/contextApi.js";
-import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
 import LoadingSpinner from "../../../utils/LoadingSpinner.jsx";
 import EmptySkeleton from "../../../utils/EmptySkeleton.jsx";
 import PlaylistCard from "../component/PlaylistCard.jsx";
@@ -15,6 +15,7 @@ const Playlist = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [infoPlaylist, setInfoPlaylist] = useState(null);
+  const handleAxiosError = useAxiosErrorHandler();
 
   useEffect(() => {
     const getPlaylistThroughUserId = async (userId) => {

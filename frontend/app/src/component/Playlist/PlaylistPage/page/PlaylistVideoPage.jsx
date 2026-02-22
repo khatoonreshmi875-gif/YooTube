@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { getPlaylistByPlaylistId } from "../../../../Api/Playlistapi.js";
-import { handleAxiosError } from "../../../utils/erroeHandler.jsx";
+import {
+  handleAxiosError,
+  useAxiosErrorHandler,
+} from "../../../utils/erroeHandler.jsx";
 
 import VideoCard from "../component/VideoCard.jsx";
 import PlaylistHeader from "../component/PlaylistHeader.jsx";
@@ -12,6 +15,7 @@ const PlaylistVideoPage = () => {
   // useState
   const [allPlaylist, setAllPlaylist] = useState({});
   const [loading, setLoading] = useState(false);
+  const handleAxiosError = useAxiosErrorHandler();
 
   const navigate = useNavigate();
   const { playlistId } = useParams();

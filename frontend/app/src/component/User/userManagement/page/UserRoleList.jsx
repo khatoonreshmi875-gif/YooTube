@@ -4,14 +4,15 @@ import { searchChannel } from "../../../../Api/Subscription";
 import { getUserByUserRole } from "../../../../Api/UserApi";
 import UserListNavbar from "../../../Navigation/userListNavbar";
 import SubscriptionSearch from "../../../Subscription/subscription/componentSubscription/SubscriptionSearch";
-import { handleAxiosError } from "../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import UserComponent from "../component/UserComponent";
 
 const UserRoleList = () => {
   const [userData, setUserData] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState("");
   const [channel, setchannel] = useState([]);
-  const navigate = useNavigate();
+    const handleAxiosError = useAxiosErrorHandler();
+  
   const handleSearchChannel = async (userdata) => {
     console.log("userdata", userdata);
     const res = await searchChannel(userdata);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { forgetPassword } from "../../../../../Api/UserApi";
-import { handleAxiosError } from "../../../../utils/erroeHandler";
+import { handleAxiosError, useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import { useNavigate } from "react-router-dom";
 import FormField from "../../../../utils/form/FormField";
 import Heading from "../../../../utils/form/Heading";
@@ -18,6 +18,7 @@ const ForgetPassword = () => {
     handleSubmit: handleLoginSubmit,
     formState: { errors, isSubmitting: isSubmittingLogin },
   } = useForm();
+  const handleAxiosError = useAxiosErrorHandler();
 
   const onLogin = async (userdata) => {
     try {
