@@ -1,10 +1,23 @@
 import React from "react";
 import { useContext } from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
+dayjs.extend(relativeTime);
 import { CiMenuKebab } from "react-icons/ci";
 import { AppContext } from "../../../utils/contextApi.js";
 const CommentHeader = ({ setIsOpen, IsOpen, c }) => {
   const { FormatTime } = useContext(AppContext);
+  const displaytime = (createdAt) => {
+    const createdTimeInMillisecond = new Date(createdAt).getTime();
+    const now = Date.now();
+    const timeDiff = createdTimeInMillisecond - now / 60000;
+    if (timeDiff > 1) {
+      return "just now";
+    } else {
+      return FormatTime(createdAt);
+    }
+  };
   return (
     <div>
       <div className="flex items-start space-x-3">
@@ -31,7 +44,7 @@ const CommentHeader = ({ setIsOpen, IsOpen, c }) => {
                 className="sm:text-xs xs:text-[12px] text-slate-600 text-[10px] 
                             hover:text-blue-500 transition-colors"
               >
-                {FormatTime(c.createdAt)}
+                {displaytime(c.createdAt)}
               </p>
             </div>
 
@@ -48,4 +61,3 @@ const CommentHeader = ({ setIsOpen, IsOpen, c }) => {
 };
 
 export default CommentHeader;
-

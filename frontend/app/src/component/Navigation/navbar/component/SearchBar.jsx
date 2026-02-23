@@ -57,55 +57,55 @@ const SearchBar = () => {
   }, []);
 
   return (
-  <div className="relative w-full max-w-xl ">
-    
-    {/* Search Input */}
-    <div className="flex items-center bg-white border border-slate-200 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-600 transition">
-      <input
-        type="text"
-        placeholder="Search..."
-        className="w-full sm:px-4 sm:py-2.5 p-1 bg-transparent text-slate-700 placeholder-slate-400 outline-none text-sm "
-        value={part}
-        onChange={(e) => {
-          debouncedSearchChannel({ value: e.target.value });
-          setvalue(true);
-          setpart(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSearch();
-            setvalue(false);
-            setpart("");
-          }
-        }}
-      />
-    </div>
-
-    {/* Dropdown Results */}  
-    {value && (
-      <div className="absolute top-full mt-2 sm:w-full  bg-white border border-slate-200 rounded-lg shadow-lg z-50 overflow-hidden">
-        {merged?.slice(0, 9).map((c, index) => (
-          <p
-            key={index}
-            className="px-4 py-2.5 text-sm text-slate-700 cursor-pointer hover:bg-slate-100 hover:text-blue-600 transition"
-            onClick={() => {
-              setpart(c.channelName || c.title);
+    <div className="relative w-full max-w-xl ">
+      {/* Search Input */}
+      <div className="flex items-center bg-white border border-slate-200 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-600 transition">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="w-full sm:px-4 sm:py-2.5 p-1 bg-transparent text-slate-700 placeholder-slate-400 outline-none text-sm "
+          value={part}
+          onChange={(e) => {
+            debouncedSearchChannel({ value: e.target.value });
+            setvalue(true);
+            setpart(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && value === true && part.trim() !== "") {
+              handleSearch();
               setvalue(false);
-              if (c._id && c.title) {
-                navigate(`/search-page/${c._id}/${formattedQuery}/title`);
-              } else if (c._id && c.channelName) {
-                navigate(`/search-page/${c._id}/${formattedQuery}/channel`);
-              }
-              hasMounted.current = true;
-            }}
-          >
-            {c.channelName ? `📺 ${c.channelName}` : `🎬 ${c.title}`}
-          </p>
-        ))}
+              setpart("");
+            } else {
+              setvalue(false);
+            }
+          }}
+        />
       </div>
-    )}
-  </div>
-);
 
-}
-export default SearchBar
+      {/* Dropdown Results */}
+      {value && (
+        <div className="absolute top-full mt-2 sm:w-full  bg-white border border-slate-200 rounded-lg shadow-lg z-50 overflow-hidden">
+          {merged?.slice(0, 9).map((c, index) => (
+            <p
+              key={index}
+              className="px-4 py-2.5 text-sm text-slate-700 cursor-pointer hover:bg-slate-100 hover:text-blue-600 transition"
+              onClick={() => {
+                setpart(c.channelName || c.title);
+                setvalue(false);
+                if (c._id && c.title) {
+                  navigate(`/search-page/${c._id}/${formattedQuery}/title`);
+                } else if (c._id && c.channelName) {
+                  navigate(`/search-page/${c._id}/${formattedQuery}/channel`);
+                }
+                hasMounted.current = true;
+              }}
+            >
+              {c.channelName ? `📺 ${c.channelName}` : `🎬 ${c.title}`}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+export default SearchBar;
