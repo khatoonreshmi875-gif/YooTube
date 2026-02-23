@@ -7,19 +7,37 @@ export const stateOfSubscribeBtn = asynchandler(async (req, res) => {
     channel: channelId,
     subscriber: req.user._id,
   }).lean();
+  const result = await Subscription.deleteMany({ subscriber: null });
+  console.log("DeleteMany result:", result); // { acknowledged: true, deletedCount: N }
 
+  
+  const subscribedToCount = await Subscription.countDocuments({
+    subscriber: channelId,
+  });
+  const subscriberCount = await Subscription.countDocuments({
+    channel: channelId,
+  });
+  const chanel = await Subscription.find({
+    channel: channelId,
+  }).populate("subscriber", "channelName username avatar _id"); // adjlean();
   if (!subscribe) {
     return res
       .status(200)
       .json(
         new ApiResponse(
           200,
-          { isSubscribed: false },
+          { isSubscribed: false, subscribedToCount, subscriberCount, chanel },
           " User is not subscribed ",
         ),
       );
   }
   res
     .status(200)
-    .json(new ApiResponse(200, { isSubscribed: true }, `User is subscribed`));
+    .json(
+      new ApiResponse(
+        200,
+        { isSubscribed: true, subscribedToCount, subscriberCount, chanel },
+        `User is subscribed`,
+      ),
+    );
 });

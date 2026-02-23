@@ -29,9 +29,7 @@ import { adminAuthorizationMiddleware } from "../middlewares/adminAuth.middlewar
 const userRouter = Router();
 userRouter.route("/curr-user").get(verifyJWT, cacheMiddleware, getCurrentUser);
 
-userRouter
-  .route("/curr-user-by-id/:userId")
-  .get(verifyJWT, cacheMiddleware, getCurrentUserById);
+userRouter.route("/curr-user-by-id/:userId").get(verifyJWT, getCurrentUserById);
 
 userRouter.route("/register").post(
   upload.fields([

@@ -15,11 +15,12 @@ const Subscription = () => {
   const { followers, user, FormatTime, setfollowers } = useContext(AppContext);
   const { userId } = useParams();
   const navigate = useNavigate();
-    const handleAxiosError = useAxiosErrorHandler();
-  
+  const handleAxiosError = useAxiosErrorHandler();
+
   const [selectedChannelId, setSelectedChannelId] = useState("");
   const [userFolower, setUserFolower] = useState();
   const handleSubscribePage = async (userId) => {
+    console.log("id", userId);
     try {
       const res = await totalSubcribeChannel(userId);
       setfollowers(res.data.data.subscriberOfEachChannel);
@@ -56,9 +57,9 @@ const Subscription = () => {
       {/* Empty state */}
 
       <div className="space-y-6 w-full">
-        {priotizeSelectChannel(followers, selectedChannelId).map((f) => (
+        {priotizeSelectChannel(followers, selectedChannelId).map((f,index) => (
           <div
-            key={f._id}
+            key={index+Date.now()}
             className="flex flex-col xl:flex-row xl:justify-between items-center 
                      space-y-4 xl:space-x-8 bg-white border border-slate-200 
                      rounded-xl shadow-sm hover:shadow-md hover:scale-[1.02] 

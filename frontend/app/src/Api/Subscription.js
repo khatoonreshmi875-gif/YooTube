@@ -59,6 +59,7 @@ export const totalSubcribe = async () => {
   }
 };
 export const totalSubcribeChannel = async (channelId) => {
+  console.log("userId",channelId)
   try {
     const token = localStorage.getItem("token");
     const response = await axios.get(

@@ -14,7 +14,7 @@ import cacheMiddleware from "../middlewares/cache.middleware.js";
 import { toggleSubcribe } from "../controllers/subscriber.controller/toggleSubscribe.js";
 subscriptionRouter
   .route("/subscribe-btn/:channelId")
-  .get(verifyJWT, cacheMiddleware, stateOfSubscribeBtn);
+  .get(verifyJWT,  stateOfSubscribeBtn);
 
 subscriptionRouter.route("/toggle-btn/:channelId").get(toggleSubcribe);
 subscriptionRouter.route("/toggle-btn").get(toggleSubcribe);
