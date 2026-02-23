@@ -105,7 +105,7 @@ export const deleteUser = asynchandler(async (req, res) => {
   await Comment.deleteMany({ owner: user._id });
   await Subscription.deleteMany({ channel: user._id });
   await Subscription.deleteMany({ subscriber: user._id });
-
+  await Report.deleteMany({ reportedBy: user._id });
   await user.deleteOne();
   await userInvalidate(user._id);
   return res
