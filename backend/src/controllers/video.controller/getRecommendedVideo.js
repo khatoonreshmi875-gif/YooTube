@@ -218,7 +218,7 @@ export const getRecommendedVideo = asynchandler(async (req, res) => {
     },
   ]);
   if (recommendedVideos.length < 7) {
-    const allVideos = await Video.find()
+    const allVideos = await Video.find({ _id: { $in: watchIds } })
       .populate("owner", "channelName avatar _id")
       .sort({ views: -1 }) // sort by views descending
       .skip(Pages * 9) // apply pagination

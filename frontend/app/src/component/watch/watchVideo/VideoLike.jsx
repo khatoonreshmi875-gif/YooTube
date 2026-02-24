@@ -21,8 +21,8 @@ const VideoLike = ({
 }) => {
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
-    const handleAxiosError = useAxiosErrorHandler();
-  
+  const handleAxiosError = useAxiosErrorHandler();
+
   //usestate
   const [reaction, setReaction] = useState({
     likeCount: initialLikeCount,
@@ -58,12 +58,8 @@ const VideoLike = ({
   }, []);
 
   useEffect(() => {
-    const id = user?._id || JSON.parse(localStorage.getItem("userId"));
-    if (id) {
-      localStorage.setItem("userId", JSON.stringify(id));
-      stateOfSubscribeButton(id);
-    }
-  }, [user._id, stateOfSubscribeButton]); // ✅
+    stateOfSubscribeButton(userId);
+  }, [userId, stateOfSubscribeButton]); // ✅
   // Toggle subscribe
 
   const toggleSubscribeBtn = async (channelId) => {

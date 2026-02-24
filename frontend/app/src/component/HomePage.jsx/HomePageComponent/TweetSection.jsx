@@ -16,7 +16,7 @@ const TweetSection = () => {
   const hasNoMore = useRef(false);
   const containerRef = useRef(null);
 
-  //api call for get tweet of whom i subscribe 
+  //api call for get tweet of whom i subscribe
   const getTweetOfSubscribers = async (page = 0) => {
     setLoading(true);
     try {
@@ -30,8 +30,7 @@ const TweetSection = () => {
           ); // ✅ prevent duplicates
           return [...prev, ...newTweets];
         });
-      }
-      if (url.data.message === "No more tweets available") {
+      } else {
         hasNoMore.current = true;
       }
     } catch (err) {
@@ -100,10 +99,12 @@ const TweetSection = () => {
 
         {loading &&
           Array.from({ length: 4 }).map((_, i) => <TweetSkeleton key={i} />)}
-        {hasNoMore.current && (
-          <p className="sm:text-xl text-sm text-center text-blue-600 w-full bg-blue-100 ">
-            No tweets are available
-          </p>
+        {hasNoMore.current === true && (
+          <div className="flex items-center justify-center  w-full p-2">
+            <p className="sm:text-xl text-sm text-blue-600 bg-blue-100 px-4 py-2 rounded">
+              No tweets are available
+            </p>
+          </div>
         )}
       </div>
     </div>

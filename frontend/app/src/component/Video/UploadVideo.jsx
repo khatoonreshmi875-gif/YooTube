@@ -72,16 +72,15 @@ const UploadVideo = () => {
       import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
     );
 
-   const res = await axios.post(url, formData, {
-     headers: { "Content-Type": "multipart/form-data" },
-     onUploadProgress: (progressEvent) => {
-       const percent = Math.round(
-         (progressEvent.loaded * 100) / progressEvent.total,
-       );
-       console.log(`Upload progress: ${percent}%`);
-     },
-   });
-
+    const res = await axios.post(url, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (progressEvent) => {
+        const percent = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total,
+        );
+        console.log(`Upload progress: ${percent}%`);
+      },
+    });
 
     return res.data; // Cloudinary URL
   };
@@ -89,7 +88,7 @@ const UploadVideo = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     const videoUrl = await uploadToCloudinary(data.videofile?.[0]);
-        formData.append("title", data.title);
+    formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("category", data.category);
     let tagsArray = [];

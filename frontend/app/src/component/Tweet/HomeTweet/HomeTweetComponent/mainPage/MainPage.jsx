@@ -25,7 +25,7 @@ const MainPage = ({ tweet, isNested, tweetByTweetId }) => {
           <TweetHeader tweet={tweet} />
 
           {/* Content */}
-          <TweetContent tweet={tweet} />
+          <TweetContent tweet={tweet} isNested={isNested} />
 
           {/* Media */}
 

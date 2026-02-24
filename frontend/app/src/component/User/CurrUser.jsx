@@ -13,7 +13,7 @@ import ChannelMenu from "./ChannelMenu.jsx";
 const CurrUser = () => {
   const { userId } = useParams();
     const handleAxiosError = useAxiosErrorHandler()
-  
+
   const { onHandleVideoUserId, subscribe, setSubscribe, user } =
     useContext(AppContext);
 
@@ -74,6 +74,15 @@ const CurrUser = () => {
         : (prev.subscriberCount ?? 0) + 1,
       subscriber: !prev.subscriber,
     }));
+    if (user._id === userId) {
+      setSubscribe((prev) => ({
+        ...prev,
+        subscribedTo:
+          prev.subscriber === true
+            ? prev.subscribedTo + 1
+            : prev.subscribedTo - 1,
+      }));
+    }
     try {
       let res = await toggleSubcribeWithId(channelId);
 
