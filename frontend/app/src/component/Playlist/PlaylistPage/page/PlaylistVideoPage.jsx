@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { getPlaylistByPlaylistId } from "../../../../Api/Playlistapi.js";
-import {
-  useAxiosErrorHandler
-} from "../../../utils/erroeHandler.jsx";
+import { useAxiosErrorHandler } from "../../../utils/erroeHandler.jsx";
 
 import LoadingSpinner from "../../../utils/LoadingSpinner.jsx";
 import PlaylistHeader from "../component/PlaylistHeader.jsx";
@@ -14,6 +12,8 @@ const PlaylistVideoPage = () => {
   // useState
   const [allPlaylist, setAllPlaylist] = useState({});
   const [loading, setLoading] = useState(false);
+  const [disabledUI, setDisabledUI] = useState(false);
+
   const handleAxiosError = useAxiosErrorHandler();
 
   const navigate = useNavigate();
@@ -42,22 +42,28 @@ const PlaylistVideoPage = () => {
     return <LoadingSpinner label="Fetching playlist videos" />;
   }
   return (
-    <div className=" min-h-screen bg-slate-50 sm:m-4 rounded-lg  hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pb-24  ">
-      {/* Playlist Header */}
-      <PlaylistHeader allPlaylist={allPlaylist} />
+    <>
+      <div className=" min-h-screen bg-slate-50 sm:m-4 rounded-lg  hover:from-black hover:via-slate-800 hover:to-black shadow-sm shadow-blue-200 hover:shadow-blue-300 hover:shadow-md pb-24  ">
+        {/* Playlist Header */}
+        <PlaylistHeader allPlaylist={allPlaylist} />
 
-      {/* Playlist Videos */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-        {allPlaylist?.playlist?.videos?.map((p, index) => (
-          <VideoCard
-            allPlaylist={allPlaylist}
-            setallPlaylist={setAllPlaylist}
-            p={p}
-            key={p._id || index}
-          />
-        ))}
+        {/* Playlist Videos */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+          {allPlaylist?.playlist?.videos?.map((p, index) => (
+            <VideoCard
+              allPlaylist={allPlaylist}
+              setallPlaylist={setAllPlaylist}
+              p={p}
+              key={p._id || index}
+              setDisabledUI={setDisabledUI}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+      {disabledUI && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
+      )}
+    </>
   );
 };
 

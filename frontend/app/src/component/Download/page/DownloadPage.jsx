@@ -9,8 +9,10 @@ import { Home } from "../../Home";
 import { useNavigate } from "react-router-dom";
 const DownloadPage = () => {
   const [downloads, setDownloads] = useState();
+  const [disabledUI, setDisabledUI] = useState(false);
+
   const { user } = useContext(AppContext);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("downloads")) || [];
@@ -50,31 +52,42 @@ const DownloadPage = () => {
     );
   }
   return (
-    <div className="min-h-screen w-full  mb-24 sm:mb-0">
-      <div className=" h-full  ">
-        <ul>
-          {downloads?.map((v, index) => (
-            <div className=" sm:p-3 py-3">
-              {" "}
-              <li key={v._id}>
-                <div className="w-full sm:block hidden">
-                  <Layout
-                    v={v}
-                    index={index}
-                    func={() => playOffline(v._id)}
-                    isDownload={true}
-                    setDownloads={setDownloads}
-                  />
-                </div>
-                <div className="w-full block sm:hidden">
-                  <Home v={v} key={v._id} setDownloads={setDownloads} />
-                </div>
-              </li>
-            </div>
-          ))}
-        </ul>
+    <>
+      <div className="min-h-screen w-full  mb-24 sm:mb-0">
+        <div className=" h-full  ">
+          <ul>
+            {downloads?.map((v, index) => (
+              <div className=" sm:p-3 py-3">
+                {" "}
+                <li key={v._id}>
+                  <div className="w-full sm:block hidden">
+                    <Layout
+                      v={v}
+                      index={index}
+                      func={() => playOffline(v._id)}
+                      isDownload={true}
+                      setDownloads={setDownloads}
+                    />
+                  </div>
+                  <div className="w-full block sm:hidden">
+                    <Home
+                      v={v}
+                      key={v._id}
+                      setDownloads={setDownloads}
+                      setDisabledUI={setDisabledUI}
+                      disabledUI={disabledUI}
+                    />
+                  </div>
+                </li>
+              </div>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+      {disabledUI && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
+      )}
+    </>
   );
 };
 

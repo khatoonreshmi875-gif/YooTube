@@ -6,6 +6,7 @@ import { deletePlaylist } from "../../../../Api/Playlistapi";
 import DropDownItem from "../../../HomePage.jsx/HomePageComponent/DropDownItem";
 import { AppContext } from "../../../utils/contextApi";
 import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
+import useDelete from "../../../../Hooks/useDelete";
 
 const PlaylistMenu = ({
   setRefresh,
@@ -14,34 +15,24 @@ const PlaylistMenu = ({
   index,
   userId,
   setInfoPlaylist,
+  setDisabledUI,
+  disabledUI,
 }) => {
   const navigate = useNavigate();
   const { user } = useContext(AppContext);
-  const [isOpen, setIsOpen] = useState(null);
-  const handleAxiosError = useAxiosErrorHandler();
 
-  const Deletevideo = async (playlistId) => {
-    const toastId = toast.loading("Deleting playlist...");
-    try {
-      setInfoPlaylist((prev) => prev.filter((p) => p._id !== playlistId));
-      await deletePlaylist(playlistId);
-      toast.update(toastId, {
-        render: "playlist deleted ✅",
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-      });
-    } catch (err) {
-      handleAxiosError(err);
-      // Error toast
-      toast.update(toastId, {
-        render: "Failed to delete ❌",
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-      });
-    }
-  };
+  const [isOpen, setIsOpen] = useState(null);
+
+  const handleAxiosError = useAxiosErrorHandler();
+  const addPlaylistBack = () => setInfoPlaylist((prev) => [...prev, playlist]);
+
+  const { handleDelete } = useDelete({
+    v: playlist,
+    setItems: setInfoPlaylist,
+    fallbackLogic: addPlaylistBack,
+    deleteFn: deletePlaylist,
+    setDisabledUI: setDisabledUI,
+  });
 
   return (
     <>
@@ -67,7 +58,7 @@ const PlaylistMenu = ({
             bg=" text-red-500 hover:bg-red-50  "
             label="Delete"
             onClick={() => {
-              Deletevideo(playlist._id);
+              handleDelete(playlist);
               setRefresh(!refresh);
             }}
           />
@@ -99,6 +90,9 @@ const PlaylistMenu = ({
             </>
           )}
         </div>
+      )}
+      {disabledUI && (
+        <div className="fixed inset-0  z-50 cursor-not-allowed "></div>
       )}
     </>
   );

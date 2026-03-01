@@ -1,23 +1,20 @@
 import axios from "axios";
-
+import { createCancelableRequest } from "./ApiClient";
 
 const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/playlists`;
 
-export const createPlaylists = async (userdata) => {
+export const createPlaylists = (userdata) => {
+  const { client, controller } = createCancelableRequest();
   try {
-    const token = localStorage.getItem("token");
-    const response = await axios.post(`${BASE_URL}/create-playlist`, userdata, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log("create-playlist", response.data);
-    return response;
+    const response = client.post(`/playlists/create-playlist`, userdata);
+
+    return { response, controller };
   } catch (err) {
-    console.log("Playlist creation failed", err);
-     throw err;
+    console.log("Uploaded failed", err);
+    throw err;
   }
 };
+
 export const addVideoToPlayList = async (playlistId, videoIds) => {
   try {
     const token = localStorage.getItem("token");
@@ -34,7 +31,7 @@ export const addVideoToPlayList = async (playlistId, videoIds) => {
     return response;
   } catch (err) {
     console.log("Playlist creation failed", err);
-     throw err;
+    throw err;
   }
 };
 export const getPlaylistByUserId = async () => {
@@ -51,7 +48,7 @@ export const getPlaylistByUserId = async () => {
     return response;
   } catch (err) {
     console.log("playlist upload by user", err);
-     throw err;
+    throw err;
   }
 };
 
@@ -69,7 +66,7 @@ export const getPlaylistByUsingUserId = async (userId) => {
     return response;
   } catch (err) {
     console.log("playlist upload by user", err);
-     throw err;
+    throw err;
   }
 };
 export const getAllPlaylist = async (userId) => {
@@ -86,7 +83,7 @@ export const getAllPlaylist = async (userId) => {
     return response;
   } catch (err) {
     console.log("playlist upload by user", err);
-     throw err;
+    throw err;
   }
 };
 
@@ -99,13 +96,13 @@ export const getPlaylistByPlaylistId = async (playlistId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     console.log("playlist of playlist by id ", response.data);
     return response;
   } catch (err) {
     console.log("playlist by id failed", err);
-     throw err;
+    throw err;
   }
 };
 export const getAllPlaylists = async () => {
@@ -120,7 +117,7 @@ export const getAllPlaylists = async () => {
     return response;
   } catch (err) {
     console.log("playlist upload by user", err);
-     throw err;
+    throw err;
   }
 };
 export const deletePlaylist = async (playlistId) => {
@@ -132,13 +129,13 @@ export const deletePlaylist = async (playlistId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     console.log("delete playlist ", response.data);
     return response;
   } catch (err) {
     console.log("playlist deleted failed", err);
-     throw err;
+    throw err;
   }
 };
 export const editPlaylist = async (userdata, playlistId) => {
@@ -151,13 +148,13 @@ export const editPlaylist = async (userdata, playlistId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     console.log("edit playslist successfully ", response.data);
     return response;
   } catch (err) {
     console.log("playlist upload by user", err);
-     throw err;
+    throw err;
   }
 };
 
@@ -170,12 +167,12 @@ export const deleteVideoFromPlaylist = async (playlistId, videoId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     console.log("delete video to playlist ", response.data);
     return response;
   } catch (err) {
     console.log("playlist deleted failed", err);
-     throw err;
+    throw err;
   }
 };

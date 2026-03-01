@@ -20,7 +20,10 @@ export const SearchOfchannel = asynchandler(async (req, res) => {
       title: { $regex: value, $options: "i" },
     })
       .select("title publicId thumbnail description createdAt views")
-      .populate({ path: "owner", select: "channelName avatar _id" });
+      .populate({
+        path: "owner",
+        select: "channelName avatar _id subscriberCount subscribedToCount",
+      });
 
     // If regex finds nothing, fall back to Atlas Search
     if (video.length === 0) {

@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { Report } from "../../Api/UserApi";
+import Heading from "../utils/form/Heading";
+import FormButton from "../utils/form/FormButton";
+import Button from "../Tweet/UserTweet/Button";
 
 export const ReportPage = () => {
   const { userId } = useParams();
@@ -31,32 +34,29 @@ export const ReportPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-lg bg-white shadow-lg rounded-xl p-8 space-y-6"
+        className="w-full max-w-lg bg-white shadow-lg rounded-xl p-8 space-y-6 mx-4 "
       >
-        <h2 className="text-2xl font-semibold text-blue-700 text-center">
-          Report Content
-        </h2>
+        <Heading label=" Report Content" />
 
         {/* Textarea registered with useForm */}
         <textarea
           {...register("content", { required: "Content is required" })}
           placeholder="Describe the issue..."
           className="w-full h-40 border border-gray-300 rounded-lg p-3 text-gray-700 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none sm:text-base text-xs"
         />
 
         {/* Submit button shows loading state */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg 
-                     hover:bg-blue-700 transition-colors disabled:opacity-50"
-        >
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </button>
+        <div className="flex justify-center">
+          <Button
+            label={isSubmitting ? "Submitting..." : "Submit"}
+            bg="bg-blue-100 text-blue-600  hover:bg-blue-600"
+            disable={isSubmitting}
+          />
+        </div>
       </form>
     </div>
   );

@@ -1,13 +1,11 @@
 // import React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createPlaylists } from "../../../Api/Playlistapi";
 import { AppContext } from "../../utils/contextApi";
 
-import {
-  useAxiosErrorHandler
-} from "../../utils/erroeHandler";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler";
 import FormButton from "../../utils/form/FormButton.jsx";
 import FormField from "../../utils/form/FormField.jsx";
 import FormImageField from "../../utils/form/FormImageField.jsx";
@@ -17,12 +15,14 @@ const CreatePlaylist = () => {
   const { onHandleVideo } = useContext(AppContext);
   const navigate = useNavigate();
   const handleAxiosError = useAxiosErrorHandler();
+  const [uploadController, setUploadController] = useState(null);
 
   //useform
   const {
     register: registerPlaylist,
     handleSubmit: handlePlaylistSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting: issubmittingPlaylist },
   } = useForm();
 
@@ -35,15 +35,22 @@ const CreatePlaylist = () => {
     formData.append("description", form.description);
     formData.append("category", form.category);
     formData.append("thumbnail", form.thumbnail[0]);
+    const { response, controller } = createPlaylists(formData);
+    setUploadController(controller);
     try {
-      const result2 = await createPlaylists(formData);
+      const result2 = await response;
+      console.log("response of create playlist", result2);
       if (result2?.data?.success) {
         const PlaylistId = result2?.data?.data?._id;
         navigate(`/add-playlist/${PlaylistId}`);
         navigate(0);
       }
     } catch (err) {
-      handleAxiosError(err);
+      if (err.name === "CanceledError") {
+        console.log("❌ Upload canceled by user");
+      } else {
+        handleAxiosError(err);
+      }
     }
   };
 
@@ -117,7 +124,22 @@ const CreatePlaylist = () => {
         />
 
         {/* Submit Button */}
-        <FormButton navigate={navigate} issubmitting={issubmittingPlaylist} />
+        <FormButton
+          navigate={navigate}
+          issubmitting={issubmittingPlaylist}
+          oncancel={() => {
+            console.log("it run ");
+            if (uploadController) {
+              console.log("abprt not urn ");
+              uploadController.abort();
+              setUploadController(null);
+              reset();
+              console.log("❌ Upload canceled");
+            }
+
+            // cl
+          }}
+        />
       </form>
     </div>
   );

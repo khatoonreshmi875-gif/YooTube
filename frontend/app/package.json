@@ -34,6 +34,7 @@
     "react-router-dom": "^7.9.5",
     "react-share": "^5.2.2",
     "react-toastify": "^11.0.5",
+    "socket.io-client": "^4.8.3",
     "tailwind-scrollbar-hide": "^4.0.0",
     "throttle": "^1.0.3"
   },

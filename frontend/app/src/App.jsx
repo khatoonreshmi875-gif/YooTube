@@ -24,6 +24,7 @@ import NavbarLayout from "./component/Layout/NavbarLayout.jsx";
 import AuthPage from "./component/User/userAuth/component/auth/AuthPage.jsx";
 import Googlesuccess from "./component/User/userAuth/component/auth/Googlesuccess.jsx";
 import ProtectedRoute from "./component/utils/ProtectedRoute.jsx";
+import socket from "./component/socket.js";
 
 function App() {
   const auth = useAuth();
@@ -36,6 +37,26 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
+  useEffect(() => {
+  console.log("data for auth",auth.user._id)
+  if (auth?.user?._id) {
+    // Register user with backend
+    socket.emit("registerUser", auth.user._id);
+
+    // Listen for account deletion
+    socket.on("accountDeleted", (data) => {
+      alert(data.message);
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    });
+
+    // Cleanup
+    return () => {
+      socket.off("accountDeleted");
+    };
+  }
+}, [auth?.user?._id]);
 
   const FormatTime = (date) => {
     const dateObj = new Date(date).getTime();

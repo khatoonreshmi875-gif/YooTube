@@ -9,7 +9,6 @@ export const subscriberInvalidate = async (channelId, ownerId) => {
     client.del(`/api/v1/subscriptions/get-all-subscriber/${ownerId}`),
     client.del(`/api/v1/subscriptions/stats:${ownerId}`),
     client.del(`/api/v1/subscriptions/pre-stats:${ownerId}`),
-
     client.del(`/api/v1/users/curr-user:${ownerId}`),
     client.del(`/api/v1/users/curr-user-by-id/${ownerId}`),
   ]);
@@ -27,7 +26,6 @@ export const subscriberInvalidate = async (channelId, ownerId) => {
     ]);
     console.log(
       "resul1 of susbcription/////////////////",
-
       result1,
     );
   }

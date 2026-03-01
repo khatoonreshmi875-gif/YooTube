@@ -16,7 +16,7 @@ const VideoInfo = ({
 
   return (
     <div
-      className={`relative flex items-start w-full pb-4 h-[30%] px-2 bg-white  `}
+      className={`flex items-start w-full pb-4 h-[30%] px-2 bg-white  `}
     >
       {showImage && (
         <img
@@ -44,7 +44,7 @@ const VideoInfo = ({
 
         {/* Description (if no image) */}
         {showImage === false && (
-          <p className="text-slate-500 lg:text-sm line-clamp-1 text-[0.85rem]">
+          <p className="text-slate-500 lg:text-sm line-clamp-1 text-[0.85rem] text-wrap w-full">
             {v.description}
           </p>
         )}

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { TweetByTweetId, TweetDelete } from "../../../../Api/TweetApi";
@@ -6,10 +6,16 @@ import { AppContext } from "../../../utils/contextApi";
 import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
 import Button from "../Button";
 
-const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
+const TweetPageBtn = ({
+  t,
+  setTweetData,
+  tweetData,
+  userId,
+  setDisabledUI,
+}) => {
   const { user } = useContext(AppContext);
-    const handleAxiosError = useAxiosErrorHandler();
-  
+  const handleAxiosError = useAxiosErrorHandler();
+
   const navigate = useNavigate();
   const tweetByTweetId = async (tweetId) => {
     const res = await TweetByTweetId(tweetId);
@@ -18,16 +24,18 @@ const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
     });
   };
   const handleDelete = async (tweetId) => {
-    const toastId = toast.loading("Deleting video...");
+    setDisabledUI(true);
+    const toastId = toast.loading("Deleting ...");
     const prevData = tweetData;
     try {
       setTweetData((prev) => prev.filter((f) => f._id !== t._id));
       const result = await TweetDelete(tweetId);
       toast.update(toastId, {
-        render: "Video deleted ✅",
+        render: "Tweet deleted successfully ✅",
         type: "success",
         isLoading: false,
         autoClose: 2000,
+        onClose: () => setDisabledUI(false),
       });
     } catch (err) {
       setTweetData(prevData);
@@ -37,6 +45,7 @@ const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
         type: "error",
         isLoading: false,
         autoClose: 3000,
+        onClose: () => setDisabledUI(false),
       });
     }
   };
@@ -58,7 +67,6 @@ const TweetPageBtn = ({ t, setTweetData, tweetData, userId }) => {
           bg="bg-blue-100 text-blue-600 hover:bg-blue-600"
           label="Comment"
         />
-       
       </div>
     </>
   );

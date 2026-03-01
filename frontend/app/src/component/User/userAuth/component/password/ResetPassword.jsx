@@ -5,11 +5,12 @@ import Button from "../../../../Tweet/UserTweet/Button";
 import { useAxiosErrorHandler } from "../../../../utils/erroeHandler";
 import FormField from "../../../../utils/form/FormField";
 import Heading from "../../../../utils/form/Heading";
+import { toast } from "react-toastify";
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-    const handleAxiosError = useAxiosErrorHandler();
-  
+  const handleAxiosError = useAxiosErrorHandler();
+
   const {
     register: registerSignin,
     handleSubmit: handleLoginSubmit,
@@ -20,6 +21,9 @@ const ResetPassword = () => {
     try {
       console.log("token -reset", token);
       const res = await resetPassword(userdata, token);
+      if (res.data.success === true) {
+        toast.success("Password changed successfully 🎉", );
+      }
       navigate("/login"); // ✅ call the function with args
       console.log(res.data.message); // handle success
       // redirect if needed

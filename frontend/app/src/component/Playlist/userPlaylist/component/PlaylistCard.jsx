@@ -11,7 +11,13 @@ import { getPlaylistByPlaylistId } from "../../../../Api/Playlistapi";
 import HoverVideo from "../../../HomePage.jsx/HomePageComponent/HoverVideo";
 import VideoInfo from "../../../HomePage.jsx/HomePageComponent/VideoInfo";
 
-const PlaylistCard = ({ infoPlaylist, userId, setInfoPlaylist }) => {
+const PlaylistCard = ({
+  infoPlaylist,
+  userId,
+  setInfoPlaylist,
+  disabledUI,
+  setDisabledUI,
+}) => {
   const { FormatTime, user } = useContext(AppContext);
   const navigate = useNavigate();
   const [isOpen, setisOpen] = useState(null);
@@ -54,6 +60,8 @@ const PlaylistCard = ({ infoPlaylist, userId, setInfoPlaylist }) => {
                 index={index}
                 userId={userId}
                 setInfoPlaylist={setInfoPlaylist}
+                setDisabledUI={setDisabledUI}
+                disabledUI={disabledUI}
               />
             )}
           </div>

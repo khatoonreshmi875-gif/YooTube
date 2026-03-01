@@ -4,10 +4,9 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addVideoToPlayList } from "../../../Api/Playlistapi.js";
 import { AppContext } from "../../utils/contextApi.js";
-import {
-  useAxiosErrorHandler
-} from "../../utils/erroeHandler.jsx";
+import { useAxiosErrorHandler } from "../../utils/erroeHandler.jsx";
 import Heading from "../../utils/form/Heading.jsx";
+import axios from "axios";
 const AddPlaylist = () => {
   const { video, onHandleVideo, user } = useContext(AppContext);
   const handleAxiosError = useAxiosErrorHandler();
@@ -16,6 +15,8 @@ const AddPlaylist = () => {
   const { playlistId } = useParams();
 
   ///usestate
+  const [uploadController, setUploadController] = useState(null);
+
   const [isOpen, setIsOpen] = useState(null);
   const [Open, setOpen] = useState(null);
   const [preview, setPreview] = useState([]);
@@ -46,7 +47,7 @@ const AddPlaylist = () => {
   const onSubmit = async (data) => {
     try {
       const result = await addVideoToPlayList(playlistId, data.videoId);
-      console.log("add video to playlist", result);
+      console.log("add video to playlist", result.data);
       if (result.data.success === true) {
         navigate(`/playlist/${result.data.data._id}`);
       }
@@ -201,12 +202,20 @@ const AddPlaylist = () => {
           name="action"
           value="Add"
           className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
+          onClick={() => {
+            if (uploadController) {
+              uploadController.abort();
+              setUploadController(null);
+              reset();
+              console.log("❌ Upload canceled");
+            }
+          }}
         >
           {issubmittingPlaylistVideo ? "Adding..." : "Add to Playlist"}
         </button>
       </form>
     </div>
   );
-};;
+};
 
 export default AddPlaylist;

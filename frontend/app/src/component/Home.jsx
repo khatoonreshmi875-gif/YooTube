@@ -15,6 +15,8 @@ const Home = ({
   isDownload,
   setDownloads,
   handleDeleteAVideoWatchHistory,
+  disabledUI,
+  setDisabledUI,
 }) => {
   const { setChannelOwnerId, sethistory, history } = useContext(AppContext);
   const navigate = useNavigate();
@@ -59,6 +61,8 @@ const Home = ({
           index={index}
           handleDeleteAVideoWatchHistory={handleDeleteAVideoWatchHistory}
           setDownloads={setDownloads}
+          setDisabledUI={setDisabledUI}
+          disabledUI={disabledUI}
         />
       </div>
     </div>

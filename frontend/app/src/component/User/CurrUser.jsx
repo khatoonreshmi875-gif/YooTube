@@ -12,10 +12,16 @@ import ChannelMenu from "./ChannelMenu.jsx";
 
 const CurrUser = () => {
   const { userId } = useParams();
-    const handleAxiosError = useAxiosErrorHandler()
+  const handleAxiosError = useAxiosErrorHandler();
 
-  const { onHandleVideoUserId, subscribe, setSubscribe, user } =
-    useContext(AppContext);
+  const {
+    onHandleVideoUserId,
+    subscribe,
+    setSubscribe,
+    user,
+    handleSubscribePage,
+    stateOfSubscribeButton,
+  } = useContext(AppContext);
 
   //usestate
   const [initial, setInitial] = useState(null);
@@ -29,18 +35,6 @@ const CurrUser = () => {
 
   //function-> initial state of subscrbe button
 
-  const stateOfSubscribeButton = async () => {
-    try {
-      const res = await SubscribeBtn(userId);
-      setSubscribe((prev) => ({
-        ...prev,
-        subscriber: res.data.data.isSubscribed,
-      }));
-    } catch (error) {
-      handleAxiosError(error);
-    }
-  };
-
   // fetch curr user info and user video and state of subscribe button
 
   useEffect(() => {
@@ -48,7 +42,7 @@ const CurrUser = () => {
       try {
         const result = await getCurrentUserById(userId);
         setInitial(result.data.data);
-
+        console.log("initail data od curr user", result.data);
         setSubscribe(() => ({
           subscriberCount: result?.data?.data?.subscriberCount,
           subscribedTo: result?.data?.data?.subscribedToCount,
@@ -57,7 +51,7 @@ const CurrUser = () => {
         handleAxiosError(err);
       }
       await onHandleVideoUserId(userId);
-      await stateOfSubscribeButton();
+      await stateOfSubscribeButton(userId);
     };
     fetchChannelData();
   }, [userId]);
@@ -67,22 +61,32 @@ const CurrUser = () => {
   const handleSubscribe = async (channelId) => {
     if (loading) return; // ignore extra clicks
     setLoading(true);
-    setSubscribe((prev) => ({
-      ...prev,
-      subscriberCount: prev.subscriber
+    setSubscribe((prev) => {
+      console.log("it run or not");
+      const nextSubscriber = !prev.subscriber;
+      const nextCount = prev.subscriber
         ? (prev.subscriberCount ?? 0) - 1
-        : (prev.subscriberCount ?? 0) + 1,
-      subscriber: !prev.subscriber,
-    }));
-    if (user._id === userId) {
-      setSubscribe((prev) => ({
+        : (prev.subscriberCount ?? 0) + 1;
+
+      if (user._id === userId) {
+        const nextSubscribedTo = prev.subscriber
+          ? (prev.subscribedTo ?? 0) - 1
+          : (prev.subscribedTo ?? 0) + 1;
+
+        return {
+          ...prev,
+          subscriber: nextSubscriber,
+          subscriberCount: nextCount,
+          subscribedTo: nextSubscribedTo,
+        };
+      }
+      return {
         ...prev,
-        subscribedTo:
-          prev.subscriber === true
-            ? prev.subscribedTo + 1
-            : prev.subscribedTo - 1,
-      }));
-    }
+        subscriber: nextSubscriber,
+        subscriberCount: nextCount,
+      };
+    });
+
     try {
       let res = await toggleSubcribeWithId(channelId);
 
@@ -92,7 +96,7 @@ const CurrUser = () => {
           res?.data?.data.subscribers?.subscriberCount ?? prev.subscriberCount,
         subscriber: res?.data?.data.subscribers?.subscriber ?? prev.subscriber,
       }));
-      P;
+      handleSubscribePage(user._id);
     } catch (error) {
       handleAxiosError(error);
     } finally {
@@ -107,7 +111,7 @@ const CurrUser = () => {
     <>
       <div className="flex flex-col min-h-screen min-w-0 w-full">
         {/* Cover Image */}
-        <div className="w-full flex flex-col flex-1 relative p-7">
+        <div className="w-full flex flex-col flex-1 relative sm:p-7">
           <img
             src={`${initial?.coverImage}.jpg`}
             alt="Cover"
@@ -117,7 +121,7 @@ const CurrUser = () => {
           {/* Avatar + Channel Info */}
           <div
             className="flex items-start sm:space-x-4  bg-white border border-slate-200 
-                    rounded-lg p-6 shadow-sm hover:shadow-md transition mt-4 "
+                    rounded-lg sm:p-6  p-3 shadow-sm hover:shadow-md transition mt-4 "
           >
             <div className="lg:mt-[-1rem] mt-[-2rem] py-6">
               <img
@@ -157,18 +161,21 @@ const CurrUser = () => {
                 <div className="font-medium text-xs md:text-base sm:text-sm ">
                   {initial?.username}
                 </div>
-                <div className="flex space-x-6 flex-row">
-                  <div className="font-medium text-xs md:text-sm flex items-center">
+                <div className="flex sm:space-x-6 space-x-2 flex-row">
+                  <div className=" text-[11px] md:text-sm flex items-center">
                     {subscribe?.subscriberCount} Subscribers
                   </div>
-                  <div className="font-medium text-xs md:text-sm flex items-center">
+                  <div className=" text-[11px] md:text-sm flex items-center">
                     {subscribe?.subscribedTo} Subscribed
+                  </div>
+                  <div className=" text-[11px] md:text-sm flex items-center">
+                    {initial.TotalVideo} video
                   </div>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-slate-500 text-xs md:text-base sm:text-sm max-w-xl line-clamp-2">
+              <p className="text-slate-500 text-[10px]  sm:text-xs line-clamp-2">
                 {initial?.description}
               </p>
 

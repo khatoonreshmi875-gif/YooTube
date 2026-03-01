@@ -8,14 +8,14 @@ import TweetSection from "./HomePageComponent/TweetSection.jsx";
 import VideoInfo from "./HomePageComponent/VideoInfo.jsx";
 import VideoMenu from "./HomePageComponent/VideoMenu.jsx";
 
-const Home2 = ({ index, v, s, playlist }) => {
+const Home2 = ({ index, v, s, playlist, disabledUI, setDisabledUI }) => {
   const { sethistory } = useContext(AppContext);
-   const handleAxiosError = useAxiosErrorHandler();
-
+  const handleAxiosError = useAxiosErrorHandler();
 
   const navigate = useNavigate();
   const videoref = useRef([]);
   const [isImageIndex, setIsImageIndex] = useState(null);
+
   const handleDeleteAVideoWatchHistory = useCallback(
     async (videoId) => {
       try {
@@ -78,7 +78,13 @@ const Home2 = ({ index, v, s, playlist }) => {
             ) : (
               <div className="flex relative">
                 <VideoInfo v={v} />
-                <VideoMenu v={v} isNested={true} index={index} />
+                <VideoMenu
+                  v={v}
+                  isNested={true}
+                  index={index}
+                  setDisabledUI={setDisabledUI}
+                  disabledUI={disabledUI}
+                />
               </div>
             )}
 
@@ -94,6 +100,7 @@ const Home2 = ({ index, v, s, playlist }) => {
           </div>
         </div>
       </div>
+     
     </>
   );
 };

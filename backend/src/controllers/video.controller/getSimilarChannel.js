@@ -8,7 +8,7 @@ export const getSimilarChannel = asynchandler(async (req, res) => {
   const { userId } = req.params;
   const { page = 0 } = req.query;
   const user = await User.findById(userId)
-    .select("channelName avatar createdAt ")
+    .select("channelName avatar createdAt subscriberCount subscribedToCount ")
     .skip(Number(page) * 9)
     .limit(9);
   const video = await Video.find({ owner: userId })

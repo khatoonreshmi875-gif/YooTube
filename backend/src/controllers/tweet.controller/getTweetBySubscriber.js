@@ -11,7 +11,7 @@ export const getTweetBySubscriber = asynchandler(async (req, res) => {
     "channel",
   );
   const tweetOwner = subscriber.map((m) => m.channel);
-  console.log("tweet length/////////////////////////////", tweetOwner.length);
+
   const tweetCount = await Tweet.countDocuments({ owner: { $in: tweetOwner } });
   const subscribedPage = Math.ceil(tweetCount / 4);
   if (tweetOwner.length > 0) {

@@ -20,11 +20,12 @@ const VideoPage = () => {
   const videoRef = useRef([]);
   const [isImageIndex, setIsImageIndex] = useState(null);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [disabledUI, setDisabledUI] = useState(false);
 
   const goToVideoPage = async (videoId, userId) => {
     navigate(`/video-rec-page/${videoId}/user/${userId}`);
   };
-  if (video === null ) {
+  if (video === null) {
     return <LoadingSpinner label="Fetching Videos" />;
   }
   if (video.length === 0) {
@@ -63,7 +64,6 @@ const VideoPage = () => {
             className="bg-white rounded-xl shadow-sm border border-gray-200 
                         hover:shadow-md transition w-full h-full"
           >
-            {" "}
             <HoverVideo
               video={v}
               videoref={videoRef}
@@ -72,19 +72,26 @@ const VideoPage = () => {
               setisImageIndex={setIsImageIndex}
             />
             {/* Video Info */}
-            <div className="flex justify-between items-start px-2 mt-2 lg:pb-4 relative ">
+            <div className="flex justify-between items-start px-2 mt-2 lg:pb-4 w-full  relative">
               <VideoInfo showImage={false} v={v} />
               {(user._id === userId ||
                 user.role === "admin" ||
                 user.role === "moderator") && (
                 <div className="">
-                  <VideoMenu v={v} index={index} />
+                  <VideoMenu
+                    v={v}
+                    index={index}
+                    setDisabledUI={setDisabledUI}
+                  />
                 </div>
               )}
             </div>
           </div>
         ))}
       </div>
+      {disabledUI && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
+      )}
     </>
   );
 };

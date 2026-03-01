@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const WatchHistory = () => {
   const { history, user, sethistory, loading } = useContext(AppContext);
+  const [disabledUI, setDisabledUI] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ const WatchHistory = () => {
     console.log("run");
     console.log("data of history", history);
     sethistory((prev) => prev.filter((item) => item.videoId._id !== videoId));
+    sethistory((prev) => [...prev, v]);
     const res = await getRemoveAVideoInWatchhistory(videoId);
   };
 
@@ -45,40 +47,49 @@ const WatchHistory = () => {
   }
   console.log("history", history);
   return (
-    <div className="min-h-screen bg-slate-50 mt-2 pb-16">
-      <div className=" mx-auto px-6 space-y-6">
-        {/* Header + Delete Button */}
+    <>
+      <div className="min-h-screen bg-slate-50 mt-2 pb-16">
+        <div className=" mx-auto px-6 space-y-6">
+          {/* Header + Delete Button */}
 
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Watch History
-          </h2>
-          <Button
-            onClick={handleDeleteWatchhistory}
-            label=" Clear History"
-            bg="bg-red-100 text-red-600 hover:bg-red-600"
-          />
-        </div>
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-slate-900">
+              Watch History
+            </h2>
+            <Button
+              onClick={handleDeleteWatchhistory}
+              label=" Clear History"
+              bg="bg-red-100 text-red-600 hover:bg-red-600"
+            />
+          </div>
 
-        {/* Videos Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {loading
-            ? Array.from({ length: 9 }).map((_, i) => <Videoskeleton key={i} />)
-            : history.map((v, index) => (
-                <Home
-                  key={v._id}
-                  v={v.videoId}
-                  index={index}
-                  watchedAt={v.watchedAt}
-                  s={v._id}
-                  handleDeleteAVideoWatchHistory={
-                    handleDeleteAVideoWatchHistory
-                  }
-                />
-              ))}
+          {/* Videos Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {loading
+              ? Array.from({ length: 9 }).map((_, i) => (
+                  <Videoskeleton key={i} />
+                ))
+              : history.map((v, index) => (
+                  <Home
+                    key={v._id}
+                    v={v.videoId}
+                    index={index}
+                    watchedAt={v.watchedAt}
+                    s={v._id}
+                    handleDeleteAVideoWatchHistory={
+                      handleDeleteAVideoWatchHistory
+                    }
+                    setDisabledUI={setDisabledUI}
+                  
+                  />
+                ))}
+          </div>
         </div>
       </div>
-    </div>
+      {disabledUI && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
+      )}
+    </>
   );
 };
 

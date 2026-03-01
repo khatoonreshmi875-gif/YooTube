@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../utils/contextApi.js";
 import Home2 from "./Home2.jsx";
 import { MdVideoLibrary } from "react-icons/md";
@@ -19,6 +19,7 @@ const Home1 = () => {
   } = useContext(AppContext);
   const location = useLocation();
   const handleAxiosError = useAxiosErrorHandler();
+  const [disabledUI, setDisabledUI] = useState(false);
 
   useEffect(() => {
     // Prefetch likely next routes
@@ -42,7 +43,14 @@ const Home1 = () => {
         <>
           <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 sm:gap-3  ">
             {getvideo.map((v, index) => (
-              <Home2 key={v._id} v={v} index={index} playlist={allPlaylist} />
+              <Home2
+                key={v._id}
+                v={v}
+                index={index}
+                playlist={allPlaylist}
+                setDisabledUI={setDisabledUI}
+                disabledUI={disabledUI}
+              />
             ))}
           </div>{" "}
           {hasNomore.current === true && (
@@ -54,6 +62,9 @@ const Home1 = () => {
                 heading_text="  No videos available"
               />
             </div>
+          )}
+          {disabledUI && (
+            <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
           )}
         </>
       ) : (

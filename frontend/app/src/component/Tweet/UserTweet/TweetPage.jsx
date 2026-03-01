@@ -14,13 +14,13 @@ const tweetDataPage = () => {
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
   const { userId } = useParams();
-    const handleAxiosError = useAxiosErrorHandler();
-  
+  const handleAxiosError = useAxiosErrorHandler();
 
   // useState
   const [loading, setLoading] = useState(false);
   const [showVisibleIndex, setShowVisibleIndex] = useState([]);
   const [tweetData, setTweetData] = useState(null);
+  const [disabledUI, setDisabledUI] = useState(false);
 
   //ref
 
@@ -102,6 +102,7 @@ const tweetDataPage = () => {
                       setTweetData={setTweetData}
                       tweetData={tweetData}
                       userId={userId}
+                      setDisabledUI={setDisabledUI}
                     />
                   </div>
                 </div>
@@ -109,6 +110,9 @@ const tweetDataPage = () => {
             );
           })}
         </div>
+      )}
+      {disabledUI && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
       )}
     </>
   );

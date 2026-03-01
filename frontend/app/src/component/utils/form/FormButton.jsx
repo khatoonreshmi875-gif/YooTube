@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../Tweet/UserTweet/Button";
 
-const FormButton = ({ issubmitting, navigate }) => {
+const FormButton = ({ issubmitting, navigate, oncancel }) => {
   const [dots, setdots] = useState(".");
   useEffect(() => {
     const timeUpdate = setInterval(() => {
@@ -16,10 +16,11 @@ const FormButton = ({ issubmitting, navigate }) => {
         <Button
           label={issubmitting ? `Uploading${dots}` : "Upload"}
           bg="bg-blue-100 text-blue-600  hover:bg-blue-600"
+          disable={issubmitting}
         />
         <Button
           label="Cancel"
-          onClick={() => navigate("/")}
+          onClick={oncancel}
           bg="bg-slate-100 text-slate-600   hover:bg-slate-400 "
         />
       </div>

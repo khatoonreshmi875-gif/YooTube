@@ -6,14 +6,22 @@ import { Subscription } from "../../../../models/subscription.model.js";
 import { Tweet } from "../../../../models/tweet.model.js";
 import { User } from "../../../../models/user.model.js";
 import { Video } from "../../../../models/video.model.js";
+import { Report } from "../../../../models/report.model.js";
 import { ApiResponse } from "../../../../utils/ApiResponse.js";
 import asynchandler from "../../../../utils/asynchandler.js";
+import { getIO } from "../../../../utils/socket.js";
 import { userInvalidate } from "../../../../utils/userInvalidate.js";
+import ApiError from "../../../../utils/ApiError.js";
 export const deleteUser = asynchandler(async (req, res) => {
   const userId = req.params.userId || req.user._id;
+  if (!userId) {
+    throw ApiError(401, "id is not found");
+  }
 
   const user = await User.findById(userId);
-
+  if (!user) {
+    throw ApiError(401, "id is not found");
+  }
   const subscriberUser = await Subscription.find({ channel: user._id })
     .select("subscriber")
 
@@ -108,6 +116,10 @@ export const deleteUser = asynchandler(async (req, res) => {
   await Report.deleteMany({ reportedBy: user._id });
   await user.deleteOne();
   await userInvalidate(user._id);
+  getIO()
+    .to(userId)
+    .emit("accountDeleted", { message: "Your account has been deleted" });
+
   return res
     .status(200)
     .json(new ApiResponse(200, [], "delete user account successfully"));

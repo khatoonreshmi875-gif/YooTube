@@ -4,11 +4,13 @@ import { deleteVideoFromPlaylist } from "../../../../Api/Playlistapi";
 import VideoInfo from "../../../HomePage.jsx/HomePageComponent/VideoInfo";
 import Button from "../../../Tweet/UserTweet/Button";
 import { useAxiosErrorHandler } from "../../../utils/erroeHandler";
-const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
+const VideoCard = ({ allPlaylist, setallPlaylist, p, setDisabledUI }) => {
   const navigate = useNavigate();
-    const handleAxiosError = useAxiosErrorHandler();
-  
+  const handleAxiosError = useAxiosErrorHandler();
+
   const Deletevideo = async (playlistId, videoId) => {
+    setDisabledUI(true); // block UI
+
     const toastId = toast.loading("Deleting video...");
     try {
       setallPlaylist((prev) => ({
@@ -28,6 +30,7 @@ const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
         type: "success",
         isLoading: false,
         autoClose: 2000,
+        onClose: () => setDisabledUI(false),
       });
     } catch (err) {
       handleAxiosError(err);
@@ -36,6 +39,7 @@ const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
         type: "error",
         isLoading: false,
         autoClose: 3000,
+        onClose: () => setDisabledUI(false),
       });
     }
   };
@@ -49,30 +53,32 @@ const VideoCard = ({ allPlaylist, setallPlaylist, p }) => {
   };
 
   return (
-    <div
-      key={p._id}
-      className="bg-white shadow-sm shadow-slate-400 rounded-lg overflow-hidden hover:shadow-lg transition duration-200"
-    >
-      <img
-        onClick={() => {
-          handleVideoPage(p?._id, p?.owner);
-        }}
-        src={p.thumbnail}
-        alt={p.title}
-        className="aspect-video w-full object-cover"
-      />
+    <>
+      <div
+        key={p._id}
+        className="bg-white shadow-sm shadow-slate-400 rounded-lg overflow-hidden hover:shadow-lg transition duration-200"
+      >
+        <img
+          onClick={() => {
+            handleVideoPage(p?._id, p?.owner);
+          }}
+          src={p.thumbnail}
+          alt={p.title}
+          className="aspect-video w-full object-cover"
+        />
 
-      <div className="flex justify-between">
-        <VideoInfo v={p} showImage={false} />
-        <div className="m-3">
-          <Button
-            onClick={() => Deletevideo(allPlaylist?.playlist?._id, p._id)}
-            label=" Delete"
-            bg="bg-red-100 text-red-600 hover:bg-red-600"
-          />
+        <div className="flex justify-between">
+          <VideoInfo v={p} showImage={false} />
+          <div className="m-3">
+            <Button
+              onClick={() => Deletevideo(allPlaylist?.playlist?._id, p._id)}
+              label=" Delete"
+              bg="bg-red-100 text-red-600 hover:bg-red-600"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -8,19 +8,22 @@ import FormButton from "../../utils/form/FormButton";
 import FormField from "../../utils/form/FormField";
 import Heading from "../../utils/form/Heading";
 import UpdateFormThumbnail from "./UpdateFormThumbnail";
+import axios from "axios";
 const UpdateVideo = () => {
   const { state } = useLocation();
   const videoId = state?.videoId;
-  const location = useLocation();
-    const handleAxiosError = useAxiosErrorHandler();
-  
-  const { video } = location.state || {};
+  const [uploadController, setUploadController] = useState(null);
 
+  const location = useLocation();
+  const handleAxiosError = useAxiosErrorHandler();
+
+  const { video } = location.state || {};
+  const [preview, setPreview] = useState(video?.thumbnail || "");
   const navigate = useNavigate();
   const {
     register: registerVideoUpdate,
     handleSubmit: handleUpdateVideoSubmit,
-
+    reset,
     formState: { errors, isSubmitting: issubmittingVideoUpdate },
   } = useForm({
     defaultValues: {
@@ -43,16 +46,17 @@ const UpdateVideo = () => {
     } else {
       formData.append("thumbnail", videoData.thumbnail);
     }
+
     try {
       const result = await EditVideo(videoId, formData);
+      console.log("data of create video", result);
       if (result?.data?.success) {
-        navigate(`/curr-user/${video?.owner?._id}/video`);
+        navigate("/");
       }
     } catch (err) {
-      (handleAxiosError(err));
+      handleAxiosError(err);
     }
   };
-  const [preview, setPreview] = useState(video?.thumbnail || "");
 
   return (
     <div className="mx-auto      md:p-6 rounded-2xl  h-auto sm:mt-2   w-[98%]  pb-24 flex justify-center items-center min-h-0 bg-gray-100 ">
@@ -119,6 +123,10 @@ const UpdateVideo = () => {
         <FormButton
           navigate={navigate}
           issubmitting={issubmittingVideoUpdate}
+          oncancel={() => {
+            console.log("it run or not");
+            navigate("/");
+          }}
         />
       </form>
     </div>

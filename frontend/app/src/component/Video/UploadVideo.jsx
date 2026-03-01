@@ -12,6 +12,9 @@ import Heading from "../utils/form/Heading.jsx";
 import axios from "axios";
 const UploadVideo = () => {
   const [stateValue, setstateValue] = useState("");
+  const [uploadController, setUploadController] = useState(null);
+  const [cloudinaryController, setCloudinaryController] = useState(null);
+
   const categories = [
     "Action",
     "Adventure",
@@ -59,11 +62,13 @@ const UploadVideo = () => {
     register: registerVideo,
     handleSubmit: handleVideoSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting: issubmittingVideo },
   } = useForm();
 
-  const uploadToCloudinary = async (file) => {
+  const uploadToCloudinary = (file) => {
     if (!file) return null;
+    const cloudCtrl = new AbortController();
     const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/upload`;
     const formData = new FormData();
     formData.append("file", file);
@@ -72,8 +77,9 @@ const UploadVideo = () => {
       import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
     );
 
-    const res = await axios.post(url, formData, {
+    const res = axios.post(url, formData, {
       headers: { "Content-Type": "multipart/form-data" },
+      signal: cloudCtrl.signal,
       onUploadProgress: (progressEvent) => {
         const percent = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total,
@@ -82,12 +88,14 @@ const UploadVideo = () => {
       },
     });
 
-    return res.data; // Cloudinary URL
+    return { res, cloudCtrl }; // Cloudinary URL
   };
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    const videoUrl = await uploadToCloudinary(data.videofile?.[0]);
+    const { res, cloudCtrl } = uploadToCloudinary(data.videofile?.[0]);
+    setCloudinaryController(cloudCtrl);
+    const videoUrl = await res;
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("category", data.category);
@@ -104,15 +112,27 @@ const UploadVideo = () => {
     tagsArray.forEach((tag) => {
       formData.append("tags", tag);
     });
-    formData.append("videoUrl", videoUrl.secure_url);
-    formData.append("publicId", videoUrl.public_id);
-    formData.append("duration", videoUrl.duration);
+    formData.append("videoUrl", videoUrl.data.secure_url);
+    formData.append("publicId", videoUrl.data.public_id);
+    formData.append("duration", videoUrl.data.duration);
     formData.append("thumbnail", data.thumbnail?.[0] || null);
-    const token = localStorage.getItem("token");
-    const result = await upload_Video(formData);
-    console.log("data of create video", result);
-    if (result?.data?.success) {
-      navigate("/");
+    const { request, controller } = upload_Video(formData);
+
+    console.log("data of create video", request, controller);
+    setUploadController(controller);
+
+    try {
+      const response = await request;
+      console.log("data of create video", response);
+      if (response?.data?.success) {
+        navigate("/");
+      }
+    } catch (err) {
+      if (err.name === "CanceledError") {
+        console.log("❌ Upload canceled by user");
+      } else {
+        console.error("❌ Upload failed:", err);
+      }
     }
   };
 
@@ -221,7 +241,22 @@ const UploadVideo = () => {
           </div>
           {/* Video Upload */}
           {/* Buttons */}
-          <FormButton navigate={navigate} issubmitting={issubmittingVideo} />
+          <FormButton
+            navigate={navigate}
+            issubmitting={issubmittingVideo}
+            oncancel={() => {
+              if (cloudinaryController) {
+                console.log("it runnnnn");
+                cloudinaryController.abort();
+                setCloudinaryController(null);
+                reset();
+                console.log("❌ Upload canceled");
+              }
+              w
+
+              // cl
+            }}
+          />
         </form>
       </div>
     </>

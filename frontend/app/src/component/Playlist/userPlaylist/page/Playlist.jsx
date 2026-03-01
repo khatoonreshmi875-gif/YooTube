@@ -10,7 +10,7 @@ import PlaylistCard from "../component/PlaylistCard.jsx";
 
 const Playlist = () => {
   const { user } = useContext(AppContext);
-
+  const [disabledUI, setDisabledUI] = useState(false);
   const [loading, setLoading] = useState();
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -54,8 +54,13 @@ const Playlist = () => {
             infoPlaylist={infoPlaylist}
             userId={userId}
             setInfoPlaylist={setInfoPlaylist}
+            setDisabledUI={setDisabledUI}
+            disabledUI={disabledUI}
           />
         </div>
+      )}
+      {disabledUI && (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-30 z-50 cursor-not-allowed "></div>
       )}
     </>
   );

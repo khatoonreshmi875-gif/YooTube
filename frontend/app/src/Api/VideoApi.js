@@ -1,18 +1,17 @@
 import axios from "axios";
+import { createCancelableRequest } from "./ApiClient";
 
 const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/videos`;
-export const upload_Video = async (userdata) => {
+export const upload_Video = (userdata) => {
+  const { client, controller } = createCancelableRequest();
   try {
-    const token = localStorage.getItem("token");
-
-    const response = await axios.post(`${BASE_URL}/upload-video`, userdata, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log("response : ", response.data);
-    return response;
+    const request = client.post(`/videos/upload-video`, userdata);
+    console.log(
+      "response of client controller.................: ",
+      request,
+      controller,
+    );
+    return { request, controller };
   } catch (err) {
     console.log("Uploaded failed", err);
     throw err;
@@ -231,16 +230,15 @@ export const getViews = async (videoId) => {
   try {
     const token = localStorage.getItem("token");
 
-   const response = await axios.patch(
-     `${BASE_URL}/views/${videoId}`,
-     {}, // no body needed
-     {
-       headers: {
-         Authorization: `Bearer ${token}`,
-       },
-     },
-   );
-
+    const response = await axios.patch(
+      `${BASE_URL}/views/${videoId}`,
+      {}, // no body needed
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
     console.log("response of view : ", response.data);
 

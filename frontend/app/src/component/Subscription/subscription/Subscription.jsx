@@ -11,6 +11,7 @@ import EmptyvideoCard from "./componentSubscription/EmptyCard/EmptyvideoCard.jsx
 import SubscripptionVideo from "./componentSubscription/SubscripptionVideo.jsx";
 import SubscriptionSearch from "./componentSubscription/SubscriptionSearch.jsx";
 import { priotizeSelectChannel } from "./sortFunction.js";
+import LoadingSpinner from "../../utils/LoadingSpinner.jsx";
 const Subscription = () => {
   const { followers, user, FormatTime, setfollowers } = useContext(AppContext);
   const { userId } = useParams();
@@ -20,7 +21,6 @@ const Subscription = () => {
   const [selectedChannelId, setSelectedChannelId] = useState("");
   const [userFolower, setUserFolower] = useState();
   const handleSubscribePage = async (userId) => {
-    console.log("id", userId);
     try {
       const res = await totalSubcribeChannel(userId);
       setfollowers(res.data.data.subscriberOfEachChannel);
@@ -33,6 +33,9 @@ const Subscription = () => {
   useEffect(() => {
     handleSubscribePage(userId);
   }, [userId]);
+  if (followers === null) {
+    return <LoadingSpinner label="Fetching " />;
+  }
   if (followers.length === 0) {
     // data fetched but no videos
     return (
@@ -57,9 +60,9 @@ const Subscription = () => {
       {/* Empty state */}
 
       <div className="space-y-6 w-full">
-        {priotizeSelectChannel(followers, selectedChannelId).map((f,index) => (
+        {priotizeSelectChannel(followers, selectedChannelId).map((f, index) => (
           <div
-            key={index+Date.now()}
+            key={index + Date.now()}
             className="flex flex-col xl:flex-row xl:justify-between items-center 
                      space-y-4 xl:space-x-8 bg-white border border-slate-200 
                      rounded-xl shadow-sm hover:shadow-md hover:scale-[1.02] 

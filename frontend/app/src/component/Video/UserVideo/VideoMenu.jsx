@@ -7,8 +7,9 @@ import { deleteVideo } from "../../../Api/VideoApi";
 import DropDownItem from "../../HomePage.jsx/HomePageComponent/DropDownItem";
 import { AppContext } from "../../utils/contextApi";
 import { useAxiosErrorHandler } from "../../utils/erroeHandler";
+import useDelete from "../../../Hooks/useDelete";
 
-const VideoMenu = ({ v, index }) => {
+const VideoMenu = ({ v, index, setDisabledUI }) => {
   const { setvideo, user } = useContext(AppContext);
   const handleAxiosError = useAxiosErrorHandler();
 
@@ -17,6 +18,8 @@ const VideoMenu = ({ v, index }) => {
   const navigate = useNavigate();
 
   const handleDelete = async (v) => {
+    setDisabledUI(true); // block UI
+
     // Optimistic UI update
     setvideo((prev) => prev?.filter((p) => p._id !== v._id));
 
@@ -32,9 +35,8 @@ const VideoMenu = ({ v, index }) => {
         type: "success",
         isLoading: false,
         autoClose: 2000,
+        onClose: () => setDisabledUI(false),
       });
-
-      console.log(result.data); // Now this will log correctly
     } catch (err) {
       handleAxiosError(err);
 
@@ -47,6 +49,7 @@ const VideoMenu = ({ v, index }) => {
         type: "error",
         isLoading: false,
         autoClose: 3000,
+        onClose: () => setDisabledUI(false),
       });
     }
   };
@@ -54,7 +57,7 @@ const VideoMenu = ({ v, index }) => {
     <>
       <button
         onClick={() => setIsOpen(isOpen === index ? null : index)}
-        className="p-2 rounded-full hover:bg-slate-100 transition duration-200"
+        className=" p-2 rounded-full hover:bg-slate-100 transition duration-200"
       >
         {isOpen === index ? (
           <XMarkIcon className="aspect-square sm:w-5 w-4 text-slate-700" />

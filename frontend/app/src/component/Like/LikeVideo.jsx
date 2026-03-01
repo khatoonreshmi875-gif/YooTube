@@ -14,6 +14,8 @@ import { Home } from "../Home";
 const LikeVideo = () => {
   const { user } = useContext(AppContext);
   const [sort, setSort] = useState("");
+    const [disabledUI, setDisabledUI] = useState(false);
+
   const formatdate = (date) => new Date(date).toLocaleString();
   const navigate = useNavigate();
   const [likeVideos, setlikeVideos] = useState(null);
@@ -95,6 +97,8 @@ const LikeVideo = () => {
                 index={index}
                 likedAt={s.createdAt}
                 dislikedVideo={dislikeVideo}
+                setDisabledUI={setDisabledUI}
+                disabledUI={disabledUI}
               />
             </div>
           ))}

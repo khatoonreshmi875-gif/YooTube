@@ -14,8 +14,8 @@ export function useAxiosErrorHandler() {
 
       // Handle JWT malformed or expired
       if (
-        error.response.data?.message === "jwt malformed" ||
-        error.response.data?.message === "jwt expired"
+        error?.response?.data?.message === "jwt malformed" ||
+        error?.response?.data?.message === "jwt expired"
       ) {
         alert("Your session has expired");
         localStorage.removeItem("token");

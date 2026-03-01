@@ -96,7 +96,7 @@ const uploadOnCloudinary = async (localFilePath, tag = "generic") => {
 
               {
                 width: 600,
-                height: "16:9",
+                aspect_ratio: "16:9",
                 crop: "limit", // keep aspect ratio, don’t distort
                 // sharpen edges
                 quality: "auto:best", // best visual quality
